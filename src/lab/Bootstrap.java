@@ -11,6 +11,7 @@ public class Bootstrap {
         commands.add(new FileCommand());
         commands.add(new RandomCommand());
         commands.add(new DiagonalRandomCommand());
+        commands.add(new TestCommand());
         Menu menu = new Menu(commands);
         menu.execute();
     }

@@ -3,11 +3,23 @@ package lab;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 
 public class Printer {
 
     private final MathContext context = new MathContext(3, RoundingMode.HALF_UP);
     public Printer() {
+    }
+    public void print(String message) {
+        System.out.println(message);
+    }
+
+
+        public void printVector(String message, ArrayList<Double> list){
+        System.out.println(message);
+        for(int i = 0; i > list.size(); i++){
+            System.out.println("["+(i+1)+"] = "+list.get(i));
+        }
     }
 
     public void printMatrix(Matrix matrix) {

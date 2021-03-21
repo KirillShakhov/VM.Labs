@@ -1,7 +1,6 @@
 package lab;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static java.lang.Math.abs;
 
@@ -12,17 +11,23 @@ public class MathModule {
     }
 
     public static void findSolution(Matrix matrix, double eps){
+        pr.printMatrix(matrix);
         if (checkDiagonal(matrix.getMatrix(),matrix.getSize())){
             ResultSet rs = solve(matrix, eps);
-//            System.out.println(rs.getTable());
+            pr.print(rs.getTable());
+            pr.printVector("Решение системы: ", rs.getResult());
+            pr.printVector("Вектор невязки: ", rs.getResiduals());
             return;
         }
         permuteMatrixHelper(matrix,0);
         if (val!= null){
             Matrix matrix1 = new Matrix(val);
+            pr.print("Матрица после перестановки строк");
             pr.printMatrix(matrix1);
             ResultSet rs = solve(matrix1, eps);
-//            System.out.println(rs.getTable());
+            pr.print(rs.getTable());
+            pr.printVector("Решение системы: ", rs.getResult());
+            pr.printVector("Вектор невязки: ", rs.getResiduals());
         } else {
             pr.notDiagonalAll();
         }
@@ -70,46 +75,13 @@ public class MathModule {
         }
     }
 
-    private static void solveGause(double[][] matrix, int size, double esp) {
-        int countIter = 0;
-        double [] pogr = new double[size];
-        double[] previousValues = new double[size];
-        Arrays.fill(previousValues, 0.0);
-        double error;
-        while (true) {
-            double[] values = new double[size];
-            for (int i = 0; i < size; i++) {
-                values[i] = matrix[i][size];
-                for (int j = 0; j < size; j++) {
-                    if (j < i) {
-                        values[i] = values[i] - matrix[i][j] * values[j];
-                    }
-                    if (j > i) {
-                        values[i] = values[i] - matrix[i][j] * previousValues[j];
-                    }
-                }
-                values[i] = values[i] / matrix[i][i];
-            }
-            error = 0.0;
-            for (int i = 0; i < size; i++) {
-                error = error + abs(values[i] - previousValues[i]);
-                pogr[i] = abs(values[i] - previousValues[i]);
-            }
-            if (error < esp) {
-                break;
-            }
-            previousValues = values;
-            countIter++;
-
-        }
-        pr.printResult(previousValues,countIter,pogr);
-    }
-
     private static ResultSet solve(Matrix matrix, double eps) {
+        ResultSet rs = new ResultSet();
         double[] x= new double[matrix.getSize()];
         double norma = 0, sum, t;
         do
         {
+            ArrayList<Double> esps = new ArrayList<>();
             norma = 0;
             //  k++;
             for(int i = 0; i < matrix.getSize(); i++)
@@ -123,101 +95,30 @@ public class MathModule {
                         sum += matrix.getMatrix()[i][j] * x[j];
                 }
                 x[i] = (matrix.getVector()[i] - sum) / matrix.getMatrix()[i][i];
+                esps.add(abs(x[i] - t));
                 if (abs(x[i] - t) > norma)
                     norma = abs(x[i] - t);
-                System.out.println("x[" + (i+1) +"] = " + x[i]);
             }
+            rs.addIter(x);
+            rs.addE(esps);
         }
         while(norma > eps);
-        System.out.println("Решение системы:");
 
-        for(int i = 0; i < matrix.getSize(); i++)
-        {
-            System.out.println("x[" + (i+1) +"] = " + x[i]);
-        }
+
+        rs.setResult(x);
 
         //Проверка
-        System.out.println("Вектор невязки:");
-        float S=0;
-        double[] r = new double[matrix.getSize()];
+        ArrayList<Double> residuals = new ArrayList<>();
         for(int i = 0; i < matrix.getSize(); i++)
         {
+            float S=0;
             for(int j = 0; j < matrix.getSize(); j++)
             {
                 S += matrix.getMatrix()[i][j] * x[j] ;
             }
-            r[i] = S - matrix.getVector()[i];
-            System.out.println("r[" + (i+1) +"] = " + r[i]);
-
-            S=0;
+            residuals.add(S - matrix.getVector()[i]);
         }
-        return null;
+        rs.setResiduals(residuals);
+        return rs;
     }
-
-    private static ResultSet solveold(Matrix matrix, double eps){
-        ResultSet resultSet = new ResultSet();
-        pr.printMatrix(matrix);
-        double[] result = new double[matrix.getSize()];
-        for (int i = 0; i < matrix.getSize(); i++)
-        {
-            result[i] = matrix.getVector()[i] / matrix.getMatrix()[i][i];
-        }
-        double[] Xn = new double[matrix.getSize()];
-
-        int iterator = 0;
-        do {
-            for (int i = 0; i < matrix.getSize(); i++) {
-                Xn[i]=  matrix.getVector()[i] / matrix.getMatrix()[i][i];
-                for (int j = 0; j < matrix.getSize(); j++) {
-                    if (i == j)
-                        continue;
-                    else {
-                        Xn[i] = matrix.getMatrix()[i][j] / matrix.getMatrix()[i][i] * result[j];
-                    }
-                }
-            }
-
-            boolean flag = true;
-            for (int i = 0; i < matrix.getSize() - 1; i++) {
-                if (abs(Xn[i] - result[i]) > eps) {
-                    flag = false;
-                    break;
-                }
-            }
-
-            for (int i = 0; i < matrix.getSize(); i++) {
-                result[i] = Xn[i];
-            }
-            iterator++;
-            resultSet.addIter(Xn);
-            if (flag || iterator>100) break;
-        } while (true);
-
-        System.out.println("Количество итераций:"+iterator);
-
-        resultSet.setResult(result);
-
-        //Проверка
-        ArrayList<Double> disp = new ArrayList<>();
-//      System.out.println("Вектор невязки:");
-        float S=0;
-        for(int i = 0; i < matrix.getSize(); i++)
-        {
-            for(int j = 0; j < matrix.getSize(); j++)
-            {
-                S += matrix.getMatrix()[i][j] * result[j];
-            }
-//          System.out.println("delta x" + (i + 1) + " = " + (S - matrix.getVector()[i]));
-            disp.add(S - matrix.getVector()[i]);
-            S=0;
-        }
-        resultSet.setDiscrepancies(disp);
-        return resultSet;
-    }
-
-    public double correctEps(double eps){
-        if (eps < 0 || eps > 1) eps = 0.1;
-        return eps;
-    }
-
 }
