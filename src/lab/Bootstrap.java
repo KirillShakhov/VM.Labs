@@ -1,8 +1,7 @@
 package lab;
 
-import lab.Commands.ConsoleCommand;
-import lab.Commands.FileCommand;
-import lab.Commands.ICommand;
+import lab.Commands.*;
+
 import java.util.ArrayList;
 
 public class Bootstrap {
@@ -10,6 +9,8 @@ public class Bootstrap {
         ArrayList<ICommand> commands = new ArrayList<>();
         commands.add(new ConsoleCommand());
         commands.add(new FileCommand());
+        commands.add(new RandomCommand());
+        commands.add(new DiagonalRandomCommand());
         Menu menu = new Menu(commands);
         menu.execute();
     }

@@ -3,12 +3,12 @@ package lab;
 import java.util.Arrays;
 
 public class MathModule {
-    private Printer pr;
-    private double[][] val;
+    private static Printer pr = new Printer();
+    private static double[][] val;
     public MathModule() {
     }
 
-    public void findSolution(Matrix matrix, double eps){
+    public static void findSolution(Matrix matrix, double eps){
         if (checkDiagonal(matrix.getMatrix(),matrix.getSize())){
             solve(matrix.getMatrix(),matrix.getSize(),eps);
             return;
@@ -23,7 +23,7 @@ public class MathModule {
         }
     }
 
-    private boolean checkDiagonal(double [][] matrix, int size) {
+    public static boolean checkDiagonal(double[][] matrix, int size) {
         int i, j, k = 1;
         double sum = 0;
         for (i = 0; i < size;i++) {
@@ -39,7 +39,7 @@ public class MathModule {
         return (k == 1);
     }
 
-    private void permuteMatrixHelper(Matrix matrix, int index) {
+    private static void permuteMatrixHelper(Matrix matrix, int index) {
         if(index >= matrix.getMatrix().length - 1){
             if (checkDiagonal(matrix.getMatrix(), matrix.getSize())){
                 val = new double[matrix.getSize()][matrix.getSize()+1];
@@ -65,7 +65,7 @@ public class MathModule {
         }
     }
 
-    private void solve(double [][] matrix, int size, double esp) {
+    private static void solve(double[][] matrix, int size, double esp) {
         int countIter = 0;
         double [] pogr = new double[size];
         double[] previousValues = new double[size];

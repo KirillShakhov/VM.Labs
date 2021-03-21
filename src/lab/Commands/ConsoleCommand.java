@@ -1,4 +1,5 @@
 package lab.Commands;
+import lab.MathModule;
 import lab.Matrix;
 
 import java.util.Scanner;
@@ -15,6 +16,16 @@ public class ConsoleCommand implements ICommand{
     public void execute() {
         System.out.println("Вводим матрицу с консоли");
         Matrix matrix = createMatrixFromKeyBoard();
+        double eps;
+        while (true) {
+            try {
+                String buffer = scanner.nextLine();
+                eps = Double.parseDouble(buffer);
+                break;
+            }
+            catch (Exception ignored){ }
+        }
+        MathModule.findSolution(matrix, eps);
     }
 
     public Matrix createMatrixFromKeyBoard(){

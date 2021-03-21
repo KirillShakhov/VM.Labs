@@ -52,7 +52,9 @@ public class Menu {
                     System.exit(0);
                 }
             }
-            catch (Exception ignored){ }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
     public static boolean isNumeric(String str) {

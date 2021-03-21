@@ -1,13 +1,17 @@
 package lab.Commands;
 
+import lab.MathModule;
 import lab.Matrix;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class FileCommand implements ICommand {
+    private final Scanner scanner = new Scanner(System.in);
+
     @Override
     public String getMessage() {
         return "Ввести матрицу с файла";
@@ -16,6 +20,19 @@ public class FileCommand implements ICommand {
     @Override
     public void execute() {
         System.out.println("Вводим матрицу с файла");
+        System.out.println("Имя файла:");
+        String path = scanner.nextLine();
+        Matrix matrix = readMatrixFromFile(path);
+        double eps;
+        while (true) {
+            try {
+                String buffer = scanner.nextLine();
+                eps = Double.parseDouble(buffer);
+                break;
+            }
+            catch (Exception ignored){ }
+        }
+        MathModule.findSolution(matrix, eps);
     }
 
     public Matrix readMatrixFromFile(String fileName) {

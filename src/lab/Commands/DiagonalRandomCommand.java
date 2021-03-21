@@ -5,17 +5,15 @@ import lab.Matrix;
 
 import java.util.Scanner;
 
-public class RandomCommand implements ICommand{
+public class DiagonalRandomCommand implements ICommand{
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public String getMessage() {
-        return "Генерация рандомной матрицы";
-    }
+    public String getMessage() { return "Генерация рандомной матрицы с диагональным преобладанием"; }
 
     @Override
     public void execute() {
-        System.out.println("Генерация матрицы");
+        System.out.println("Генерация матрицы c диагональным преобладанием");
         int size = 0;
         double eps = 1;
         while (true) {
@@ -30,7 +28,11 @@ public class RandomCommand implements ICommand{
             }
             catch (Exception ignored){ }
         }
-        MathModule.findSolution(createRandomMatrix(size), eps);
+        Matrix matrix;
+        do {
+            matrix = createRandomMatrix(size);
+        } while (!MathModule.checkDiagonal(matrix.getMatrix(), size));
+        MathModule.findSolution(matrix, eps);
     }
 
     public Matrix createRandomMatrix(int size) {

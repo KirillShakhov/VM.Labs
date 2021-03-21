@@ -21,7 +21,12 @@ public class Matrix {
         return size;
     }
 
-    public void getVector(){
+    public double[] getVector(){
+        double [] vector = new double[size];
+        for(int i = 0; i < this.size; i++){
+            vector[i]=matrix[i][size+1];
+        }
+        return vector;
     }
 
     @Override
