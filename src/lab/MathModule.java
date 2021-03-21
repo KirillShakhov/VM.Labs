@@ -14,7 +14,7 @@ public class MathModule {
     public static void findSolution(Matrix matrix, double eps){
         if (checkDiagonal(matrix.getMatrix(),matrix.getSize())){
             ResultSet rs = solve(matrix, eps);
-            System.out.println(rs.getTable());
+//            System.out.println(rs.getTable());
             return;
         }
         permuteMatrixHelper(matrix,0);
@@ -22,7 +22,7 @@ public class MathModule {
             Matrix matrix1 = new Matrix(val);
             pr.printMatrix(matrix1);
             ResultSet rs = solve(matrix1, eps);
-            System.out.println(rs.getTable());
+//            System.out.println(rs.getTable());
         } else {
             pr.notDiagonalAll();
         }
@@ -105,7 +105,56 @@ public class MathModule {
         pr.printResult(previousValues,countIter,pogr);
     }
 
-    private static ResultSet solve(Matrix matrix, double eps){
+    private static ResultSet solve(Matrix matrix, double eps) {
+        double[] x= new double[matrix.getSize()];
+        double norma = 0, sum, t;
+        do
+        {
+            norma = 0;
+            //  k++;
+            for(int i = 0; i < matrix.getSize(); i++)
+            {
+                t = x[i];
+                sum = 0;
+
+                for(int j = 0; j < matrix.getSize(); j++)
+                {
+                    if(j != i)
+                        sum += matrix.getMatrix()[i][j] * x[j];
+                }
+                x[i] = (matrix.getVector()[i] - sum) / matrix.getMatrix()[i][i];
+                if (abs(x[i] - t) > norma)
+                    norma = abs(x[i] - t);
+                System.out.println("x[" + (i+1) +"] = " + x[i]);
+            }
+        }
+        while(norma > eps);
+        System.out.println("Решение системы:");
+
+        for(int i = 0; i < matrix.getSize(); i++)
+        {
+            System.out.println("x[" + (i+1) +"] = " + x[i]);
+        }
+
+        //Проверка
+        System.out.println("Вектор невязки:");
+        float S=0;
+        double[] r = new double[matrix.getSize()];
+        for(int i = 0; i < matrix.getSize(); i++)
+        {
+            for(int j = 0; j < matrix.getSize(); j++)
+            {
+                S += matrix.getMatrix()[i][j] * x[j] ;
+            }
+            r[i] = S - matrix.getVector()[i];
+            System.out.println("r[" + (i+1) +"] = " + r[i]);
+
+            S=0;
+        }
+        return null;
+    }
+
+    private static ResultSet solveold(Matrix matrix, double eps){
         ResultSet resultSet = new ResultSet();
         pr.printMatrix(matrix);
         double[] result = new double[matrix.getSize()];
@@ -150,7 +199,7 @@ public class MathModule {
 
         //Проверка
         ArrayList<Double> disp = new ArrayList<>();
-//        System.out.println("Вектор невязки:");
+//      System.out.println("Вектор невязки:");
         float S=0;
         for(int i = 0; i < matrix.getSize(); i++)
         {
@@ -158,7 +207,7 @@ public class MathModule {
             {
                 S += matrix.getMatrix()[i][j] * result[j];
             }
-//            System.out.println("delta x" + (i + 1) + " = " + (S - matrix.getVector()[i]));
+//          System.out.println("delta x" + (i + 1) + " = " + (S - matrix.getVector()[i]));
             disp.add(S - matrix.getVector()[i]);
             S=0;
         }

@@ -26,6 +26,7 @@ public class FileCommand implements ICommand {
         double eps;
         while (true) {
             try {
+                System.out.println("Введите точность:");
                 String buffer = scanner.nextLine();
                 eps = Double.parseDouble(buffer);
                 break;
