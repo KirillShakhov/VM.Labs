@@ -24,7 +24,7 @@ public class Matrix {
     public double[] getVector(){
         double [] vector = new double[size];
         for(int i = 0; i < this.size; i++){
-            vector[i]=matrix[i][size+1];
+            vector[i]=matrix[i][size];
         }
         return vector;
     }

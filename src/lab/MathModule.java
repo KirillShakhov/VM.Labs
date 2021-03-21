@@ -1,6 +1,9 @@
 package lab;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import static java.lang.Math.abs;
 
 public class MathModule {
     private static Printer pr = new Printer();
@@ -10,14 +13,16 @@ public class MathModule {
 
     public static void findSolution(Matrix matrix, double eps){
         if (checkDiagonal(matrix.getMatrix(),matrix.getSize())){
-            solve(matrix.getMatrix(),matrix.getSize(),eps);
+            ResultSet rs = solve(matrix, eps);
+            System.out.println(rs.getTable());
             return;
         }
         permuteMatrixHelper(matrix,0);
         if (val!= null){
             Matrix matrix1 = new Matrix(val);
             pr.printMatrix(matrix1);
-            solve(matrix1.getMatrix(),matrix1.getSize(),eps);
+            ResultSet rs = solve(matrix1, eps);
+            System.out.println(rs.getTable());
         } else {
             pr.notDiagonalAll();
         }
@@ -29,10 +34,10 @@ public class MathModule {
         for (i = 0; i < size;i++) {
             sum = 0;
             for (j = 0; j < size;j++) {
-                sum+=Math.abs(matrix[i][j]);
+                sum+= abs(matrix[i][j]);
             }
-            sum -= Math.abs(matrix[i][i]);
-            if (sum >= Math.abs(matrix[i][i])) {
+            sum -= abs(matrix[i][i]);
+            if (sum >= abs(matrix[i][i])) {
                 k = 0;
             }
         }
@@ -65,7 +70,7 @@ public class MathModule {
         }
     }
 
-    private static void solve(double[][] matrix, int size, double esp) {
+    private static void solveGause(double[][] matrix, int size, double esp) {
         int countIter = 0;
         double [] pogr = new double[size];
         double[] previousValues = new double[size];
@@ -87,8 +92,8 @@ public class MathModule {
             }
             error = 0.0;
             for (int i = 0; i < size; i++) {
-                error = error + Math.abs(values[i] - previousValues[i]);
-                pogr[i] = Math.abs(values[i] - previousValues[i]);
+                error = error + abs(values[i] - previousValues[i]);
+                pogr[i] = abs(values[i] - previousValues[i]);
             }
             if (error < esp) {
                 break;
@@ -98,6 +103,67 @@ public class MathModule {
 
         }
         pr.printResult(previousValues,countIter,pogr);
+    }
+
+    private static ResultSet solve(Matrix matrix, double eps){
+        ResultSet resultSet = new ResultSet();
+        pr.printMatrix(matrix);
+        double[] result = new double[matrix.getSize()];
+        for (int i = 0; i < matrix.getSize(); i++)
+        {
+            result[i] = matrix.getVector()[i] / matrix.getMatrix()[i][i];
+        }
+        double[] Xn = new double[matrix.getSize()];
+
+        int iterator = 0;
+        do {
+            for (int i = 0; i < matrix.getSize(); i++) {
+                Xn[i]=  matrix.getVector()[i] / matrix.getMatrix()[i][i];
+                for (int j = 0; j < matrix.getSize(); j++) {
+                    if (i == j)
+                        continue;
+                    else {
+                        Xn[i] = matrix.getMatrix()[i][j] / matrix.getMatrix()[i][i] * result[j];
+                    }
+                }
+            }
+
+            boolean flag = true;
+            for (int i = 0; i < matrix.getSize() - 1; i++) {
+                if (abs(Xn[i] - result[i]) > eps) {
+                    flag = false;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < matrix.getSize(); i++) {
+                result[i] = Xn[i];
+            }
+            iterator++;
+            resultSet.addIter(Xn);
+            if (flag || iterator>100) break;
+        } while (true);
+
+        System.out.println("Количество итераций:"+iterator);
+
+        resultSet.setResult(result);
+
+        //Проверка
+        ArrayList<Double> disp = new ArrayList<>();
+//        System.out.println("Вектор невязки:");
+        float S=0;
+        for(int i = 0; i < matrix.getSize(); i++)
+        {
+            for(int j = 0; j < matrix.getSize(); j++)
+            {
+                S += matrix.getMatrix()[i][j] * result[j];
+            }
+//            System.out.println("delta x" + (i + 1) + " = " + (S - matrix.getVector()[i]));
+            disp.add(S - matrix.getVector()[i]);
+            S=0;
+        }
+        resultSet.setDiscrepancies(disp);
+        return resultSet;
     }
 
     public double correctEps(double eps){
