@@ -4,9 +4,6 @@ import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
 import lab.modules.GraphModule;
 import lab.modules.MathModule;
-import lab.modules.PrinterModule;
-
-import java.util.Scanner;
 
 public class Test implements IFunc, ICommand {
     @Override

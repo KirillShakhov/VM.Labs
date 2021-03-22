@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public interface ISysFunc {
-    ArrayList<Double> solve(double val1, double val2);
+    double solvef(double x);
+    double solveg(double x);
     ArrayList<IFunc> getDraw();
     static String toString(ArrayList<String> arrayList) {
         StringBuilder result = new StringBuilder("|");
@@ -37,6 +38,10 @@ public interface ISysFunc {
             eps = Double.parseDouble(scanner.nextLine());
             break;
         }
+        double x = MathModule.iterMetod(func, eps);
+        double y = func.solveg(x);
+        pr.print("x: "+x);
+        pr.print("y: "+y);
 //        double point1 = MathModule.doubMetod(func, left, right, eps);
 //        double point2 = MathModule.doubMetod(func, left, right, eps);
         new GraphModule(func.getDraw(), left, right);
