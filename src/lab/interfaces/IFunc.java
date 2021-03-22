@@ -1,6 +1,7 @@
 package lab.interfaces;
 
 
+import lab.func.Point;
 import lab.modules.GraphModule;
 import lab.modules.MathModule;
 import lab.modules.PrinterModule;
@@ -8,7 +9,7 @@ import lab.modules.PrinterModule;
 import java.util.Scanner;
 
 public interface IFunc {
-    double solve(double val);
+    double solve(double x);
     static void execute(IFunc func){
         PrinterModule pr = new PrinterModule();
         Scanner scanner = new Scanner(System.in);
@@ -22,8 +23,14 @@ public interface IFunc {
             eps = Double.parseDouble(scanner.nextLine());
             break;
         }
+//        if (doubChecker(first, left, right)) {
+//            print("Уравнение решений не имеет в рамках данного диапазона/метода")
+//            paintGraph(first)
+//            else:
+//        }
         double point1 = MathModule.doubMetod(func, left, right, eps);
+        pr.print("Ответ:");
         double point2 = MathModule.doubMetod(func, left, right, eps);
-        new GraphModule(func, point1, point2, left, right);
+        new GraphModule(func, new Point(MathModule.doubMetod(func, left, right, eps), 0), new Point(MathModule.doubMetod(func, left, right, eps), 0), left, right);
     }
 }

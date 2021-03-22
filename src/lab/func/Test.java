@@ -24,6 +24,6 @@ public class Test implements IFunc, ICommand {
         double left = -10, right = 10, eps = 0.001;
         double point1 = MathModule.doubMetod(this, left, right, eps);
         double point2 = MathModule.doubMetod(this, left, right, eps);
-        new GraphModule(this, point1, point2, left, right);
+        new GraphModule(this, new Point(point1, 0), new Point(point2, 0), left, right);
     }
 }

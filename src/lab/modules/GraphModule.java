@@ -14,62 +14,60 @@ import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import lab.func.Point;
+
 
 
 public class GraphModule extends JPanel {
-    double x1, x2, y1, y2, step_x, step_y;
-    int WIDTH;
-    int HEIGHT;
-    int lastX;
-    int lastY;
+    double x1, x2, y1, y2;
+    double step_x = 1;
+    double step_y = 1;
+    //Settings
+    int WIDTH = 640;
+    int HEIGHT = 480;
+    int lastX = 0;
+    int lastY = 0;
+    //step_x = Math.PI;
     ArrayList<IFunc> f = new ArrayList<>();
     ArrayList<ISysFunc> fsys = new ArrayList<>();
     ArrayList<Point> points = new ArrayList<>();
-    boolean isSys = false;
 
-    public GraphModule(IFunc func, double point1, double point2, double left, double right) {
+    public GraphModule(IFunc func, Point point1, Point point2, double left, double right) {
         this.x1 = left;
         this.x2 = right;
         this.y1 = left;
         this.y2 = right;
         this.f.add(func);
-        points.add(new Point( 1, 1));
-//        points.add(new Point((int) point1, 1));
-//        points.add(new Point((int) point2, 1));
-
-        //Settings
-        HEIGHT = 480;
-        WIDTH = 640;
-
-        //step_x = Math.PI;
-        step_x = 1;
-        step_y = 1;
-
-        lastX = 0;
-        lastY = 0;
+        points.add(point1);
+        points.add(point2);
         frameOp();
     }
-
-    public GraphModule(ISysFunc func, double point1x, double point1y, double point2x, double point2y, double left, double right) {
+    public GraphModule(IFunc func, double left, double right) {
         this.x1 = left;
         this.x2 = right;
         this.y1 = left;
         this.y2 = right;
-        this.fsys.add(func);
-        points.add(new Point((int) point1x, (int) point1y));
-        points.add(new Point((int) point2x, (int) point2y));
+        this.f.add(func);
+        frameOp();
+    }
 
-        //Settings
-        HEIGHT = 480;
-        WIDTH = 640;
+    public GraphModule(ArrayList<IFunc> func, Point point1, Point point2, double left, double right) {
+        this.x1 = left;
+        this.x2 = right;
+        this.y1 = left;
+        this.y2 = right;
+        this.f.addAll(func);
+        points.add(point1);
+        points.add(point2);
+        frameOp();
+    }
 
-        //step_x = Math.PI;
-        step_x = 1;
-        step_y = 1;
-
-        lastX = 0;
-        lastY = 0;
-        isSys = true;
+    public GraphModule(ArrayList<IFunc> func, double left, double right) {
+        this.x1 = left;
+        this.x2 = right;
+        this.y1 = left;
+        this.y2 = right;
+        this.f.addAll(func);
         frameOp();
     }
 
@@ -247,45 +245,22 @@ public class GraphModule extends JPanel {
     }
 
     public void paintF(Graphics g) {
-        if(isSys){
-            for (ISysFunc f1 : fsys) {
-                int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.valGr1(x1) - y1));
-                for (int i = 1; i < WIDTH; i++) {
-                    double i2 = f1.valGr1(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
-                    int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
+        //Рисуем графики
+        for (IFunc f1 : f) {
+            int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
+            for (int i = 1; i < WIDTH; i++) {
+                double i2 = f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
+                int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
 
-                    g.drawLine(i - 1, q1, i, q2);
+                g.drawLine(i - 1, q1, i, q2);
 
-                    q1 = q2;
-                }
-                q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.valGr2(x1) - y1));
-                for (int i = 1; i < WIDTH; i++) {
-                    double i2 = f1.valGr2(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
-                    int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
-
-                    g.drawLine(i - 1, q1, i, q2);
-
-                    q1 = q2;
-                }
+                q1 = q2;
             }
         }
-        else {
-            for (IFunc f1 : f) {
-                int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
-                for (int i = 1; i < WIDTH; i++) {
-                    double i2 = f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
-                    int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
-
-                    g.drawLine(i - 1, q1, i, q2);
-
-                    q1 = q2;
-                }
-            }
-        }
+        //Рисуем точки
         for(Point p : points) {
-            //int positionX = WIDTH - (int) Math.floor((WIDTH / (Math.abs(x2 - x1))) * (p.x - x1));
-            int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.x - x1));
-            int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.y - y1));
+            int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.getX() - x1));
+            int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.getY() - y1));
             g.setColor(Color.green);
             g.fillOval(positionX - 3, positionY - 3, 6, 6);
         }
