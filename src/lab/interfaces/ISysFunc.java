@@ -28,6 +28,11 @@ public interface ISysFunc {
             left = Double.parseDouble(scanner.nextLine());
             pr.print("Введите правую границу:");
             right = Double.parseDouble(scanner.nextLine());
+            if (left > right){
+                double t = left;
+                left = right;
+                right = t;
+            }
             pr.print("Введите точность:");
             eps = Double.parseDouble(scanner.nextLine());
             break;

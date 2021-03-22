@@ -11,26 +11,48 @@ public class MathModule {
     public MathModule() {
     }
 
-    public static double doubMetod(IFunc function, double start_x, double end_x, double eps) {
-        if (function.solve(start_x) == 0){
-            return start_x;
+    public static boolean doubChecker(IFunc function, double left, double right) {
+        boolean value = false;
+        for (double i = left; i < right; i+=0.5){
+            for (double j = left; j < right; j+=0.5) {
+                if (function.solve(i) * function.solve(j) < 0) {
+                    value = true;
+                }
+            }
         }
-        if (function.solve(end_x) == 0){
-            return end_x;
+        return value;
+    }
+    public static double doubMetod(IFunc function, double left, double right, double eps) {
+        if (function.solve(left) == 0){
+            return left;
+        }
+        if (function.solve(right) == 0){
+            return right;
         }
         double dx = 0, xi = 0;
-        while (end_x - start_x > eps) {
-            dx = (end_x - start_x) / 2.0;
-            xi = start_x + dx;
-            if (sign(function.solve(start_x)) != sign(function.solve(xi))){
-                end_x = xi;
+        while (right - left > eps) {
+            dx = (right - left) / 2.0;
+            xi = left + dx;
+            if (sign(function.solve(left)) != sign(function.solve(xi))){
+                right = xi;
             }
             else{
-                start_x = xi;
+                left = xi;
             }
         }
         return xi;
     }
+    public static double chordMethod(IFunc function, double left, double right, double eps) {
+        while (Math.abs(right - left) > eps) {
+            left = right - (right - left) * function.solve(right) / (function.solve(
+                    right) - function.solve(left));
+            right = left - (left - right) * function.solve(left) / (function.solve(
+                    left) - function.solve(right));
+        }
+
+        return right;
+    }
+
     private static int sign(double x) {
         if (x > 0)
             return 1;
