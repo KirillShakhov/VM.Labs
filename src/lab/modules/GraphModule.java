@@ -1,5 +1,9 @@
 package lab.modules;
 
+
+import lab.interfaces.IFunc;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,12 +12,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Paint extends JPanel {
+
+public class GraphModule extends JPanel {
 
     double[] X;
     double x1, x2, y1, y2, step_x, step_y;
@@ -22,16 +25,16 @@ public class Paint extends JPanel {
     int lastX;
     int lastY;
 
-    calc f;
+    IFunc f;
 
+    public GraphModule(IFunc func, double point1, double point2, double left, double right) {
 
+        this.x1 = left;
+        this.x2 = right;
+        this.y1 = left;
+        this.y2 = right;
+        this.f = func;
 
-    Paint(double x1, double x2, double y1, double y2, String s) {
-
-        this.x1 = x1;
-        this.x2 = x2;
-        this.y1 = y1;
-        this.y2 = y2;
 
         HEIGHT = 480;
         WIDTH = 640;
@@ -41,16 +44,13 @@ public class Paint extends JPanel {
 
         lastX = 0;
         lastY = 0;
-
-        f = new calc(s);
-
         frameOp();
 
     }
 
     public void frameOp() {
 
-        JFrame JF = new JFrame("test_title");
+        JFrame JF = new JFrame("Paint");
         JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28);
         JF.setLayout(null);
         JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -227,10 +227,10 @@ public class Paint extends JPanel {
 
     public void paintF(Graphics g) {
 
-        int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f.alg(x1) - y1));
+        int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f.solve(x1) - y1));
 
         for (int i = 1; i < WIDTH; i++) {
-            double i2 = f.alg(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
+            double i2 = f.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
             int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
 
             g.drawLine(i - 1, q1, i, q2);
@@ -240,3 +240,4 @@ public class Paint extends JPanel {
     }
 
 }
+

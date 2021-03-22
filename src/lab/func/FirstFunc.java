@@ -2,6 +2,7 @@ package lab.func;
 
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
+import lab.modules.GraphModule;
 import lab.modules.MathModule;
 import lab.modules.PrinterModule;
 
@@ -22,7 +23,7 @@ public class FirstFunc implements IFunc, ICommand {
 
     @Override
     public void execute() {
-        double left = 0, right = 100, eps = 0.001;
+        double left = -5, right = 5, eps = 0.001;
 //        while(true){
 //            if (scanner.hasNext()) {
 //                pr.print("Введите левую границу:");
@@ -40,7 +41,6 @@ public class FirstFunc implements IFunc, ICommand {
 //        }
         double point1 = MathModule.doubMetod(this, left, right, eps);
         double point2 = MathModule.doubMetod(this, left, right, eps);
-//        GraphModule gm = new GraphModule(new SecondFunc(), point1, point2);
-//        gm.start();
+        GraphModule gm = new GraphModule(this, point1, point2, left, right);
     }
 }
