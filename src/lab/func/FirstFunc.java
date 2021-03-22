@@ -2,8 +2,14 @@ package lab.func;
 
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
+import lab.modules.MathModule;
+import lab.modules.PrinterModule;
+
+import java.util.Scanner;
 
 public class FirstFunc implements IFunc, ICommand {
+    PrinterModule pr = new PrinterModule();
+    Scanner scanner = new Scanner(System.in);
     @Override
     public double solve(double val) {
         return Math.pow(val, 2) + val + 2;
@@ -16,6 +22,25 @@ public class FirstFunc implements IFunc, ICommand {
 
     @Override
     public void execute() {
-
+        double left = 0, right = 100, eps = 0.001;
+//        while(true){
+//            if (scanner.hasNext()) {
+//                pr.print("Введите левую границу:");
+//                left = Double.parseDouble(scanner.nextLine());
+//                pr.print("Введите правую границу:");
+//                right = Double.parseDouble(scanner.nextLine());
+//                pr.print("Введите точность:");
+//                eps = Double.parseDouble(scanner.nextLine());
+//                break;
+//            }
+//            else{
+//                pr.print("Завершение работы:");
+//                System.exit(0);
+//            }
+//        }
+        double point1 = MathModule.doubMetod(this, left, right, eps);
+        double point2 = MathModule.doubMetod(this, left, right, eps);
+//        GraphModule gm = new GraphModule(new SecondFunc(), point1, point2);
+//        gm.start();
     }
 }

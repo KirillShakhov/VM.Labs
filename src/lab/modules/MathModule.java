@@ -11,7 +11,7 @@ public class MathModule {
     public MathModule() {
     }
 
-    private static double solve(IFunc function, double start_x, double end_x, double eps) {
+    public static double doubMetod(IFunc function, double start_x, double end_x, double eps) {
         if (function.solve(start_x) == 0){
             return start_x;
         }
