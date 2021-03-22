@@ -35,7 +35,7 @@ public class FirstSysFunc implements ISysFunc, ICommand {
     @Override
     public void execute() {
         ArrayList<IFunc> ar = new ArrayList<>();
-        double point1 = 0, point2 = 0, left = 0, right = 10;
-        new GraphModule(this, point1, point2, left, right);
+        double point1x = 0, point1y = 0, point2x = 0, point2y = 0, left = 0, right = 10;
+        new GraphModule(this, point1x, point1y, point2x, point2y, left, right);
     }
 }

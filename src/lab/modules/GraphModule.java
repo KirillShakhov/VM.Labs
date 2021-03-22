@@ -1,16 +1,12 @@
 package lab.modules;
 
 
-import lab.func.FirstSysFunc;
 import lab.interfaces.IFunc;
 import lab.interfaces.ISysFunc;
 
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -21,8 +17,6 @@ import javax.swing.JPanel;
 
 
 public class GraphModule extends JPanel {
-
-    double[] X;
     double x1, x2, y1, y2, step_x, step_y;
     int WIDTH;
     int HEIGHT;
@@ -30,6 +24,7 @@ public class GraphModule extends JPanel {
     int lastY;
     ArrayList<IFunc> f = new ArrayList<>();
     ArrayList<ISysFunc> fsys = new ArrayList<>();
+    ArrayList<Point> points = new ArrayList<>();
     boolean isSys = false;
 
     public GraphModule(IFunc func, double point1, double point2, double left, double right) {
@@ -38,6 +33,9 @@ public class GraphModule extends JPanel {
         this.y1 = left;
         this.y2 = right;
         this.f.add(func);
+        points.add(new Point( 1, 1));
+//        points.add(new Point((int) point1, 1));
+//        points.add(new Point((int) point2, 1));
 
         //Settings
         HEIGHT = 480;
@@ -52,12 +50,14 @@ public class GraphModule extends JPanel {
         frameOp();
     }
 
-    public GraphModule(ISysFunc func, double point1, double point2, double left, double right) {
+    public GraphModule(ISysFunc func, double point1x, double point1y, double point2x, double point2y, double left, double right) {
         this.x1 = left;
         this.x2 = right;
         this.y1 = left;
         this.y2 = right;
         this.fsys.add(func);
+        points.add(new Point((int) point1x, (int) point1y));
+        points.add(new Point((int) point2x, (int) point2y));
 
         //Settings
         HEIGHT = 480;
@@ -208,7 +208,6 @@ public class GraphModule extends JPanel {
 
             g.drawString(String.format("%." + String.valueOf(format) + "f", i * step_x), positionX + 2, positionY);
         }
-
         for (int i = (int) Math.floor(y1 / step_y); i <= Math.floor(y2 / step_y); i++) {
             int positionY = (int) (HEIGHT + (y1 - step_y * i) / (y2 - y1) * HEIGHT);
 
@@ -282,6 +281,13 @@ public class GraphModule extends JPanel {
                     q1 = q2;
                 }
             }
+        }
+        for(Point p : points) {
+            //int positionX = WIDTH - (int) Math.floor((WIDTH / (Math.abs(x2 - x1))) * (p.x - x1));
+            int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.x - x1));
+            int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.y - y1));
+            g.setColor(Color.green);
+            g.fillOval(positionX - 3, positionY - 3, 6, 6);
         }
     }
 
