@@ -1,7 +1,10 @@
 package lab.modules;
 
 
+import lab.func.FirstSysFunc;
 import lab.interfaces.IFunc;
+import lab.interfaces.ISysFunc;
+
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.BasicStroke;
@@ -12,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -24,32 +28,52 @@ public class GraphModule extends JPanel {
     int HEIGHT;
     int lastX;
     int lastY;
-
-    IFunc f;
+    ArrayList<IFunc> f = new ArrayList<>();
+    ArrayList<ISysFunc> fsys = new ArrayList<>();
+    boolean isSys = false;
 
     public GraphModule(IFunc func, double point1, double point2, double left, double right) {
-
         this.x1 = left;
         this.x2 = right;
         this.y1 = left;
         this.y2 = right;
-        this.f = func;
+        this.f.add(func);
 
-
+        //Settings
         HEIGHT = 480;
         WIDTH = 640;
 
-        step_x = Math.PI;
+        //step_x = Math.PI;
+        step_x = 1;
         step_y = 1;
 
         lastX = 0;
         lastY = 0;
         frameOp();
+    }
 
+    public GraphModule(ISysFunc func, double point1, double point2, double left, double right) {
+        this.x1 = left;
+        this.x2 = right;
+        this.y1 = left;
+        this.y2 = right;
+        this.fsys.add(func);
+
+        //Settings
+        HEIGHT = 480;
+        WIDTH = 640;
+
+        //step_x = Math.PI;
+        step_x = 1;
+        step_y = 1;
+
+        lastX = 0;
+        lastY = 0;
+        isSys = true;
+        frameOp();
     }
 
     public void frameOp() {
-
         JFrame JF = new JFrame("Paint");
         JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28);
         JF.setLayout(null);
@@ -135,8 +159,6 @@ public class GraphModule extends JPanel {
 
             }
         });
-
-
     }
 
     @Override
@@ -226,16 +248,40 @@ public class GraphModule extends JPanel {
     }
 
     public void paintF(Graphics g) {
+        if(isSys){
+            for (ISysFunc f1 : fsys) {
+                int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.valGr1(x1) - y1));
+                for (int i = 1; i < WIDTH; i++) {
+                    double i2 = f1.valGr1(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
+                    int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
 
-        int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f.solve(x1) - y1));
+                    g.drawLine(i - 1, q1, i, q2);
 
-        for (int i = 1; i < WIDTH; i++) {
-            double i2 = f.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
-            int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
+                    q1 = q2;
+                }
+                q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.valGr2(x1) - y1));
+                for (int i = 1; i < WIDTH; i++) {
+                    double i2 = f1.valGr2(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
+                    int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
 
-            g.drawLine(i - 1, q1, i, q2);
+                    g.drawLine(i - 1, q1, i, q2);
 
-            q1 = q2;
+                    q1 = q2;
+                }
+            }
+        }
+        else {
+            for (IFunc f1 : f) {
+                int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
+                for (int i = 1; i < WIDTH; i++) {
+                    double i2 = f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
+                    int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
+
+                    g.drawLine(i - 1, q1, i, q2);
+
+                    q1 = q2;
+                }
+            }
         }
     }
 

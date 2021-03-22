@@ -16,6 +16,6 @@ public class SecondFunc implements IFunc, ICommand {
 
     @Override
     public void execute() {
-
+        IFunc.execute(this);
     }
 }

@@ -1,7 +1,9 @@
 package lab.func;
 
 import lab.interfaces.ICommand;
+import lab.interfaces.IFunc;
 import lab.interfaces.ISysFunc;
+import lab.modules.GraphModule;
 
 import java.util.ArrayList;
 
@@ -14,13 +16,14 @@ public class FirstSysFunc implements ISysFunc, ICommand {
         return ar;
     }
 
-    public static double valStr1(double val, double val1) {
-        return val + val1 - 8;
+    public double valStr1(double x, double y) {
+        return x + y - 8;
     }
-    public static double valStr2(double val, double val1) {
-        return Math.pow(val, 2) + Math.pow(val1, 2) - 82;
+    public double valStr2(double x, double y) {
+        return Math.pow(x, 2) + Math.pow(y, 2) - 82;
     }
-
+    public double valGr1(double x){ return 8 - x; }
+    public double valGr2(double x){ return Math.pow(82 - Math.pow(x, 2), 0.5); }
     @Override
     public String getMessage() {
         ArrayList<String> ar = new ArrayList<>();
@@ -31,6 +34,8 @@ public class FirstSysFunc implements ISysFunc, ICommand {
 
     @Override
     public void execute() {
-
+        ArrayList<IFunc> ar = new ArrayList<>();
+        double point1 = 0, point2 = 0, left = 0, right = 10;
+        new GraphModule(this, point1, point2, left, right);
     }
 }
