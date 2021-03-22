@@ -1,12 +1,66 @@
 package lab.modules;
 
+import lab.interfaces.IFunc;
+
 import static java.lang.Math.abs;
 
 public class MathModule {
     private static PrinterModule pr = new PrinterModule();
-//    private static double[][] val;
+
+    //    private static double[][] val;
     public MathModule() {
     }
+
+    private static double solve(IFunc function, double start_x, double end_x, double eps) {
+        if (function.solve(start_x) == 0){
+            return start_x;
+        }
+        if (function.solve(end_x) == 0){
+            return end_x;
+        }
+        double dx = 0, xi = 0;
+        while (end_x - start_x > eps) {
+            dx = (end_x - start_x) / 2.0;
+            xi = start_x + dx;
+            if (sign(function.solve(start_x)) != sign(function.solve(xi))){
+                end_x = xi;
+            }
+            else{
+                start_x = xi;
+            }
+        }
+        return xi;
+    }
+    private static int sign(double x) {
+        if (x > 0)
+            return 1;
+        else if (x < 0)
+            return -1;
+        return 0;
+    }
+
+//    private static boolean pointChecker(function, double left, double right, double point1, double point2) {
+//        if (resultIntervalChecker(left, right, point1)) {
+//            pr.print(String.valueOf(point1));
+//        }
+//        else{
+//            pr.print("Решение не удовлетворяет заданному интервалу");
+//            point1 = 0;
+//        }
+//        if (resultIntervalChecker(left, right, point2)) {
+//            pr.print(String.valueOf(point2));
+//        }
+//        else{
+//            pr.print("Решение не удовлетворяет заданному интервалу");
+//            point2 = 0;
+//        }
+////        paintSolve(function, point1, point2);
+//        return
+//    }
+    private static boolean pointChecker(double left, double right, double point) {
+        return left <= point && point <= right;
+    }
+
 
 //    public static void findSolution(Matrix matrix, double eps){
 //        pr.printMatrix(matrix);
