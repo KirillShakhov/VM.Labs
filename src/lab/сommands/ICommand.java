@@ -1,4 +1,4 @@
-package lab.Commands;
+package lab.сommands;
 
 public interface ICommand {
     String getMessage();

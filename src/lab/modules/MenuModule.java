@@ -1,14 +1,17 @@
-package lab;
+package lab.modules;
 
-import lab.Commands.ICommand;
+import lab.сommands.ICommand;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Menu {
+public class MenuModule {
     ArrayList<ICommand> commands;
 
-    public Menu(ArrayList<ICommand> commands) {
+    public MenuModule(ArrayList<ICommand> commands) {
         this.commands = commands;
+    }
+
+    public MenuModule() {
     }
 
     public void setCommands(ArrayList<ICommand> commands) {
