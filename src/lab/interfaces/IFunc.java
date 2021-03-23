@@ -6,7 +6,10 @@ import lab.modules.GraphModule;
 import lab.modules.MathModule;
 import lab.modules.PrinterModule;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import static lab.modules.MathModule.pointChecker;
 
 public interface IFunc {
     double solve(double x);
@@ -29,15 +32,25 @@ public interface IFunc {
             break;
         }
         if (MathModule.doubChecker(func, left, right)) {
+            ArrayList<Point> points = new ArrayList<>();
             double point1 = MathModule.doubMetod(func, left, right, eps);
             double point2 = MathModule.chordMethod(func, left, right, eps);
-            pr.print("Результат метода деления пополам: "+point1);
-            pr.print("Результат метода хорд: "+point2);
-            new GraphModule(func, new Point(point1, 0), new Point(point2, 0), left, right);
+            if (pointChecker(left, right, point1)) {
+                pr.print("Результат метода деления пополам: "+point1);
+                points.add(new Point(point1, 0));
+            }else{
+                pr.print("Результат метода деления пополам: решение не удовлетворяет заданному интервалу");
+            }
+            if (pointChecker(left, right, point2)) {
+                pr.print("Результат метода хорд: "+point2);
+                points.add(new Point(point2, 0));
+            }else{
+                pr.print("Результат метода хорд: решение не удовлетворяет заданному интервалу");
+            }
+            new GraphModule(func, points, left, right);
         } else {
             pr.print("Уравнение решений не имеет в рамках данного диапазона/метода");
             new GraphModule(func, left, right);
-
         }
     }
 }

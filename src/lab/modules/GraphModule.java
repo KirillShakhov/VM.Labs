@@ -71,11 +71,21 @@ public class GraphModule extends JPanel {
         frameOp();
     }
 
+    public GraphModule(IFunc func, ArrayList<Point> ar, double left, double right) {
+        this.x1 = left;
+        this.x2 = right;
+        this.y1 = left;
+        this.y2 = right;
+        this.f.add(func);
+        points.addAll(ar);
+        frameOp();
+    }
+
     public void frameOp() {
         JFrame JF = new JFrame("Paint");
         JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28);
         JF.setLayout(null);
-        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JF.setVisible(true);
         JF.setResizable(false);
         this.setSize(WIDTH, HEIGHT);

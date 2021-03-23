@@ -43,12 +43,50 @@ public class MathModule {
         while (Math.abs(right - left) > eps) {
             left = right - (right - left) * function.solve(right) / (function.solve(
                     right) - function.solve(left));
-            right = left - (left - right) * function.solve(left) / (function.solve(
-                    left) - function.solve(right));
+            right = left - (left - right) * function.solve(left) /(function.solve(left) - function.solve(right));
         }
-
         return right;
     }
+
+    public static double chordMethod2(IFunc function, double left, double right, double eps) {
+        double c = 0;
+        while(Math.abs(function.solve(right)-function.solve(left))>eps){
+            c=(function.solve(right)*left-function.solve(left)*right)/(function.solve(right)-function.solve(left));
+            if((function.solve(left)*function.solve(c)) > 0) left=c;
+            else right=c;
+        }
+        return c;
+    }
+
+    public static double chordMethod3(IFunc function, double left, double right, double eps) {
+        double t = 0;
+        while (Math.abs(right - left) >= eps)
+        {
+            t = left + (function.solve(right) * (right - left)) / (function.solve(right) - function.solve(left));
+
+            if (function.solve(left) * function.solve(t) < 0)
+            {
+                right = t;
+            }
+            else if (function.solve(t) * function.solve(right) < 0)
+            {
+                left = t;
+            }
+            else
+                return t;
+        }
+        return t;
+    }
+
+//    public static double chordMethod(IFunc function, double left, double right, double eps) {
+//        while(Math.abs(function.solve(right)) > eps)
+//        {
+//            left = right - ((right - left) * function.solve(right))/(function.solve(right) - function.solve(left));
+//            right = left - ((left - right) * function.solve(left))/(function.solve(left) - function.solve(right));
+//        }
+//        return right;
+//    }
+
 
     private static int sign(double x) {
         if (x > 0)
@@ -65,7 +103,8 @@ public class MathModule {
         }
         return x;
     }
-    private static boolean pointChecker(double left, double right, double point) {
-        return left <= point && point <= right;
+    public static boolean pointChecker(double left, double right, double point) {
+        System.out.println(left+":"+right+":"+point);
+        return point >= left && point <= right;
     }
 }
