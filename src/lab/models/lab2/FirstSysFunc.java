@@ -1,11 +1,12 @@
-package lab.func;
+package lab.models.lab2;
 
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
 import lab.interfaces.ISysFunc;
+
 import java.util.ArrayList;
 
-public class SecondSysFunc implements ISysFunc, ICommand {
+public class FirstSysFunc implements ISysFunc, ICommand {
     @Override
     public double solvef(double x) {
         return Math.pow(x, 2)+Math.pow(solveg(x), 2) - 82;

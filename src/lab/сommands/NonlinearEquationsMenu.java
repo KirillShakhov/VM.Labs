@@ -1,7 +1,7 @@
 package lab.сommands;
 
-import lab.func.*;
 import lab.interfaces.ICommand;
+import lab.models.lab2.*;
 import lab.modules.MenuModule;
 
 import java.util.ArrayList;

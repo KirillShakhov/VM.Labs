@@ -1,14 +1,21 @@
 # VM.Lab2
 
-Лабораторная работа 2. «Решение системы линейных алгебраических уравнений СЛАУ»
+Лабораторные работы по Вычислительной математике.
 
-Вариант: 2aб
+ЛР1 - В будущем
+
+ЛР2 - «Решение системы линейных алгебраических уравнений СЛАУ» 
+Вариант: 2aб (2 - метод простых итераций, a - метод деления пополам, б - метод хорд)
+
+ЛР3 - «Численное интегрирование»
+Вариант: 2 (Метод трапеций)
+
 
 [![GitHub stars][stars-shield]][stars-url]
 [![GitHub issues][issues-shield]][issues-url]
 [![GitHub][license-shield]][license-url]
-![GitHub repo size](https://img.shields.io/github/repo-size/KirillShakhov/VM.Lab2)
-![GitHub last commit](https://img.shields.io/github/last-commit/KirillShakhov/VM.Lab2)
+![GitHub repo size](https://img.shields.io/github/repo-size/KirillShakhov/VM.Labs)
+![GitHub last commit](https://img.shields.io/github/last-commit/KirillShakhov/VM.Labs)
 
 
 

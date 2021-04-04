@@ -1,4 +1,4 @@
-package lab.func;
+package lab.models.lab2;
 
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;

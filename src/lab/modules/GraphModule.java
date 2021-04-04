@@ -14,7 +14,7 @@ import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import lab.func.Point;
+import lab.models.lab2.Point;
 
 
 

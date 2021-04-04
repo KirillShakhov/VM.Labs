@@ -1,7 +1,7 @@
 package lab.interfaces;
 
 
-import lab.func.Point;
+import lab.models.lab2.Point;
 import lab.modules.GraphModule;
 import lab.modules.MathModule;
 import lab.modules.PrinterModule;

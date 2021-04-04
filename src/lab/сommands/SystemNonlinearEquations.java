@@ -1,7 +1,7 @@
 package lab.сommands;
 
-import lab.func.FirstSysFunc;
-import lab.func.SecondSysFunc;
+import lab.models.lab2.FirstSysFunc;
+import lab.models.lab2.SecondSysFunc;
 import lab.interfaces.ICommand;
 import lab.modules.MenuModule;
 

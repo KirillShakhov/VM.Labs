@@ -1,4 +1,4 @@
-package lab.func;
+package lab.models.lab2;
 
 public class Point {
     private double x;
