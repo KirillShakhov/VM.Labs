@@ -295,7 +295,35 @@ public class MathModule {
         }
     }
     public static class Lab3{
-        Double integral(IFunc func, double a, double b, int step_count) {
+        public static void execute(IFunc func) {
+            PrinterModule pr = new PrinterModule();
+            Scanner scanner = new Scanner(System.in);
+            double a = 0, b = 0;
+            int step = 0;
+            while(true){
+                pr.print("Введите верхнюю границу:");
+                a = Double.parseDouble(scanner.nextLine());
+                pr.print("Введите правую границу:");
+                b = Double.parseDouble(scanner.nextLine());
+                if (a > b){
+                    double t = a;
+                    a = b;
+                    b = t;
+                }
+                pr.print("Введите шаг:");
+                step = Integer.parseInt(scanner.nextLine());
+                break;
+            }
+            Double result = integral(func, a, b, step);
+            if(result != null){
+                System.out.println("Результат: " + result);
+            }
+            else{
+                System.out.println("Решение не найдено");
+            }
+        }
+
+        static Double integral(IFunc func, double a, double b, int step_count) {
             if(step_count<0){
                 return null;
             }
