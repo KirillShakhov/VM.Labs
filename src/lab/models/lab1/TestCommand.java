@@ -1,4 +1,4 @@
-package lab.сommands.lab1;
+package lab.models.lab1;
 
 import lab.interfaces.ICommand;
 import lab.models.lab1.Matrix;
@@ -23,7 +23,7 @@ public class TestCommand implements ICommand {
         String path = "C:\\Users\\kiril\\IdeaProjects\\VM.Lab1\\example\\matrix3";
         Matrix matrix = readMatrixFromFile(path);
         double eps = 0.0001;
-        MathModule.findSolution_method_of_simple_iterations_SLAU(matrix, eps);
+        MathModule.Lab1.findSolution_method_of_simple_iterations_SLAU(matrix, eps);
     }
 
     public Matrix readMatrixFromFile(String fileName) {

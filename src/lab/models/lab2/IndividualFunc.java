@@ -3,6 +3,7 @@ package lab.models.lab2;
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
 import lab.modules.CalcModule;
+import lab.modules.MathModule;
 
 import java.util.Scanner;
 
@@ -25,7 +26,7 @@ public class IndividualFunc implements IFunc, ICommand {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Пример уравнения: x^2-cos(x)-x\nВведите уравнение:");
             this.xyz = scanner.nextLine();
-            IFunc.execute(this);
+            MathModule.Lab2.execute(this);
         }catch (Exception e){
             System.out.println("Произошла проблема.");
         }

@@ -19,8 +19,8 @@ public class Test implements IFunc, ICommand {
     @Override
     public void execute() {
         double left = -10, right = 10, eps = 0.001;
-        double point1 = MathModule.doubMetod(this, left, right, eps);
-        double point2 = MathModule.doubMetod(this, left, right, eps);
+        double point1 = MathModule.Lab2.doubMetod(this, left, right, eps);
+        double point2 = MathModule.Lab2.doubMetod(this, left, right, eps);
         new GraphModule(this, new Point(point1, 0), new Point(point2, 0), left, right);
     }
 }

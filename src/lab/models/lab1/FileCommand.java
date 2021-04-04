@@ -1,4 +1,4 @@
-package lab.сommands.lab1;
+package lab.models.lab1;
 
 
 import lab.interfaces.ICommand;
@@ -35,7 +35,7 @@ public class FileCommand implements ICommand {
             }
             catch (Exception ignored){ }
         }
-        MathModule.findSolution_method_of_simple_iterations_SLAU(matrix, eps);
+        MathModule.Lab1.findSolution_method_of_simple_iterations_SLAU(matrix, eps);
     }
 
     public Matrix readMatrixFromFile(String fileName) {

@@ -37,8 +37,8 @@ public interface ISysFunc {
             eps = Double.parseDouble(scanner.nextLine());
             break;
         }
-        double x = MathModule.iterMetod2(func, 0, eps);
-        double y = MathModule.g(x);
+        double x = MathModule.Lab2.iterMetod2(func, 0, eps);
+        double y = MathModule.Lab2.g(x);
         pr.print("x: "+x);
         pr.print("y: "+y);
         new GraphModule(func.getDraw(), left, right);

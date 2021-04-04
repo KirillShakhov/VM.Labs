@@ -1,5 +1,4 @@
-package lab.сommands.lab1;
-
+package lab.models.lab1;
 
 import lab.interfaces.ICommand;
 import lab.models.lab1.Matrix;
@@ -7,17 +6,15 @@ import lab.modules.MathModule;
 
 import java.util.Scanner;
 
-public class RandomCommand implements ICommand {
+public class DiagonalRandomCommand implements ICommand {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public String getMessage() {
-        return "Генерация рандомной матрицы";
-    }
+    public String getMessage() { return "Генерация рандомной матрицы с диагональным преобладанием"; }
 
     @Override
     public void execute() {
-        System.out.println("Генерация матрицы");
+        System.out.println("Генерация матрицы c диагональным преобладанием");
         int size = 0;
         double eps = 1;
         while (true) {
@@ -32,7 +29,11 @@ public class RandomCommand implements ICommand {
             }
             catch (Exception ignored){ }
         }
-        MathModule.findSolution_method_of_simple_iterations_SLAU(createRandomMatrix(size), eps);
+        Matrix matrix;
+        do {
+            matrix = createRandomMatrix(size);
+        } while (!MathModule.Lab1.checkDiagonal(matrix.getMatrix(), size));
+        MathModule.Lab1.findSolution_method_of_simple_iterations_SLAU(matrix, eps);
     }
 
     public Matrix createRandomMatrix(int size) {
