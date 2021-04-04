@@ -2,13 +2,12 @@ package lab.сommands;
 
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
-import lab.models.lab2.*;
+import lab.models.lab2.IndividualFunc;
 import lab.modules.MathModule;
 import lab.modules.MenuModule;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 public class NonlinearEquationsMenu implements ICommand {

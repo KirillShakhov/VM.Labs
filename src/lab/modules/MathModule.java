@@ -329,7 +329,7 @@ public class MathModule {
             while(true){
                 pr.print("Введите верхнюю границу:");
                 a = Double.parseDouble(scanner.nextLine());
-                pr.print("Введите правую границу:");
+                pr.print("Введите нижнюю границу:");
                 b = Double.parseDouble(scanner.nextLine());
                 if (a > b){
                     double t = a;

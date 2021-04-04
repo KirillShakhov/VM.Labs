@@ -3,10 +3,9 @@ package lab.сommands;
 
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
-import lab.models.lab2.IndividualFunc;
+import lab.models.lab3.IndividualFunc;
 import lab.modules.MathModule;
 import lab.modules.MenuModule;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
