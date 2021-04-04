@@ -19,6 +19,7 @@ public class NonlinearEquationsMenu implements ICommand {
         commands.add(new SecondFunc());
         commands.add(new ThirdFunc());
         commands.add(new FourthFunc());
+        commands.add(new IndividualFunc());
         commands.add(new Test());
         commands.add(new Main());
         MenuModule menu = new MenuModule(commands);

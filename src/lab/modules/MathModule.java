@@ -103,6 +103,32 @@ public class MathModule {
         }
         return x;
     }
+
+    static double f(double x) {
+        return Math.pow(2.0,x) - 2*Math.pow(x, 2.0) - 1;
+        //y = 2^x-2x^2-1
+    }
+
+    public static double g(double x){
+        return x + 0.5*f(x);
+        //x + 0.5y
+    }
+
+    public static double iterMetod2(ISysFunc func, double x, double eps){
+        for(double iter = 1; eps < Math.abs(f(x)); iter = iter + 1)
+        {
+            //*Итераций может быть очень много, поэтому рекомендую забыть
+            //о целых а использовать дабл как счётчик, хотя в принципе если
+            //решение не нашли за 10-100 итераций то решения для данного коэффициента
+            //при f(x) в g(x) нет и надо его менять
+//            cout<<"Iteration : "<<setprecision(0)<<iter<<endl;
+//            cout<<"x    = "<<x   <<endl;
+//            cout<<"g(x) = "<<g(x)<<endl;
+//            cout<<"f(x) = "<<f(x)<<endl;
+            x = g(x);
+        }
+        return x;
+    }
     public static boolean pointChecker(double left, double right, double point) {
         System.out.println(left+":"+right+":"+point);
         return point >= left && point <= right;

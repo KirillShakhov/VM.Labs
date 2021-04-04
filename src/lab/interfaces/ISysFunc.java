@@ -38,12 +38,10 @@ public interface ISysFunc {
             eps = Double.parseDouble(scanner.nextLine());
             break;
         }
-        double x = MathModule.iterMetod(func, eps);
-        double y = func.solveg(x);
+        double x = MathModule.iterMetod2(func, 0, eps);
+        double y = MathModule.g(x);
         pr.print("x: "+x);
         pr.print("y: "+y);
-//        double point1 = MathModule.doubMetod(func, left, right, eps);
-//        double point2 = MathModule.doubMetod(func, left, right, eps);
         new GraphModule(func.getDraw(), left, right);
     }
 }
