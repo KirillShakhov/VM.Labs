@@ -41,9 +41,15 @@ public class DiagonalRandomCommand implements ICommand {
                 throw new Exception();
             }
             double[][] matrix = new double[size][size + 1];
+            int min = 1, max = 10;
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < matrix.length + 1; j++) {
-                    matrix[i][j] = Math.random() * 50 - 25;
+                    if(i == j){
+                        matrix[i][j] = Math.random() * ((max*size - min*size) + 1) + min*size;
+                    }
+                    else {
+                        matrix[i][j] = Math.random() * ((max - min) + 1) + min;
+                    }
                 }
             }
             return new Matrix(matrix);

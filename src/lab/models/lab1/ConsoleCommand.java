@@ -43,9 +43,7 @@ public class ConsoleCommand implements ICommand {
             for (int i = 0; i < size;i++) {
                 buffer = scanner.nextLine();
                 arr[i] = buffer.trim().split(" ");
-                buffer = "";
             }
-
             for (int i = 0; i < size;i++){
                 for (int j = 0; j < size+1;j++) {
                     matrix[i][j] = Double.parseDouble(arr[i][j].trim());

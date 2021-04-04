@@ -3,7 +3,6 @@ package lab.modules;
 import lab.interfaces.IFunc;
 import lab.interfaces.ISysFunc;
 import lab.models.lab1.Matrix;
-import lab.models.lab1.Printer;
 import lab.models.lab1.ResultSet;
 import lab.models.lab2.Point;
 
@@ -13,11 +12,9 @@ import java.util.Scanner;
 import static java.lang.Math.abs;
 
 public class MathModule {
-    private static Printer pr = new Printer();
-    private static double[][] val;
-    public MathModule() {
-    }
     public static class Lab1{
+        private static PrinterModule pr = new PrinterModule();
+        private static double[][] val;
         public static void execute(Matrix matrix, double eps){
             pr.printMatrix(matrix);
             if (checkDiagonal(matrix.getMatrix(),matrix.getSize())){
