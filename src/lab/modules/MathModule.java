@@ -18,7 +18,7 @@ public class MathModule {
     public MathModule() {
     }
     public static class Lab1{
-        public static void findSolution_method_of_simple_iterations_SLAU(Matrix matrix, double eps){
+        public static void execute(Matrix matrix, double eps){
             pr.printMatrix(matrix);
             if (checkDiagonal(matrix.getMatrix(),matrix.getSize())){
                 ResultSet rs = method_of_simple_iterations_SLAU(matrix, eps);
@@ -133,6 +133,7 @@ public class MathModule {
     }
     public static class Lab2 {
         public static void execute(IFunc func){
+            //Для нелинейных уравнений
             PrinterModule pr = new PrinterModule();
             Scanner scanner = new Scanner(System.in);
             double left = -5, right = 5, eps = 0.001;
@@ -171,6 +172,31 @@ public class MathModule {
                 pr.print("Уравнение решений не имеет в рамках данного диапазона/метода");
                 new GraphModule(func, left, right);
             }
+        }
+        public static void execute(ISysFunc func){
+            // для систем нелинейных уравнений
+            PrinterModule pr = new PrinterModule();
+            Scanner scanner = new Scanner(System.in);
+            double left = -5, right = 5, eps = 0.001;
+            while(true){
+                pr.print("Введите левую границу:");
+                left = Double.parseDouble(scanner.nextLine());
+                pr.print("Введите правую границу:");
+                right = Double.parseDouble(scanner.nextLine());
+                if (left > right){
+                    double t = left;
+                    left = right;
+                    right = t;
+                }
+                pr.print("Введите точность:");
+                eps = Double.parseDouble(scanner.nextLine());
+                break;
+            }
+            double x = MathModule.Lab2.iterMetod2(func, 0, eps);
+            double y = MathModule.Lab2.g(x);
+            pr.print("x: "+x);
+            pr.print("y: "+y);
+            new GraphModule(func.getDraw(), left, right);
         }
         public static boolean doubChecker(IFunc function, double left, double right) {
             boolean value = false;

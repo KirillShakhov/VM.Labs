@@ -1,6 +1,5 @@
 package lab.models.lab1;
 import lab.interfaces.ICommand;
-import lab.models.lab1.Matrix;
 import lab.modules.MathModule;
 
 import java.util.Scanner;
@@ -26,7 +25,7 @@ public class ConsoleCommand implements ICommand {
             }
             catch (Exception ignored){ }
         }
-        MathModule.Lab1.findSolution_method_of_simple_iterations_SLAU(matrix, eps);
+        MathModule.Lab1.execute(matrix, eps);
     }
 
     public Matrix createMatrixFromKeyBoard(){

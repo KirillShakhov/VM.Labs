@@ -2,7 +2,6 @@ package lab.models.lab1;
 
 
 import lab.interfaces.ICommand;
-import lab.models.lab1.Matrix;
 import lab.modules.MathModule;
 
 import java.util.Scanner;
@@ -32,7 +31,7 @@ public class RandomCommand implements ICommand {
             }
             catch (Exception ignored){ }
         }
-        MathModule.Lab1.findSolution_method_of_simple_iterations_SLAU(createRandomMatrix(size), eps);
+        MathModule.Lab1.execute(createRandomMatrix(size), eps);
     }
 
     public Matrix createRandomMatrix(int size) {

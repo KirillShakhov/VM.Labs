@@ -1,11 +1,9 @@
 package lab.models.lab2;
-
-import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
 import lab.interfaces.ISysFunc;
 import java.util.ArrayList;
 
-public class SecondSysFunc implements ISysFunc, ICommand {
+public class SecondSysFunc implements ISysFunc {
     @Override
     public double solvef(double x) {
         return Math.pow(x, 2)+Math.pow(solveg(x), 2) - 82;
@@ -28,10 +26,5 @@ public class SecondSysFunc implements ISysFunc, ICommand {
         ar.add("x+y-8");
         ar.add("x^2+y^2-82");
         return ISysFunc.toString(ar);
-    }
-
-    @Override
-    public void execute() {
-        ISysFunc.execute(this);
     }
 }

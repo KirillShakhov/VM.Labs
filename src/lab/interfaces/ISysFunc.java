@@ -19,28 +19,5 @@ public interface ISysFunc {
         result.delete(result.length()-5, result.length());
         return result.toString();
     }
-    static void execute(ISysFunc func){
-        PrinterModule pr = new PrinterModule();
-        Scanner scanner = new Scanner(System.in);
-        double left = -5, right = 5, eps = 0.001;
-        while(true){
-            pr.print("Введите левую границу:");
-            left = Double.parseDouble(scanner.nextLine());
-            pr.print("Введите правую границу:");
-            right = Double.parseDouble(scanner.nextLine());
-            if (left > right){
-                double t = left;
-                left = right;
-                right = t;
-            }
-            pr.print("Введите точность:");
-            eps = Double.parseDouble(scanner.nextLine());
-            break;
-        }
-        double x = MathModule.Lab2.iterMetod2(func, 0, eps);
-        double y = MathModule.Lab2.g(x);
-        pr.print("x: "+x);
-        pr.print("y: "+y);
-        new GraphModule(func.getDraw(), left, right);
-    }
+    String getMessage();
 }
