@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public interface ISysFunc {
-    double solvef(double x);
-    double solveg(double x);
     ArrayList<IFunc> getDraw();
     static String toString(ArrayList<String> arrayList) {
         StringBuilder result = new StringBuilder("|");
@@ -20,4 +18,8 @@ public interface ISysFunc {
         return result.toString();
     }
     String getMessage();
+    double g_x(double y);
+    double g_y(double x);
+    double f1(double x, double y);
+    double f2(double x, double y);
 }

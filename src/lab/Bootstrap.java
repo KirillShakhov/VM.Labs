@@ -1,4 +1,5 @@
 package lab;
+
 import lab.сommands.Main;
 
 public class Bootstrap {
