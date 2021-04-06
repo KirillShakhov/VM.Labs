@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public interface ISysFunc {
-    ArrayList<IFunc> getDraw();
+//    ArrayList<IFunc> getDraw();
     static String toString(ArrayList<String> arrayList) {
         StringBuilder result = new StringBuilder("|");
         for(String it : arrayList){

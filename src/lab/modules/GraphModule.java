@@ -28,7 +28,8 @@ public class GraphModule extends JPanel {
     int lastX = 0;
     int lastY = 0;
     //step_x = Math.PI;
-    ArrayList<IFunc> f = new ArrayList<>();
+    ArrayList<IFunc> funcs1 = new ArrayList<>();
+    ArrayList<IFunc> funcs2 = new ArrayList<>();
     ArrayList<ISysFunc> fsys = new ArrayList<>();
     ArrayList<Point> points = new ArrayList<>();
 
@@ -37,7 +38,7 @@ public class GraphModule extends JPanel {
         this.x2 = right;
         this.y1 = left;
         this.y2 = right;
-        this.f.add(func);
+        this.funcs1.add(func);
         points.add(point1);
         points.add(point2);
         frameOp();
@@ -47,7 +48,7 @@ public class GraphModule extends JPanel {
         this.x2 = right;
         this.y1 = left;
         this.y2 = right;
-        this.f.add(func);
+        this.funcs1.add(func);
         frameOp();
     }
 
@@ -56,7 +57,7 @@ public class GraphModule extends JPanel {
         this.x2 = right;
         this.y1 = left;
         this.y2 = right;
-        this.f.addAll(func);
+        this.funcs1.addAll(func);
         this.points.addAll(points);
         frameOp();
     }
@@ -66,8 +67,19 @@ public class GraphModule extends JPanel {
         this.x2 = right;
         this.y1 = left;
         this.y2 = right;
-        this.f.add(func);
+        this.funcs1.add(func);
         points.addAll(ar);
+        frameOp();
+    }
+
+    public GraphModule(ISysFunc func, ArrayList<Point> points) {
+        this.x1 = -5;
+        this.x2 = 5;
+        this.y1 = -5;
+        this.y2 = 5;
+        this.funcs1.add(func::g_y);
+        this.funcs2.add(func::g_x);
+        points.addAll(points);
         frameOp();
     }
 
@@ -246,14 +258,23 @@ public class GraphModule extends JPanel {
 
     public void paintF(Graphics g) {
         //Рисуем графики
-        for (IFunc f1 : f) {
+        for (IFunc f1 : funcs1) {
             int q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
-            for (int i = 1; i < WIDTH; i++) {
+            for (int i  = 1; i < WIDTH; i++) {
                 double i2 = f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
                 int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
 
                 g.drawLine(i - 1, q1, i, q2);
 
+                q1 = q2;
+            }
+        }
+        for (IFunc f1 : funcs2) {
+            int q1 = WIDTH - (int) Math.floor((WIDTH / (Math.abs(y2 - y1))) * (f1.solve(y1) - x1));
+            for (int i  = 1; i < HEIGHT; i++) {
+                double i2 = f1.solve(y1 - ((Math.abs(y2 - y1)) / HEIGHT) * i);
+                int q2 = WIDTH - (int) Math.floor((WIDTH / -(Math.abs(x2 - x1))) * (i2 - x1));
+                g.drawLine(q1, i - 1, q2, i);
                 q1 = q2;
             }
         }
