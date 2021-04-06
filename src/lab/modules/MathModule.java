@@ -271,7 +271,7 @@ public class MathModule {
                 System.out.println("x= "+x+"  :  y= "+y);
                 System.out.println("Math.abs(d1) = "+ Math.abs(d1));
                 System.out.println("Math.abs(d2) = "+ Math.abs(d2));
-            }while(Math.abs(d1)>eps && Math.abs(d2)>eps);
+            }while(Math.abs(d1)>eps || Math.abs(d2)>eps);
             return new Point(x, y);
         }
 
