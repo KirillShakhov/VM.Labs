@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class IndividualFunc implements IFunc, ICommand {
     private String xyz;
     @Override
-    public double solve(double x) {
+    public Double solve(double x) {
         CalcModule calcModule = new CalcModule(xyz);
         return calcModule.execute(x);
     }

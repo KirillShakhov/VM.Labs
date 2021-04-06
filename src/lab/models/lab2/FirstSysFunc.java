@@ -8,7 +8,8 @@ public class FirstSysFunc implements ISysFunc {
     public ArrayList<IFunc> getDraw() {
         ArrayList<IFunc> ar = new ArrayList<>();
         ar.add(x -> (1-2*x)/3);
-        ar.add(x -> (x>0 && x<Math.pow(3, 0.5)) ? -Math.abs(Math.pow(3-Math.pow(x,2), 0.5)) : 0);
+        ar.add(x -> (x>=-Math.pow(3, 0.5) && x<=Math.pow(3, 0.5)) ? -Math.abs(Math.pow(3-Math.pow(x,2), 0.5)) : null);
+        ar.add(x -> (x>=-Math.pow(3, 0.5) && x<=Math.pow(3, 0.5)) ? Math.abs(Math.pow(3-Math.pow(x,2), 0.5)) : null);
         return ar;
     }
     @Override

@@ -6,7 +6,7 @@ import lab.modules.MathModule;
 
 public class Test implements IFunc, ICommand {
     @Override
-    public double solve(double val) {
+    public Double solve(double val) {
         return Math.pow(val, 2) + val + 2;
     }
 

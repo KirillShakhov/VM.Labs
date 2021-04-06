@@ -2,5 +2,5 @@ package lab.interfaces;
 
 
 public interface IFunc {
-    double solve(double x);
+    Double solve(double x);
 }
