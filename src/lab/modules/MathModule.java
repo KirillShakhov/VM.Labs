@@ -260,6 +260,7 @@ public class MathModule {
 
         public static Point iterMetod(ISysFunc func, double x, double y, double eps) {
             double x0=x,y0=y,d1,d2;
+            int i = 1;
             do
             {
                 x= func.g_x(y0);
@@ -268,9 +269,10 @@ public class MathModule {
                 d2=func.f2(x, y);
                 x0=x;
                 y0=y;
+                System.out.println("Iteration = "+ i++);
                 System.out.println("x= "+x+"  :  y= "+y);
-                System.out.println("Math.abs(d1) = "+ Math.abs(d1));
-                System.out.println("Math.abs(d2) = "+ Math.abs(d2));
+                System.out.println("abs(f1) = "+ Math.abs(d1));
+                System.out.println("abs(f2) = "+ Math.abs(d2));
             }while(Math.abs(d1)>eps || Math.abs(d2)>eps);
             return new Point(x, y);
         }
