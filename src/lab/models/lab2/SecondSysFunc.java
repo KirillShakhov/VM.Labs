@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 public class SecondSysFunc implements ISysFunc {
     @Override
+    public ArrayList<IFunc> getDraw() {
+        return null;
+    }
+
+    @Override
     public String getMessage() {
         ArrayList<String> ar = new ArrayList<>();
         ar.add("sin(x-0.6)-y=1.6");

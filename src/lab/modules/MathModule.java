@@ -202,7 +202,7 @@ public class MathModule {
             Point point = MathModule.Lab2.iterMetod(func, eps);
             points.add(point);
             pr.print("x: " + point.getX() + " | y: " + point.getY());
-            new GraphModule(func, points);
+            new GraphModule(func.getDraw(), points, -10, 10);
         }
 
         public static boolean doubChecker(IFunc function, double left, double right) {
