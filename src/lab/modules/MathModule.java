@@ -5,6 +5,8 @@ import lab.interfaces.ISysFunc;
 import lab.models.lab1.Matrix;
 import lab.models.lab1.ResultSet;
 import lab.models.lab2.Point;
+import lab.models.lab2.ResultSetForSys;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -127,7 +129,7 @@ public class MathModule {
             return rs;
         }
     }
-    public static class Lab2 {
+    public static class  Lab2 {
         public static void execute(IFunc func){
             //Для нелинейных уравнений
             PrinterModule pr = new PrinterModule();
@@ -143,8 +145,16 @@ public class MathModule {
                     left = right;
                     right = t;
                 }
-                pr.print("Введите точность:");
-                eps = Double.parseDouble(scanner.nextLine());
+                while(true){
+                    pr.print("Введите точность:");
+                    eps = Double.parseDouble(scanner.nextLine());
+                    if(eps>0 && eps < 1){
+                        break;
+                    }
+                    else{
+                        pr.print("Точность должна быть больше 0 и меньше 1.");
+                    }
+                }
                 break;
             }
 
@@ -183,7 +193,7 @@ public class MathModule {
             // для систем нелинейных уравнений
             PrinterModule pr = new PrinterModule();
             Scanner scanner = new Scanner(System.in);
-            double eps = 0.001, x, y;
+            double eps, x, y;
             while(true){
                 pr.print("Введите приближение x:");
                 x = Double.parseDouble(scanner.nextLine());
@@ -194,14 +204,22 @@ public class MathModule {
 //                    left = right;
 //                    right = t;
 //                }
-                pr.print("Введите точность:");
-                eps = Double.parseDouble(scanner.nextLine());
+                while(true){
+                    pr.print("Введите точность:");
+                    eps = Double.parseDouble(scanner.nextLine());
+                    if(eps>0 && eps < 1){
+                        break;
+                    }
+                    else{
+                        pr.print("Точность должна быть больше 0 и меньше 1.");
+                    }
+                }
                 break;
             }
             ArrayList<Point> points = new ArrayList<>();
-            Point point = MathModule.Lab2.iterMetod(func, x, y, eps);
-            points.add(point);
-            pr.print("x: " + point.getX() + " | y: " + point.getY());
+            ResultSetForSys result = MathModule.Lab2.iterMetod(func, x, y, eps);
+            points.add(result.getPoint());
+            result.print();
             new GraphModule(func.getDraw(), points, -10, 10);
         }
 
@@ -258,7 +276,8 @@ public class MathModule {
             return c;
         }
 
-        public static Point iterMetod(ISysFunc func, double x, double y, double eps) {
+        public static ResultSetForSys iterMetod(ISysFunc func, double x, double y, double eps) {
+            ResultSetForSys result = new ResultSetForSys();
             double x0=x,y0=y,d1,d2;
             int i = 1;
             do
@@ -269,16 +288,13 @@ public class MathModule {
                 d2=func.f2(x, y);
                 x0=x;
                 y0=y;
-                System.out.println("Iteration = "+ i++);
-                System.out.println("x= "+x+"  :  y= "+y);
-                System.out.println("abs(f1) = "+ Math.abs(d1));
-                System.out.println("abs(f2) = "+ Math.abs(d2));
+                result.addIter(x, y, Math.abs(d1), Math.abs(d2));
             }while(Math.abs(d1)>eps || Math.abs(d2)>eps);
-            return new Point(x, y);
+            result.setPoint(new Point(x, y));
+            return result;
         }
 
         public static boolean pointChecker(double left, double right, double point) {
-            System.out.println(left+" : "+right+" : "+ point);
             return point >= left && point <= right;
         }
     }
