@@ -8,23 +8,27 @@ import java.util.ArrayList;
 public class SecondSysFunc implements ISysFunc {
     @Override
     public ArrayList<IFunc> getDraw() {
-        return null;
+        ArrayList<IFunc> ar = new ArrayList<>();
+        ar.add(this::g_y);
+        ar.add(x -> (x>=-2 && x<=2) ? -Math.abs(Math.pow(9*(1-(Math.pow(x, 2)/4)), 0.5)) : null);
+        ar.add(x -> (x>=-2 && x<=2) ? Math.abs(Math.pow(9*(1-(Math.pow(x, 2)/4)), 0.5)) : null);
+        return ar;
     }
 
     @Override
     public String getMessage() {
         ArrayList<String> ar = new ArrayList<>();
-        ar.add("sin(x-0.6)-y=1.6");
-        ar.add("3x-cos(y)=0.9");
+        ar.add("3x - y = -2");
+        ar.add("x^2/4 + y^2/9 = 1");
         return ISysFunc.toString(ar);
     }
 
     @Override
-    public double g_x(double y) { return (0.9+Math.cos(y))/3; }
+    public double g_x(double y) { return Math.pow(4*(1-(Math.pow(y, 2)/9)), 0.5); }
     @Override
-    public double g_y(double x) { return Math.sin(x-0.6)-1.6; }
+    public double g_y(double x) { return 3*x+2; }
     @Override
-    public double f1(double x, double y) { return Math.sin(x-0.6)-y-1.6; }
+    public double f1(double x, double y) { return 3*x-y+2; }
     @Override
-    public double f2(double x, double y) { return 3*x-Math.cos(y)-0.9; }
+    public double f2(double x, double y) { return (Math.pow(x, 2)/4)+(Math.pow(y, 2)/9)-1; }
 }
