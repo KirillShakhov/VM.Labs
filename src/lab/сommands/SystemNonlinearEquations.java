@@ -3,6 +3,7 @@ package lab.сommands;
 import lab.interfaces.ISysFunc;
 import lab.models.lab2.FirstSysFunc;
 import lab.interfaces.ICommand;
+import lab.models.lab2.SecondSysFunc;
 import lab.modules.MathModule;
 import lab.modules.MenuModule;
 
@@ -21,6 +22,7 @@ public class SystemNonlinearEquations implements ICommand {
 
 
         sysFuncs.add(new FirstSysFunc());
+        sysFuncs.add(new SecondSysFunc());
 
 
         for (ISysFunc func : sysFuncs){
