@@ -183,12 +183,12 @@ public class MathModule {
             // для систем нелинейных уравнений
             PrinterModule pr = new PrinterModule();
             Scanner scanner = new Scanner(System.in);
-            double eps = 0.001;
+            double eps = 0.001, x, y;
             while(true){
-//                pr.print("Введите левую границу:");
-//                left = Double.parseDouble(scanner.nextLine());
-//                pr.print("Введите правую границу:");
-//                right = Double.parseDouble(scanner.nextLine());
+                pr.print("Введите приближение x:");
+                x = Double.parseDouble(scanner.nextLine());
+                pr.print("Введите приближение y:");
+                y = Double.parseDouble(scanner.nextLine());
 //                if (left > right){
 //                    double t = left;
 //                    left = right;
@@ -199,7 +199,7 @@ public class MathModule {
                 break;
             }
             ArrayList<Point> points = new ArrayList<>();
-            Point point = MathModule.Lab2.iterMetod(func, eps);
+            Point point = MathModule.Lab2.iterMetod(func, x, y, eps);
             points.add(point);
             pr.print("x: " + point.getX() + " | y: " + point.getY());
             new GraphModule(func.getDraw(), points, -10, 10);
@@ -258,8 +258,8 @@ public class MathModule {
             return c;
         }
 
-        public static Point iterMetod(ISysFunc func, double eps) {
-            double x0=0,y0=0,x,y,d1,d2;
+        public static Point iterMetod(ISysFunc func, double x, double y, double eps) {
+            double x0=x,y0=y,d1,d2;
             do
             {
                 x= func.g_x(y0);
