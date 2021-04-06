@@ -270,7 +270,7 @@ public class GraphModule extends JPanel {
             }
         }
         for (IFunc f1 : funcs2) {
-            int q1 = WIDTH - (int) Math.floor((WIDTH / (Math.abs(y2 - y1))) * (f1.solve(y1) - x1));
+            int q1 = WIDTH - (int) Math.floor((WIDTH / -(Math.abs(y2 - y1))) * (f1.solve(y1) - x1));
             for (int i  = 1; i < HEIGHT; i++) {
                 double i2 = f1.solve(y1 - ((Math.abs(y2 - y1)) / HEIGHT) * i);
                 int q2 = WIDTH - (int) Math.floor((WIDTH / -(Math.abs(x2 - x1))) * (i2 - x1));
