@@ -6,6 +6,7 @@ import lab.models.lab1.Matrix;
 import lab.models.lab1.ResultSet;
 import lab.models.lab2.Point;
 import lab.models.lab2.ResultSetForSys;
+import lab.models.lab3.ResultSetForIntegral;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -199,11 +200,6 @@ public class MathModule {
                 x = Double.parseDouble(scanner.nextLine());
                 pr.print("Введите приближение y:");
                 y = Double.parseDouble(scanner.nextLine());
-//                if (left > right){
-//                    double t = left;
-//                    left = right;
-//                    right = t;
-//                }
                 while(true){
                     pr.print("Введите точность:");
                     eps = Double.parseDouble(scanner.nextLine());
@@ -266,16 +262,6 @@ public class MathModule {
             return right;
         }
 
-        public static double chordMethod2(IFunc function, double left, double right, double eps) {
-            double c = 0;
-            while (Math.abs(function.solve(right) - function.solve(left)) > eps) {
-                c = (function.solve(right) * left - function.solve(left) * right) / (function.solve(right) - function.solve(left));
-                if ((function.solve(left) * function.solve(c)) > 0) left = c;
-                else right = c;
-            }
-            return c;
-        }
-
         public static ResultSetForSys iterMetod(ISysFunc func, double x, double y, double eps) {
             ResultSetForSys result = new ResultSetForSys();
             double x0=x,y0=y,d1,d2;
@@ -302,53 +288,51 @@ public class MathModule {
         public static void execute(IFunc func) {
             PrinterModule pr = new PrinterModule();
             Scanner scanner = new Scanner(System.in);
-            double a = 0, b = 0;
-            int step = 0;
+            double a = 0, b = 0, steps = 0;
             while(true){
-                pr.print("Введите верхнюю границу:");
-                a = Double.parseDouble(scanner.nextLine());
                 pr.print("Введите нижнюю границу:");
+                a = Double.parseDouble(scanner.nextLine());
+                pr.print("Введите верхнюю границу:");
                 b = Double.parseDouble(scanner.nextLine());
-                if (a > b){
-                    double t = a;
-                    a = b;
-                    b = t;
-                }
-                pr.print("Введите шаг:");
-                step = Integer.parseInt(scanner.nextLine());
+                pr.print("Введите количество шагов:");
+                steps = Double.parseDouble(scanner.nextLine());
                 break;
             }
-            Double result = integral(func, a, b, step);
-            if(result != null){
-                System.out.println("Результат: " + result);
-            }
-            else{
-                System.out.println("Решение не найдено");
-            }
+            ResultSetForIntegral result = solve(func, a, b, steps);
+            System.out.println("Результат: " + result.getResult());
+            System.out.println("Погрешность: " + String.format("%.8f", result.getEps()));
         }
 
-        static Double integral(IFunc func, double a, double b, int step_count) {
-            if(step_count<0){
+        static ResultSetForIntegral solve(IFunc func, double a, double b, double step_count){
+            ResultSetForIntegral result = new ResultSetForIntegral();
+            result.setResult(integral(func, a, b, step_count));
+            result.setSteps(step_count);
+            result.setEps(Math.abs(integral(func, a, b, step_count)-integral(func, a, b, step_count*2)));
+            return result;
+        }
+
+        static Double integral(IFunc func, double a, double b, double step_count) {
+            //Проверка шага
+            double sum = 0, step;
+            if(step_count<0) {
                 return null;
             }
-            double sum = .0, step;
-            if (0 == step_count) return sum;
+            else if (0 == step_count) {
+                return 0.0;
+            }
 
-            step = (b - a) / (1.0 * step_count);
+
+            step = (b - a) / (step_count);
+
+
             for (int i = 1 ; i < step_count ; ++i ) {
                 sum += func.solve(a + i * step);
             }
+
+
             sum += (func.solve(a) + func.solve(b)) / 2;
             sum *= step;
             return sum;
         }
-        // double f (double x) {
-        // return 2 * x;
-        // }
-        //
-        // int main() {
-        // printf ("\\int_0^10(x) = %f\n", integral(f, 0, 10, 15));
-        // return 0;
-        // }
     }
 }

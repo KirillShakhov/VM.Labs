@@ -20,11 +20,13 @@ public class NumericalIntegration implements ICommand {
     public void execute() {
         ArrayList<ICommand> commands = new ArrayList<>();
         HashMap<String, IFunc> funcHashMap = new HashMap<>();
-        funcHashMap.put("x^2+x+2", x -> Math.pow(x, 2) + x + 2);
-        funcHashMap.put("3x^2-14x-5", x -> 3 * Math.pow(x, 2) - (14 * x) - 5);
-        funcHashMap.put("x^2+2x+1", x -> Math.pow(x, 2) + (2 * x) + 1);
-        funcHashMap.put("e^x-1", x -> Math.pow(Math.E, x) - 1);
+//        funcHashMap.put("x^2+x+2", x -> Math.pow(x, 2) + x + 2);
+//        funcHashMap.put("3x^2-14x-5", x -> 3 * Math.pow(x, 2) - (14 * x) - 5);
+//        funcHashMap.put("x^2+2x+1", x -> Math.pow(x, 2) + (2 * x) + 1);
+//        funcHashMap.put("e^x-1", x -> Math.pow(Math.E, x) - 1);
         funcHashMap.put("2x", x -> 2 * x);
+        funcHashMap.put("1/x", x -> 1/x);
+        funcHashMap.put("sin(x)/x", x -> Math.sin(x)/x);
 
         for(Map.Entry<String, IFunc> entry : funcHashMap.entrySet()) {
             commands.add(new ICommand() {
