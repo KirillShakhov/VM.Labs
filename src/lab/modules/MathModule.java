@@ -7,11 +7,15 @@ import lab.models.lab1.ResultSet;
 import lab.models.lab2.Point;
 import lab.models.lab2.ResultSetForSys;
 import lab.models.lab3.ResultSetForIntegral;
+import lab.models.lab3.Separation;
+import org.apache.commons.math3.util.Precision;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.round;
 
 public class MathModule {
     public static class Lab1{
@@ -288,7 +292,7 @@ public class MathModule {
         public static void execute(IFunc func) {
             PrinterModule pr = new PrinterModule();
             Scanner scanner = new Scanner(System.in);
-            double a = 0, b = 0, steps = 0;
+            double a, b, steps;
             while(true){
                 pr.print("Введите нижнюю границу:");
                 a = Double.parseDouble(scanner.nextLine());
@@ -298,34 +302,46 @@ public class MathModule {
                 steps = Double.parseDouble(scanner.nextLine());
                 break;
             }
-            ResultSetForIntegral result = solve(func, a, b, steps);
-            System.out.println("Результат: " + result.getResult());
-            System.out.println("Погрешность: " + String.format("%.8f", result.getEps()));
+            solve(func, a, b, steps);
         }
 
-        static ResultSetForIntegral solve(IFunc func, double a, double b, double step_count){
-            ResultSetForIntegral result = new ResultSetForIntegral();
-            result.setResult(integral(func, a, b, step_count));
-            result.setSteps(step_count);
-            result.setEps(Math.abs(integral(func, a, b, step_count)-integral(func, a, b, step_count*2)));
-            return result;
+        static void solve(IFunc func, double a, double b, double step_count){
+            ArrayList<Separation> separations = findSeparation(func, a, b);
+
+            for (Separation separation : separations){
+                System.out.println("Результат для промежутка["+String.format("%.8f",separation.getLeft())+","+String.format("%.8f",separation.getRight())+"]: " + integral(func, separation.getLeft(), separation.getRight(), step_count));
+                System.out.println("Погрешность: " + String.format("%.8f", Math.abs(integral(func, separation.getLeft(), separation.getRight(), step_count)-integral(func, separation.getLeft(), separation.getRight(), step_count*2))));
+            }
+        }
+
+        static ArrayList<Separation> findSeparation(IFunc func, double a, double b){
+            ArrayList<Separation> array = new ArrayList<>();
+            double left_now = a;
+            double eps = 0.00000001;
+            for(double i = a; i <= b; i+=0.0001){
+                if (func.solve(Precision.round(i, 8)).isNaN() || func.solve(Precision.round(i, 8)).isInfinite()) {
+                    System.out.println("Разрыв в точке: " + Precision.round(i, 8));
+                    array.add(new Separation(left_now, i-eps));
+                    left_now = i+eps;
+                }
+                else if(Precision.round(i, 8)==b){
+                    array.add(new Separation(left_now, i));
+                }
+            }
+            return array;
         }
 
         static Double integral(IFunc func, double a, double b, double step_count) {
-            //Проверка шага
             double sum = 0, step;
-            if(step_count<0) {
-                return null;
-            }
-            else if (0 == step_count) {
-                return 0.0;
-            }
+            //Проверка шага
+            if(step_count<0) { return null; }
+            else if (0 == step_count) { return 0.0; }
 
-
+            // Подсчет промежутка
             step = (b - a) / (step_count);
 
 
-            for (int i = 1 ; i < step_count ; ++i ) {
+            for (int i = 1; i < step_count; i++) {
                 sum += func.solve(a + i * step);
             }
 
