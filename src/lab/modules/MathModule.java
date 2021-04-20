@@ -311,11 +311,11 @@ public class MathModule {
             double sum = 0;
             for (Separation separation : separations){
                 double result = integral(func, separation.getLeft(), separation.getRight(), step_count);
-                sum += result;
+                sum += Precision.round(result, 8);
                 System.out.println("Результат для промежутка["+String.format("%.8f",separation.getLeft())+","+String.format("%.8f",separation.getRight())+"]: " + String.format("%.8f",integral(func, separation.getLeft(), separation.getRight(), step_count)));
                 System.out.println("Погрешность: " + String.format("%.8f", Math.abs(integral(func, separation.getLeft(), separation.getRight(), step_count)-integral(func, separation.getLeft(), separation.getRight(), step_count*2))));
             }
-            System.out.println("Общая  площадь: " + sum);
+            System.out.println("Общая  площадь: " + Precision.round(sum, 8));
         }
 
         static ArrayList<Separation> findSeparation(IFunc func, double a, double b){
@@ -329,10 +329,8 @@ public class MathModule {
                         array.add(new Separation(left_now, i-eps));
                         left_now = i+eps;
                     }
-                    else if(Precision.round(i, 8)==b){
-                        array.add(new Separation(left_now, i));
-                    }
                 }
+                array.add(new Separation(left_now, b));
             }
             else{
                 double left_now = a;
