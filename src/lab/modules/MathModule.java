@@ -1,21 +1,16 @@
 package lab.modules;
-
 import lab.interfaces.IFunc;
 import lab.interfaces.ISysFunc;
 import lab.models.lab1.Matrix;
 import lab.models.lab1.ResultSet;
 import lab.models.lab2.Point;
 import lab.models.lab2.ResultSetForSys;
-import lab.models.lab3.ResultSetForIntegral;
 import lab.models.lab3.Separation;
 import org.apache.commons.math3.util.Precision;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
-
 import static java.lang.Math.abs;
-import static java.lang.Math.round;
 
 public class MathModule {
     public static class Lab1{
@@ -319,12 +314,14 @@ public class MathModule {
         }
 
         static ArrayList<Separation> findSeparation(IFunc func, double a, double b){
+            // TODO доделать для промежутка [0, 5], где точка 0 разрыв и для [0, 5], где точка 5 разрыв.
             ArrayList<Separation> array = new ArrayList<>();
             double eps = 0.00000001;
+            int scale = 8; // Количество знаков после запятой.
             if(a<=b){
                 double left_now = a;
                 for(double i = a; i <= b; i+=0.0001){
-                    if (func.solve(Precision.round(i, 8)).isNaN() || func.solve(Precision.round(i, 8)).isInfinite()) {
+                    if (func.solve(round(i, scale)).isNaN() || func.solve(round(i, scale)).isInfinite()) {
 //                    System.out.println("Разрыв в точке: " + Precision.round(i, 8));
                         array.add(new Separation(left_now, i-eps));
                         left_now = i+eps;
@@ -335,17 +332,28 @@ public class MathModule {
             else{
                 double left_now = a;
                 for(double i = a; i >= b; i-=0.0001){
-                    if (func.solve(Precision.round(i, 8)).isNaN() || func.solve(Precision.round(i, 8)).isInfinite()) {
+                    if (func.solve(round(i, scale)).isNaN() || func.solve(round(i, scale)).isInfinite()) {
 //                    System.out.println("Разрыв в точке: " + Precision.round(i, 8));
                         array.add(new Separation(left_now, i+eps));
                         left_now = i-eps;
                     }
-                    else if(Precision.round(i, 8)==b){
+                    else if(round(i, scale)==b){
                         array.add(new Separation(left_now, i));
                     }
                 }
             }
             return array;
+        }
+        public static double round(double x, int scale){
+            return round(x,scale,4);
+        }
+        public static double round(double x, int scale, int roundingMethod) {
+            try {
+                double rounded = (new BigDecimal(Double.toString(x))).setScale(scale, roundingMethod).doubleValue();
+                return rounded == 0.0D ? 0.0D * x : rounded;
+            } catch (NumberFormatException var6) {
+                return Double.isInfinite(x) ? x : 0.0D / 0.0;
+            }
         }
 
         static Double integral(IFunc func, double a, double b, double step_count) {
