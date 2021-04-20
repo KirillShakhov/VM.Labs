@@ -308,24 +308,43 @@ public class MathModule {
         static void solve(IFunc func, double a, double b, double step_count){
             ArrayList<Separation> separations = findSeparation(func, a, b);
 
+            double sum = 0;
             for (Separation separation : separations){
-                System.out.println("Результат для промежутка["+String.format("%.8f",separation.getLeft())+","+String.format("%.8f",separation.getRight())+"]: " + integral(func, separation.getLeft(), separation.getRight(), step_count));
+                double result = integral(func, separation.getLeft(), separation.getRight(), step_count);
+                sum += result;
+                System.out.println("Результат для промежутка["+String.format("%.8f",separation.getLeft())+","+String.format("%.8f",separation.getRight())+"]: " + String.format("%.8f",integral(func, separation.getLeft(), separation.getRight(), step_count)));
                 System.out.println("Погрешность: " + String.format("%.8f", Math.abs(integral(func, separation.getLeft(), separation.getRight(), step_count)-integral(func, separation.getLeft(), separation.getRight(), step_count*2))));
             }
+            System.out.println("Общая  площадь: " + sum);
         }
 
         static ArrayList<Separation> findSeparation(IFunc func, double a, double b){
             ArrayList<Separation> array = new ArrayList<>();
-            double left_now = a;
             double eps = 0.00000001;
-            for(double i = a; i <= b; i+=0.0001){
-                if (func.solve(Precision.round(i, 8)).isNaN() || func.solve(Precision.round(i, 8)).isInfinite()) {
-                    System.out.println("Разрыв в точке: " + Precision.round(i, 8));
-                    array.add(new Separation(left_now, i-eps));
-                    left_now = i+eps;
+            if(a<=b){
+                double left_now = a;
+                for(double i = a; i <= b; i+=0.0001){
+                    if (func.solve(Precision.round(i, 8)).isNaN() || func.solve(Precision.round(i, 8)).isInfinite()) {
+//                    System.out.println("Разрыв в точке: " + Precision.round(i, 8));
+                        array.add(new Separation(left_now, i-eps));
+                        left_now = i+eps;
+                    }
+                    else if(Precision.round(i, 8)==b){
+                        array.add(new Separation(left_now, i));
+                    }
                 }
-                else if(Precision.round(i, 8)==b){
-                    array.add(new Separation(left_now, i));
+            }
+            else{
+                double left_now = a;
+                for(double i = a; i >= b; i-=0.0001){
+                    if (func.solve(Precision.round(i, 8)).isNaN() || func.solve(Precision.round(i, 8)).isInfinite()) {
+//                    System.out.println("Разрыв в точке: " + Precision.round(i, 8));
+                        array.add(new Separation(left_now, i+eps));
+                        left_now = i-eps;
+                    }
+                    else if(Precision.round(i, 8)==b){
+                        array.add(new Separation(left_now, i));
+                    }
                 }
             }
             return array;
