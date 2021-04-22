@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MathModuleLab3 {
+public class TrapezoidIntegral {
     public static void execute(IFunc func) {
         Scanner scanner = new Scanner(System.in);
         double a, b, steps;

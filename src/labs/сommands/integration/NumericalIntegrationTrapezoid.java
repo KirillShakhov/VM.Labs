@@ -1,17 +1,19 @@
-package labs.сommands;
+package labs.сommands.integration;
 import labs.interfaces.ICommand;
 import labs.interfaces.IFunc;
-import labs.lab3.MathModuleLab3;
+import labs.lab3.TrapezoidIntegral;
 import labs.lab3.models.IndividualFunc;
 import labs.modules.MenuModule;
+import labs.сommands.Main;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NumericalIntegration implements ICommand {
+public class NumericalIntegrationTrapezoid implements ICommand {
     @Override
     public String getMessage() {
-        return "Численное интегрирование";
+        return "Нахождение интегралов методом Трапеций";
     }
 
     @Override
@@ -34,7 +36,7 @@ public class NumericalIntegration implements ICommand {
                 }
                 @Override
                 public void execute() {
-                    MathModuleLab3.execute(entry.getValue());
+                    TrapezoidIntegral.execute(entry.getValue());
                 }
             });
         }

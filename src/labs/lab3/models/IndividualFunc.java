@@ -1,7 +1,7 @@
 package labs.lab3.models;
 import labs.interfaces.ICommand;
 import labs.interfaces.IFunc;
-import labs.lab3.MathModuleLab3;
+import labs.lab3.TrapezoidIntegral;
 import labs.modules.CalcModule;
 
 import java.util.Scanner;
@@ -25,7 +25,7 @@ public class IndividualFunc implements IFunc, ICommand {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Пример уравнения: 2*x\nВведите уравнение:");
             this.xyz = scanner.nextLine();
-            MathModuleLab3.execute(this);
+            TrapezoidIntegral.execute(this);
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("Произошла проблема.");

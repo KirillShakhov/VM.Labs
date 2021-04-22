@@ -1,9 +1,8 @@
 package labs.сommands;
-
 import labs.interfaces.ICommand;
 import labs.modules.MenuModule;
+import labs.сommands.integration.Integration;
 import labs.сommands.interpolation.InterpolationLagrange;
-
 import java.util.ArrayList;
 
 public class Main implements ICommand {
@@ -21,7 +20,7 @@ public class Main implements ICommand {
         commands.add(new NonlinearEquationsMenu());
         commands.add(new SystemNonlinearEquations());
         //Lab3
-        commands.add(new NumericalIntegration());
+        commands.add(new Integration());
         //Lab4
         commands.add(new InterpolationLagrange());
         //
