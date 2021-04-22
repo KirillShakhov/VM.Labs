@@ -350,25 +350,24 @@ public class MathModule {
                 return Double.isInfinite(x) ? x : Double.NaN;
             }
         }
-
         static Double integral(IFunc func, double a, double b, double step_count) {
             double sum = 0, step;
             //Проверка шага
             if(step_count<0) { return null; }
             else if (0 == step_count) { return 0.0; }
-
             // Подсчет промежутка
             step = (b - a) / (step_count);
-
-
+            //
             for (int i = 1; i < step_count; i++) {
                 sum += func.solve(a + i * step);
             }
-
-
+            //
             sum += (func.solve(a) + func.solve(b)) / 2;
             sum *= step;
             return sum;
         }
+    }
+    public static class Lab4{
+
     }
 }

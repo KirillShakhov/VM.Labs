@@ -2,6 +2,7 @@ package lab.сommands;
 
 import lab.interfaces.ICommand;
 import lab.modules.MenuModule;
+import lab.сommands.interpolation.InterpolationLagrange;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,8 @@ public class Main implements ICommand {
         commands.add(new SystemNonlinearEquations());
         //Lab3
         commands.add(new NumericalIntegration());
+        //Lab4
+        commands.add(new InterpolationLagrange());
         //
         MenuModule menu = new MenuModule(commands);
         menu.execute();
