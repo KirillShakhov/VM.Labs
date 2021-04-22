@@ -1,8 +1,7 @@
-package lab.models.lab1;
+package lab.lab1.models;
 import lab.interfaces.ICommand;
-import lab.modules.MathModule;
-
 import java.util.Scanner;
+import lab.lab1.MathModuleLab1;
 
 public class ConsoleCommand implements ICommand {
     private final Scanner scanner = new Scanner(System.in);
@@ -25,7 +24,7 @@ public class ConsoleCommand implements ICommand {
             }
             catch (Exception ignored){ }
         }
-        MathModule.Lab1.execute(matrix, eps);
+        MathModuleLab1.execute(matrix, eps);
     }
 
     public Matrix createMatrixFromKeyBoard(){

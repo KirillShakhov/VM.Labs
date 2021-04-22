@@ -1,10 +1,8 @@
 package lab.сommands;
-
-
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
-import lab.models.lab3.IndividualFunc;
-import lab.modules.MathModule;
+import lab.lab3.MathModuleLab3;
+import lab.lab3.models.IndividualFunc;
 import lab.modules.MenuModule;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +34,7 @@ public class NumericalIntegration implements ICommand {
                 }
                 @Override
                 public void execute() {
-                    MathModule.Lab3.execute(entry.getValue());
+                    MathModuleLab3.execute(entry.getValue());
                 }
             });
         }

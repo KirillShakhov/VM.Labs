@@ -1,4 +1,4 @@
-package lab.models.lab2;
+package lab.lab2.models;
 import lab.interfaces.IFunc;
 import lab.interfaces.ISysFunc;
 import java.util.ArrayList;

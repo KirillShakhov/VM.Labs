@@ -1,10 +1,7 @@
-package lab.models.lab1;
-
-
+package lab.lab1.models;
 import lab.interfaces.ICommand;
-import lab.modules.MathModule;
-
 import java.util.Scanner;
+import lab.lab1.MathModuleLab1;
 
 public class RandomCommand implements ICommand {
     private final Scanner scanner = new Scanner(System.in);
@@ -31,7 +28,7 @@ public class RandomCommand implements ICommand {
             }
             catch (Exception ignored){ }
         }
-        MathModule.Lab1.execute(createRandomMatrix(size), eps);
+        MathModuleLab1.execute(createRandomMatrix(size), eps);
     }
 
     public Matrix createRandomMatrix(int size) {

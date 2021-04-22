@@ -1,13 +1,11 @@
-package lab.models.lab1;
-
+package lab.lab1.models;
 import lab.interfaces.ICommand;
-import lab.modules.MathModule;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import lab.lab1.MathModuleLab1;
 
 public class TestCommand implements ICommand {
     private final Scanner scanner = new Scanner(System.in);
@@ -22,7 +20,7 @@ public class TestCommand implements ICommand {
         String path = "C:\\Users\\kiril\\IdeaProjects\\VM.Lab1\\example\\matrix3";
         Matrix matrix = readMatrixFromFile(path);
         double eps = 0.0001;
-        MathModule.Lab1.execute(matrix, eps);
+        MathModuleLab1.execute(matrix, eps);
     }
 
     public Matrix readMatrixFromFile(String fileName) {

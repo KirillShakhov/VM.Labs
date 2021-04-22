@@ -1,14 +1,12 @@
 package lab.сommands;
-
 import lab.interfaces.ICommand;
 import lab.interfaces.IFunc;
-import lab.models.lab2.IndividualFunc;
-import lab.modules.MathModule;
 import lab.modules.MenuModule;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import lab.lab2.models.IndividualFunc;
+import lab.lab2.MathModuleLab2;
 
 public class NonlinearEquationsMenu implements ICommand {
     @Override
@@ -33,7 +31,7 @@ public class NonlinearEquationsMenu implements ICommand {
                 }
                 @Override
                 public void execute() {
-                    MathModule.Lab2.execute(entry.getValue());
+                    MathModuleLab2.execute(entry.getValue());
                 }
             });
         }

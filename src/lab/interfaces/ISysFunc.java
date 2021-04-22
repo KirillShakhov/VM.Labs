@@ -1,11 +1,5 @@
 package lab.interfaces;
-
-import lab.modules.GraphModule;
-import lab.modules.MathModule;
-import lab.modules.PrinterModule;
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public interface ISysFunc {
     ArrayList<IFunc> getDraw();

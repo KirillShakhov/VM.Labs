@@ -1,4 +1,4 @@
-package lab.models.lab3;
+package lab.lab3.models;
 
 public class Separation {
     double left;

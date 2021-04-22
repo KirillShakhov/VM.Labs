@@ -1,6 +1,6 @@
-package lab.modules;
+package lab.lab1;
 
-import lab.models.lab1.Matrix;
+import lab.lab1.models.Matrix;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

@@ -1,9 +1,4 @@
-package lab.modules;
-
-
-import lab.interfaces.IFunc;
-import lab.interfaces.ISysFunc;
-
+package lab.lab2;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
@@ -14,8 +9,9 @@ import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import lab.models.lab2.Point;
-
+import lab.lab2.models.Point;
+import lab.interfaces.IFunc;
+import lab.interfaces.ISysFunc;
 
 
 public class GraphModule extends JPanel {
