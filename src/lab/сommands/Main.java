@@ -21,8 +21,6 @@ public class Main implements ICommand {
         commands.add(new SystemNonlinearEquations());
         //Lab3
         commands.add(new NumericalIntegration());
-        //Lab4
-        commands.add(new ());
         //
         MenuModule menu = new MenuModule(commands);
         menu.execute();
