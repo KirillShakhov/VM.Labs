@@ -19,11 +19,11 @@ public class RectangleIntegral {
         double sum_right = 0.0d;
         double sum_mid = 0.0d;
         for(Separation s : array){
-            ResultSet result = solve(f, a, b, eps);
+            ResultSet result = solve(f, s.getLeft(), s.getRight(), eps);
             sum_left += result.getLeft();
             sum_right += result.getRight();
             sum_mid += result.getMid();
-            System.out.println("Результаты для отрезка от "+a+" до "+b+":");
+            System.out.println("Результаты для отрезка от "+s.getLeft()+" до "+s.getRight()+":");
             System.out.println("Левые прямоугольники: "+String.format("%.8f", result.getLeft())+" eps: "+String.format("%.8f", result.getEpsLeft()));
             System.out.println("Правые прямоугольники: "+String.format("%.8f", result.getRight())+" eps: "+String.format("%.8f", result.getEpsRight()));
             System.out.println("Средние прямоугольники: "+String.format("%.8f", result.getMid())+" eps: "+String.format("%.8f", result.getEpsMid()));
