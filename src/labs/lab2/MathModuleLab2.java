@@ -3,6 +3,8 @@ import labs.interfaces.IFunc;
 import labs.interfaces.ISysFunc;
 import labs.lab2.models.Point;
 import labs.lab2.models.ResultSetForSys;
+import labs.modules.GraphModule;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

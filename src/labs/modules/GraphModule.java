@@ -1,4 +1,4 @@
-package labs.lab2;
+package labs.modules;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
