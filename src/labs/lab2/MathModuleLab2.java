@@ -6,6 +6,8 @@ import labs.lab2.models.ResultSetForSys;
 import labs.modules.GraphModule;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MathModuleLab2 {
@@ -60,7 +62,15 @@ public class MathModuleLab2 {
         } else {
             System.out.println("Уравнение не имеет решений методом хорд.");
         }
-        new GraphModule(func, points, left, right);
+        // Добавление функции на график
+        Map<String, ArrayList<IFunc>> map_func = new HashMap<>();
+        ArrayList<IFunc> funcs = new ArrayList<>();
+        funcs.add(func);
+        map_func.put("График функции", funcs);
+        // Добавление функции на график
+        Map<String, ArrayList<Point>> map_points = new HashMap<>();
+        map_points.put("Точки", points);
+        new GraphModule(map_func, map_points);
     }
 
     private static boolean cordChecker(IFunc func, double left, double right) {
@@ -92,7 +102,15 @@ public class MathModuleLab2 {
         ResultSetForSys result = iterMetod(func, x, y, eps);
         points.add(result.getPoint());
         result.print();
-        new GraphModule(func.getDraw(), points, -10, 10);
+
+
+        // Добавление функции на график
+        Map<String, ArrayList<IFunc>> map_func = new HashMap<>();
+        map_func.put("График функции", func.getDraw());
+        // Добавление функции на график
+        Map<String, ArrayList<Point>> map_points = new HashMap<>();
+        map_points.put("Точки", points);
+        new GraphModule(map_func, map_points);
     }
 
     public static boolean doubChecker(IFunc function, double left, double right) {

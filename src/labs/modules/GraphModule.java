@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.*;
 
 import labs.models.Point;
@@ -12,7 +14,7 @@ import labs.lab2.models.ISysFunc;
 
 
 public class GraphModule extends JPanel {
-    double x1, x2, y1, y2;
+    double x1 = -5, x2 = 5, y1 = -5, y2 = 5;
     double step_x = 1;
     double step_y = 1;
     //Settings
@@ -21,67 +23,21 @@ public class GraphModule extends JPanel {
     int lastX = 0;
     int lastY = 0;
     //step_x = Math.PI;
-    ArrayList<IFunc> f = new ArrayList<>();
-    ArrayList<ISysFunc> fsys = new ArrayList<>();
-    ArrayList<Point> points = new ArrayList<>();
-    JCheckBox graph_flag = new JCheckBox("График функции");
-    JCheckBox points_flag = new JCheckBox("Точки");
-
-    public GraphModule(IFunc func, Point point1, Point point2, double left, double right) {
-        this.x1 = left;
-        this.x2 = right;
-        this.y1 = left;
-        this.y2 = right;
-        this.f.add(func);
-        points.add(point1);
-        points.add(point2);
-        frameOp();
-    }
-    public GraphModule(IFunc func, double left, double right) {
-        this.x1 = left;
-        this.x2 = right;
-        this.y1 = left;
-        this.y2 = right;
-        this.f.add(func);
-        frameOp();
-    }
-
-    public GraphModule(ArrayList<IFunc> func, ArrayList<Point> points, double left, double right) {
-        this.x1 = left;
-        this.x2 = right;
-        this.y1 = left;
-        this.y2 = right;
-        this.f.addAll(func);
-        this.points.addAll(points);
-        frameOp();
-    }
-
-    public GraphModule(IFunc func, ArrayList<Point> ar, double left, double right) {
-        this.x1 = left;
-        this.x2 = right;
-        this.y1 = left;
-        this.y2 = right;
-        this.f.add(func);
-        points.addAll(ar);
-        frameOp();
-    }
-    public GraphModule(ArrayList<IFunc> func, ArrayList<Point> points) {
-        this.x1 = -5;
-        this.x2 = 5;
-        this.y1 = -5;
-        this.y2 = 5;
-        this.f.addAll(func);
-        this.points.addAll(points);
-        frameOp();
-    }
-
-    public GraphModule(IFunc func, ArrayList<Point> ar) {
-        this.x1 = -5;
-        this.x2 = 5;
-        this.y1 = -5;
-        this.y2 = 5;
-        this.f.add(func);
-        points.addAll(ar);
+    Map<JCheckBox, ArrayList<IFunc>> f = new HashMap<>();
+    Map<JCheckBox, ArrayList<Point>> points = new HashMap<>();
+    public GraphModule(Map<String, ArrayList<IFunc>> map_func, Map<String, ArrayList<Point>> map_points) {
+        for(Map.Entry<String, ArrayList<IFunc>> entry : map_func.entrySet()){
+            JCheckBox j = new JCheckBox(entry.getKey());
+            j.setSelected(true);
+            j.addItemListener(e -> updateUI());
+            f.put(j, entry.getValue());
+        }
+        for(Map.Entry<String, ArrayList<Point>> entry : map_points.entrySet()){
+            JCheckBox j = new JCheckBox(entry.getKey());
+            j.setSelected(true);
+            j.addItemListener(e -> updateUI());
+            points.put(j, entry.getValue());
+        }
         frameOp();
     }
 
@@ -94,15 +50,20 @@ public class GraphModule extends JPanel {
         JF.setVisible(true);
         JF.setResizable(false);
 
-
         Box box = Box.createVerticalBox();
         box.add(this);
-        box.add(graph_flag);
-        graph_flag.setSelected(true);
-        graph_flag.addItemListener(e -> updateUI());
-        box.add(points_flag);
-        points_flag.setSelected(true);
-        points_flag.addItemListener(e -> updateUI());
+        for(Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()){
+            box.add(entry.getKey());
+        }
+        for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
+            box.add(entry.getKey());
+        }
+//        box.add(graph_flag);
+//        graph_flag.setSelected(true);
+//        graph_flag.addItemListener(e -> updateUI());
+//        box.add(points_flag);
+//        points_flag.setSelected(true);
+//        points_flag.addItemListener(e -> updateUI());
         JF.add(box);
 
         this.setBackground(Color.WHITE);
@@ -269,31 +230,35 @@ public class GraphModule extends JPanel {
 
     public void paintF(Graphics g) {
         //Рисуем графики
-        if(graph_flag.isSelected()) {
-            for (IFunc f1 : f) {
-                int q1;
-                if (f1.solve(x1) != null) {
-                    q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
-                } else {
-                    q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (0 - y1));
-                }
-                for (int i = 1; i < WIDTH; i++) {
-                    if (f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i) != null) {
-                        double i2 = f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
-                        int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
-                        g.drawLine(i - 1, q1, i, q2);
-                        q1 = q2;
+        for (Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()) {
+            if(entry.getKey().isSelected()) {
+                for (IFunc f1 : entry.getValue()) {
+                    int q1;
+                    if (f1.solve(x1) != null) {
+                        q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
+                    } else {
+                        q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (0 - y1));
+                    }
+                    for (int i = 1; i < WIDTH; i++) {
+                        if (f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i) != null) {
+                            double i2 = f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
+                            int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
+                            g.drawLine(i - 1, q1, i, q2);
+                            q1 = q2;
+                        }
                     }
                 }
             }
         }
         //Рисуем точки
-        if(points_flag.isSelected()) {
-            for (Point p : points) {
-                int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.getX() - x1));
-                int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.getY() - y1));
-                g.setColor(p.getColor());
-                g.fillOval(positionX - 3, positionY - 3, 6, 6);
+        for (Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()) {
+            if(entry.getKey().isSelected()) {
+                for (Point p : entry.getValue()) {
+                    int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.getX() - x1));
+                    int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.getY() - y1));
+                    g.setColor(p.getColor());
+                    g.fillOval(positionX - 3, positionY - 3, 6, 6);
+                }
             }
         }
     }

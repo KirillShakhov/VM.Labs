@@ -118,6 +118,12 @@ public class LagrangianIntegration {
         if (xy.isEmpty()) {
             System.out.println("Что-то пошло не так. Массивы X и Y отсутствуют.");
         } else {
+            // Добавление функции на график
+            Map<String, ArrayList<IFunc>> map_func = new HashMap<>();
+            ArrayList<IFunc> funcs = new ArrayList<>();
+            funcs.add(func1);
+            map_func.put("График функции", funcs);
+
             System.out.println("Введите координату x искомой точки:");
             double t = Double.parseDouble(scanner.nextLine());
             Double result = lagranz(xy, t);
@@ -153,7 +159,9 @@ public class LagrangianIntegration {
             points.add(new Point(t, result, Color.BLUE));
 
             Approximation(xy, points, min, max);
-            new GraphModule(func1, points);
+            Map<String, ArrayList<Point>> point_func = new HashMap<>();
+            point_func.put("Точки", points);
+            new GraphModule(map_func, point_func);
         }
 
     }
