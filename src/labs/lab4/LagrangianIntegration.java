@@ -129,6 +129,7 @@ public class LagrangianIntegration {
             }
             point_func.put("Точки исходных данных", data_points);
 
+            // TODO Аппроксимирование это другое, надо переделать
             // Интерполяция
             System.out.println("Введите координату x искомой точки:");
             double t = Double.parseDouble(scanner.nextLine());
@@ -136,14 +137,10 @@ public class LagrangianIntegration {
             System.out.println("Ln(" + t + ")=" + result);
             ArrayList<Point> point = new ArrayList<>();
             point.add(new Point(t, result));
-            point_func.put("Точка результата", point);
-
-            // Aппроксимация
-            ArrayList<Map.Entry<Double, Double>> list = new ArrayList<>(xy.entrySet());
-            list.sort(Map.Entry.comparingByKey());
-            int steps;
-            for (int i = 1; i < list.size(); i++) {
-            }
+            point_func.put("Точка результата Интерполяции", point);
+            // Аппроксимирование
+            ArrayList<Point> approximation = Approximation(xy);
+            point_func.put("Точки Аппроксимирования", approximation);
             // Экстрополяция
             ArrayList<Point> extrapolation = Extrapolation(xy);
             point_func.put("Точки Экстрополяции", extrapolation);
@@ -153,9 +150,26 @@ public class LagrangianIntegration {
 
     }
 
+    private static ArrayList<Point> Approximation(Map<Double, Double> xy) {
+        ArrayList<Point> points = new ArrayList<>();
+        // Сортировка
+        ArrayList<Map.Entry<Double, Double>> list = new ArrayList<>(xy.entrySet());
+        list.sort(Map.Entry.comparingByKey());
+        //
+        int steps = 2;
+        for (int i = 1; i < list.size(); i++) {
+            double first = list.get(i-1).getKey();
+            double second = list.get(i).getKey();
+            double step = (second-first)/(steps+1);
+            for(double j = first+step; j+0.0000001 < second; j+=step){
+                points.add(new Point(j, lagranz(xy, j)));
+            }
+        }
+        return points;
+    }
+
     private static ArrayList<Point> Extrapolation(Map<Double, Double> xy) {
         ArrayList<Point> points = new ArrayList<>();
-        //Аппроксимирование
         int steps = 100;
         int xplux = 10;
         // Поиск минимума и макисума
