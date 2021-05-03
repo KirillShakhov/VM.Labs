@@ -16,8 +16,8 @@ public class GraphModule extends JPanel {
     double step_x = 1;
     double step_y = 1;
     //Settings
-    int WIDTH = 640;
-    int HEIGHT = 640;
+    int WIDTH = 800;
+    int HEIGHT = 800;
     int lastX = 0;
     int lastY = 0;
     //step_x = Math.PI;
@@ -263,8 +263,7 @@ public class GraphModule extends JPanel {
         ArrayList<Color> colors = new ArrayList<>();
         colors.add(Color.green);
         colors.add(Color.blue);
-        colors.add(Color.orange);
-        colors.add(Color.cyan);
+        colors.add(Color.black);
         colors.add(Color.magenta);
         colors.add(Color.YELLOW);
         if(i>0){
