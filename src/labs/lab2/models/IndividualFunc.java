@@ -1,6 +1,6 @@
 package labs.lab2.models;
-import labs.interfaces.ICommand;
-import labs.interfaces.IFunc;
+import labs.models.ICommand;
+import labs.models.IFunc;
 import labs.modules.CalcModule;
 import java.util.Scanner;
 import labs.lab2.MathModuleLab2;

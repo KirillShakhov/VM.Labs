@@ -1,5 +1,5 @@
 package labs.lab1.models;
-import labs.interfaces.ICommand;
+import labs.models.ICommand;
 import java.util.Scanner;
 import labs.lab1.MathModuleLab1;
 

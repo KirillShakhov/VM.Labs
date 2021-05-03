@@ -1,5 +1,5 @@
 package labs.lab3;
-import labs.interfaces.IFunc;
+import labs.models.IFunc;
 import labs.lab3.models.Separation;
 import java.math.BigDecimal;
 import java.util.ArrayList;

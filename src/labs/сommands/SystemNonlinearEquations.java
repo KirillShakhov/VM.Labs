@@ -1,7 +1,7 @@
 package labs.сommands;
 import java.util.ArrayList;
-import labs.interfaces.ICommand;
-import labs.interfaces.ISysFunc;
+import labs.models.ICommand;
+import labs.lab2.models.ISysFunc;
 import labs.modules.MenuModule;
 import labs.lab2.models.FirstSysFunc;
 import labs.lab2.models.SecondSysFunc;

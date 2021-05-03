@@ -1,6 +1,6 @@
 package labs.сommands;
-import labs.interfaces.ICommand;
-import labs.interfaces.IFunc;
+import labs.models.ICommand;
+import labs.models.IFunc;
 import labs.modules.MenuModule;
 import java.util.ArrayList;
 import java.util.HashMap;

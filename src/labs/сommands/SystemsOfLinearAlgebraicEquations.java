@@ -1,5 +1,5 @@
 package labs.сommands;
-import labs.interfaces.ICommand;
+import labs.models.ICommand;
 import labs.lab1.models.*;
 import labs.modules.MenuModule;
 import java.util.ArrayList;

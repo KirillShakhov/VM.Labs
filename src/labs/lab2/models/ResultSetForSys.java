@@ -1,6 +1,8 @@
 package labs.lab2.models;
 
 
+import labs.models.Point;
+
 import java.util.ArrayList;
 
 public class ResultSetForSys {

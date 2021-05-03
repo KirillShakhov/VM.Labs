@@ -1,6 +1,6 @@
 package labs.lab3;
 import labs.lab3.models.Separation;
-import labs.interfaces.IFunc;
+import labs.models.IFunc;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;

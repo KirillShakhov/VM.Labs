@@ -9,9 +9,9 @@ import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import labs.lab2.models.Point;
-import labs.interfaces.IFunc;
-import labs.interfaces.ISysFunc;
+import labs.models.Point;
+import labs.models.IFunc;
+import labs.lab2.models.ISysFunc;
 
 
 public class GraphModule extends JPanel {

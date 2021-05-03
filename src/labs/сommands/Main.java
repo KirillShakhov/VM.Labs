@@ -1,5 +1,5 @@
 package labs.сommands;
-import labs.interfaces.ICommand;
+import labs.models.ICommand;
 import labs.modules.MenuModule;
 import labs.сommands.integration.Integration;
 import labs.сommands.interpolation.InterpolationLagrange;

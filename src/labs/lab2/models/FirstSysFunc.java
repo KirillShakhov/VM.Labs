@@ -1,6 +1,6 @@
 package labs.lab2.models;
-import labs.interfaces.IFunc;
-import labs.interfaces.ISysFunc;
+import labs.models.IFunc;
+
 import java.util.ArrayList;
 
 public class FirstSysFunc implements ISysFunc {

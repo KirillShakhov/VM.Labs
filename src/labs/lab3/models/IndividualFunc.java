@@ -1,6 +1,6 @@
 package labs.lab3.models;
-import labs.interfaces.ICommand;
-import labs.interfaces.IFunc;
+import labs.models.ICommand;
+import labs.models.IFunc;
 import labs.lab3.TrapezoidIntegral;
 import labs.modules.CalcModule;
 

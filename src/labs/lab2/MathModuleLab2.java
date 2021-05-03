@@ -1,7 +1,7 @@
 package labs.lab2;
-import labs.interfaces.IFunc;
-import labs.interfaces.ISysFunc;
-import labs.lab2.models.Point;
+import labs.models.IFunc;
+import labs.lab2.models.ISysFunc;
+import labs.models.Point;
 import labs.lab2.models.ResultSetForSys;
 import labs.modules.GraphModule;
 

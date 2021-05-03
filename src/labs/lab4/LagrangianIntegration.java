@@ -1,6 +1,6 @@
 package labs.lab4;
 
-import labs.interfaces.IFunc;
+import labs.models.IFunc;
 
 import java.util.ArrayList;
 import java.util.HashMap;

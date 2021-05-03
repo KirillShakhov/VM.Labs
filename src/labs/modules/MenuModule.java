@@ -1,5 +1,5 @@
 package labs.modules;
-import labs.interfaces.ICommand;
+import labs.models.ICommand;
 import java.util.ArrayList;
 import java.util.Scanner;
 

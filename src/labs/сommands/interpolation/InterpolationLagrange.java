@@ -1,8 +1,7 @@
 package labs.сommands.interpolation;
 
-import labs.interfaces.ICommand;
-import labs.interfaces.IFunc;
-import labs.lab3.RectangleIntegral;
+import labs.models.ICommand;
+import labs.models.IFunc;
 import labs.lab4.LagrangianIntegration;
 
 import java.util.ArrayList;

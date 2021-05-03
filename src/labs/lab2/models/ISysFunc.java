@@ -1,4 +1,6 @@
-package labs.interfaces;
+package labs.lab2.models;
+import labs.models.IFunc;
+
 import java.util.ArrayList;
 
 public interface ISysFunc {

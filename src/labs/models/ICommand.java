@@ -1,4 +1,4 @@
-package labs.interfaces;
+package labs.models;
 
 public interface ICommand {
     String getMessage();
