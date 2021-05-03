@@ -1,14 +1,11 @@
 package labs.modules;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+
 import labs.models.Point;
 import labs.models.IFunc;
 import labs.lab2.models.ISysFunc;
@@ -27,6 +24,8 @@ public class GraphModule extends JPanel {
     ArrayList<IFunc> f = new ArrayList<>();
     ArrayList<ISysFunc> fsys = new ArrayList<>();
     ArrayList<Point> points = new ArrayList<>();
+    JCheckBox graph_flag = new JCheckBox("График функции");
+    JCheckBox points_flag = new JCheckBox("Точки");
 
     public GraphModule(IFunc func, Point point1, Point point2, double left, double right) {
         this.x1 = left;
@@ -88,13 +87,24 @@ public class GraphModule extends JPanel {
 
     public void frameOp() {
         JFrame JF = new JFrame("Paint");
-        JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28);
+        JPanel boxesPanel = new JPanel();
+        JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28 + 28);
 //        JF.setLayout(null);
 //        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JF.setVisible(true);
         JF.setResizable(false);
-        this.setSize(WIDTH, HEIGHT);
-        JF.add(this);
+
+
+        Box box = Box.createVerticalBox();
+        box.add(this);
+        box.add(graph_flag);
+        graph_flag.setSelected(true);
+        graph_flag.addItemListener(e -> updateUI());
+        box.add(points_flag);
+        points_flag.setSelected(true);
+        points_flag.addItemListener(e -> updateUI());
+        JF.add(box);
+
         this.setBackground(Color.WHITE);
 
         MouseAdapter MA = new MouseAdapter() {
@@ -259,28 +269,32 @@ public class GraphModule extends JPanel {
 
     public void paintF(Graphics g) {
         //Рисуем графики
-        for (IFunc f1 : f) {
-            int q1;
-            if(f1.solve(x1)!= null) {
-                q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
-            }else{
-                q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (0 - y1));
-            }
-            for (int i = 1; i < WIDTH; i++) {
-                if (f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i) != null) {
-                    double i2 = f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
-                    int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
-                    g.drawLine(i - 1, q1, i, q2);
-                    q1 = q2;
+        if(graph_flag.isSelected()) {
+            for (IFunc f1 : f) {
+                int q1;
+                if (f1.solve(x1) != null) {
+                    q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
+                } else {
+                    q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (0 - y1));
+                }
+                for (int i = 1; i < WIDTH; i++) {
+                    if (f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i) != null) {
+                        double i2 = f1.solve(x1 + ((Math.abs(x2 - x1)) / WIDTH) * i);
+                        int q2 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (i2 - y1));
+                        g.drawLine(i - 1, q1, i, q2);
+                        q1 = q2;
+                    }
                 }
             }
         }
         //Рисуем точки
-        for(Point p : points) {
-            int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.getX() - x1));
-            int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.getY() - y1));
-            g.setColor(p.getColor());
-            g.fillOval(positionX - 3, positionY - 3, 6, 6);
+        if(points_flag.isSelected()) {
+            for (Point p : points) {
+                int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.getX() - x1));
+                int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.getY() - y1));
+                g.setColor(p.getColor());
+                g.fillOval(positionX - 3, positionY - 3, 6, 6);
+            }
         }
     }
 }
