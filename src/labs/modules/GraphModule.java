@@ -262,10 +262,9 @@ public class GraphModule extends JPanel {
         for(Point p : points) {
             int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.getX() - x1));
             int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.getY() - y1));
-            g.setColor(Color.green);
+            g.setColor(p.getColor());
             g.fillOval(positionX - 3, positionY - 3, 6, 6);
         }
     }
-
 }
 

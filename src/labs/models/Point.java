@@ -1,9 +1,11 @@
 package labs.models;
 
+import java.awt.*;
+
 public class Point {
     private double x;
     private double y;
-    private COLORS color;
+    private Color color;
 
     Point(double x){
         this.x = x;
@@ -12,9 +14,10 @@ public class Point {
     public Point(double x, double y){
         this.x = x;
         this.y = y;
+        this.color = Color.green;
     }
 
-    public Point(double x, double y, COLORS color){
+    public Point(double x, double y, Color color){
         this.x = x;
         this.y = y;
         this.color = color;
@@ -32,11 +35,6 @@ public class Point {
     public void setY(double y) {
         this.y = y;
     }
-    public COLORS getColor() { return color; }
-    public void setColor(COLORS color) { this.color = color; }
-}
-
-enum COLORS{
-    RED,
-    GREEN,
+    public Color getColor() { return color; }
+    public void setColor(Color color) { this.color = color; }
 }
