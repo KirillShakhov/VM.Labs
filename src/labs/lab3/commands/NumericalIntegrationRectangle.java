@@ -1,25 +1,23 @@
-package labs.сommands.interpolation;
-
+package labs.lab3.commands;
 import labs.models.ICommand;
 import labs.models.IFunc;
-import labs.lab4.LagrangianIntegration;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import labs.lab3.RectangleIntegral;
 
-public class InterpolationLagrange implements ICommand {
-    Scanner scanner = new Scanner(System.in);
+public class NumericalIntegrationRectangle implements ICommand {
+    static Scanner scanner = new Scanner(System.in);
+
     @Override
     public String getMessage() {
-        return "Интерполирование многочленом Лагранжа";
+        return "Нахождение интегралов методом прямоугольников(левых, правых, средних)";
     }
-
 
     @Override
     public void execute() {
-        System.out.println("Интерполирование многочленом Лагранжа:");
+        System.out.println("Нахождение интегралов методом прямоугольников(левых, правых, средних)");
         Map<String, IFunc> funcs = new HashMap<>();
         // 1
         funcs.put("sin(x)/x", x -> Math.sin(x)/x);
@@ -40,7 +38,7 @@ public class InterpolationLagrange implements ICommand {
         String str = scanner.nextLine();
         try {
             IFunc func1 = funcs.get(keys.get(Integer.parseInt(str) - 1));
-            LagrangianIntegration.solve(func1);
+            RectangleIntegral.solve(func1);
         } catch (Exception e) {
             System.out.println("Нет такого уравнения");
         }

@@ -1,7 +1,9 @@
-package labs.сommands;
+package labs.lab1.commands;
 import labs.models.ICommand;
 import labs.lab1.models.*;
 import labs.modules.MenuModule;
+import labs.сommands.Main;
+
 import java.util.ArrayList;
 
 public class SystemsOfLinearAlgebraicEquations implements ICommand {

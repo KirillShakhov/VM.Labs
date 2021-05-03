@@ -1,9 +1,8 @@
-package labs.сommands.integration;
+package labs.lab3.commands;
 import labs.models.ICommand;
 import labs.modules.MenuModule;
 import labs.сommands.Main;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Integration implements ICommand {
