@@ -1,7 +1,10 @@
 package labs.lab4;
 
 import labs.models.IFunc;
+import labs.models.Point;
+import labs.modules.GraphModule;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,11 +17,49 @@ public class LagrangianIntegration {
         while (true){
             try{
                 System.out.println("Выберите готовые данные, или введиет свои:");
+                // TODO добавить данных
+                System.out.println("1. Сгенерировать данные");
                 System.out.println("1. Готовые данные для sin(x)");
-                System.out.println("2. Ввести свои данные");
+                System.out.println("3. Ввести свои данные");
                 if(scanner.hasNext()) {
                     String s = scanner.nextLine();
                     if(s.equals("1")){
+                        while(true) {
+                            xy = new HashMap<>();
+                            Double left, right;
+                            System.out.println("Введите границы через запятую");
+                            System.out.println("Привем для промежутка от -5 до 5:\n-5,5");
+                            System.out.println("Введите данные:");
+                            try {
+                                if (scanner.hasNext()) {
+                                    String[] buffer = scanner.nextLine().split(",");
+                                    left = Double.valueOf(buffer[0]);
+                                    right = Double.valueOf(buffer[1]);
+                                    if (right < left) {
+                                        Double t = right;
+                                        right = left;
+                                        left = t;
+                                    }
+                                    Double sep = right - left;
+                                    System.out.println("Введите количество точек:");
+                                    Double steps = Double.valueOf(scanner.nextLine());
+                                    for (double i = left; i < right; i += sep / steps) {
+                                        xy.put(i, func1.solve(i));
+                                    }
+                                    System.out.println("Полученные данные:");
+                                    for (Map.Entry<Double, Double> entry : xy.entrySet()) {
+                                        System.out.println("(" + entry.getKey() + "," + entry.getValue() + ")");
+                                    }
+                                } else {
+                                    System.out.println("Завершершение работы");
+                                    System.exit(0);
+                                }
+                                break;
+                            } catch (Exception e) {
+                                System.out.println("Введены неправильные данные");
+                            }
+                        }
+                    }else if(s.equals("2")){
                         System.out.println("Данные для sin(x):");
                         xy = new HashMap<>();
                         xy.put(1.0, 1.0);
@@ -28,19 +69,17 @@ public class LagrangianIntegration {
                         for(Map.Entry<Double, Double> entry : xy.entrySet()) {
                             System.out.println("("+entry.getKey()+","+entry.getValue()+")");
                         }
-                    }else if(s.equals("2")){
-                        System.out.println("Данные для null:");
                     }else{
                         String buffer = "";
                         xy = new HashMap<>();
                         System.out.println("Вводите данные через запятую, используйте \"0\" после ввода данных:");
                         System.out.println("Пример:\n1,2\n2,3\n4,5\n0");
                         System.out.println("Вводите данные:");
-                        while(buffer != "0"){
+                        while(!buffer.equals("0")){
                             try{
                                 if(scanner.hasNext()) {
                                     buffer = scanner.nextLine();
-                                    if(buffer != "0") {
+                                    if(!buffer.equals("0")) {
                                         String[] t = buffer.split(",");
                                         xy.put(Double.valueOf(t[0]), Double.valueOf(t[1]));
                                     }
@@ -69,7 +108,16 @@ public class LagrangianIntegration {
         else {
             System.out.println("Введите координату x искомой точки:");
             double t = Double.parseDouble(scanner.nextLine());
-            System.out.println("Ln(" + t + ")=" + lagranz(xy, t));
+            Double result = lagranz(xy, t);
+            System.out.println("Ln(" + t + ")=" + result);
+            // Добавление точек исходных данных
+            ArrayList<Point> points = new ArrayList<>();
+            for(Map.Entry<Double, Double> entry : xy.entrySet()) {
+                points.add(new Point(entry.getKey(), entry.getValue()));
+            }
+            // Добавление точек результата
+            points.add(new Point(t, result, Color.BLUE));
+            new GraphModule(func1, points);
         }
     }
 

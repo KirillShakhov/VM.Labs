@@ -1,6 +1,9 @@
 package labs.сommands.integration;
 import labs.models.ICommand;
 import labs.modules.MenuModule;
+import labs.сommands.Main;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Integration implements ICommand {
@@ -13,6 +16,7 @@ public class Integration implements ICommand {
         commands.add(new NumericalIntegrationTrapezoid());
         commands.add(new NumericalIntegrationRectangle());
         //
+        commands.add(new Main());
         MenuModule menu = new MenuModule(commands);
         menu.execute();
     }

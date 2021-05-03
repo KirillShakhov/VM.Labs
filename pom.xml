@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>itmo</groupId>
     <artifactId>VM.Labs</artifactId>
-    <version>3.0</version>
+    <version>4.0</version>
     <build>
         <plugins>
             <plugin>

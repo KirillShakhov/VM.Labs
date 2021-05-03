@@ -19,7 +19,7 @@ public class InterpolationLagrange implements ICommand {
 
     @Override
     public void execute() {
-        System.out.println("Нахождение интегралов методом прямоугольников(левых, правых, средних)");
+        System.out.println("Интерполирование многочленом Лагранжа:");
         Map<String, IFunc> funcs = new HashMap<>();
         // 1
         funcs.put("sin(x)/x", x -> Math.sin(x)/x);

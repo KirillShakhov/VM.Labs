@@ -66,6 +66,25 @@ public class GraphModule extends JPanel {
         points.addAll(ar);
         frameOp();
     }
+    public GraphModule(ArrayList<IFunc> func, ArrayList<Point> points) {
+        this.x1 = -5;
+        this.x2 = 5;
+        this.y1 = -5;
+        this.y2 = 5;
+        this.f.addAll(func);
+        this.points.addAll(points);
+        frameOp();
+    }
+
+    public GraphModule(IFunc func, ArrayList<Point> ar) {
+        this.x1 = -5;
+        this.x2 = 5;
+        this.y1 = -5;
+        this.y2 = 5;
+        this.f.add(func);
+        points.addAll(ar);
+        frameOp();
+    }
 
     public void frameOp() {
         JFrame JF = new JFrame("Paint");
@@ -166,9 +185,7 @@ public class GraphModule extends JPanel {
         g2d.setStroke(new BasicStroke(2));
 
         g.setColor(Color.RED);
-
         paintF(g);
-
     }
 
     public void paintD(Graphics g) {
