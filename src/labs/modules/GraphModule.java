@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
-
 import labs.models.Point;
 import labs.models.IFunc;
-import labs.lab2.models.ISysFunc;
 
 
 public class GraphModule extends JPanel {
@@ -125,23 +123,15 @@ public class GraphModule extends JPanel {
         addMouseListener(MA);
         addMouseMotionListener(MA);
 
-        this.addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-
-                int r = e.getWheelRotation();
-
-                double dx = (x2 - x1) / (10 + Math.abs(r + 1) / 2);
-                double dy = (y2 - y1) / (10 + Math.abs(r + 1) / 2);
-
-                x1 -= r * dx * lastX / WIDTH;
-                x2 += r * dx * (WIDTH - lastX) / WIDTH;
-                y1 -= r * dy * (HEIGHT - lastY) / HEIGHT;
-                y2 += r * dy * lastY / HEIGHT;
-
-                repaint();
-
-            }
+        this.addMouseWheelListener(e -> {
+            int r = e.getWheelRotation();
+            double dx = (x2 - x1) / (10 + Math.abs(r + 1) / 2);
+            double dy = (y2 - y1) / (10 + Math.abs(r + 1) / 2);
+            x1 -= r * dx * lastX / WIDTH;
+            x2 += r * dx * (WIDTH - lastX) / WIDTH;
+            y1 -= r * dy * (HEIGHT - lastY) / HEIGHT;
+            y2 += r * dy * lastY / HEIGHT;
+            repaint();
         });
     }
 
@@ -230,7 +220,9 @@ public class GraphModule extends JPanel {
 
     public void paintF(Graphics g) {
         //Рисуем графики
+        int t = 0;
         for (Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()) {
+            Color color = getColor(t);
             if(entry.getKey().isSelected()) {
                 for (IFunc f1 : entry.getValue()) {
                     int q1;
@@ -249,17 +241,40 @@ public class GraphModule extends JPanel {
                     }
                 }
             }
+            t++;
         }
         //Рисуем точки
+        t = 0;
         for (Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()) {
+            Color color = getColor(t);
             if(entry.getKey().isSelected()) {
                 for (Point p : entry.getValue()) {
                     int positionX = (int) Math.floor((WIDTH / Math.abs(x1 - x2)) * (p.getX() - x1));
                     int positionY = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (p.getY() - y1));
-                    g.setColor(p.getColor());
+                    g.setColor(color);
                     g.fillOval(positionX - 3, positionY - 3, 6, 6);
                 }
             }
+            t++;
+        }
+    }
+
+    private Color getColor(int i){
+        ArrayList<Color> colors = new ArrayList<>();
+        colors.add(Color.green);
+        colors.add(Color.blue);
+        colors.add(Color.orange);
+        colors.add(Color.cyan);
+        colors.add(Color.magenta);
+        colors.add(Color.YELLOW);
+        if(i>0){
+            while(i>colors.size()){
+                i-=colors.size();
+            }
+            return colors.get(i);
+        }
+        else {
+            return Color.green;
         }
     }
 }

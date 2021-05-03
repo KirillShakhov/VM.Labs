@@ -1,10 +1,7 @@
 package labs.lab4;
-
 import labs.models.IFunc;
 import labs.models.Point;
 import labs.modules.GraphModule;
-
-import java.awt.*;
 import java.util.*;
 
 public class LagrangianIntegration {
@@ -118,65 +115,62 @@ public class LagrangianIntegration {
         if (xy.isEmpty()) {
             System.out.println("Что-то пошло не так. Массивы X и Y отсутствуют.");
         } else {
-            // Добавление функции на график
             Map<String, ArrayList<IFunc>> map_func = new HashMap<>();
+            Map<String, ArrayList<Point>> point_func = new HashMap<>();
+            // Добавление функции на график
             ArrayList<IFunc> funcs = new ArrayList<>();
             funcs.add(func1);
             map_func.put("График функции", funcs);
 
+            // Добавление точек исходных данных на график
+            ArrayList<Point> data_points = new ArrayList<>();
+            for (Map.Entry<Double, Double> entry : xy.entrySet()) {
+                data_points.add(new Point(entry.getKey(), entry.getValue()));
+            }
+            point_func.put("Точки исходных данных", data_points);
+
+            // Интерполяция
             System.out.println("Введите координату x искомой точки:");
             double t = Double.parseDouble(scanner.nextLine());
             Double result = lagranz(xy, t);
             System.out.println("Ln(" + t + ")=" + result);
-            ArrayList<Point> points = new ArrayList<>();
+            ArrayList<Point> point = new ArrayList<>();
+            point.add(new Point(t, result));
+            point_func.put("Точка результата", point);
 
-            // Сортировка
+            // Aппроксимация
             ArrayList<Map.Entry<Double, Double>> list = new ArrayList<>(xy.entrySet());
             list.sort(Map.Entry.comparingByKey());
-
-
-            // Добавление точек исходных данных
-            double min = Double.MAX_VALUE;
-            double max = Double.MIN_VALUE;
-            for (Map.Entry<Double, Double> entry : xy.entrySet()) {
-                if (entry.getKey() >= max) {
-                    max = entry.getKey();
-                }
-                if (entry.getKey() <= min) {
-                    min = entry.getKey();
-                }
-                points.add(new Point(entry.getKey(), entry.getValue()));
-            }
-
-
             int steps;
             for (int i = 1; i < list.size(); i++) {
             }
-
-            /*
-            Добавление точек результата
-             */
-            points.add(new Point(t, result, Color.BLUE));
-
-            Approximation(xy, points, min, max);
-            Map<String, ArrayList<Point>> point_func = new HashMap<>();
-            point_func.put("Точки", points);
+            // Экстрополяция
+            ArrayList<Point> extrapolation = Extrapolation(xy);
+            point_func.put("Точки Экстрополяции", extrapolation);
+            // Рисуем график
             new GraphModule(map_func, point_func);
         }
 
     }
 
-    private static ArrayList<Point> Approximation(Map<Double, Double> xy, ArrayList<Point> points, double min, double max) {
+    private static ArrayList<Point> Extrapolation(Map<Double, Double> xy) {
+        ArrayList<Point> points = new ArrayList<>();
         //Аппроксимирование
         int steps = 100;
         int xplux = 10;
+        // Поиск минимума и макисума
+        double min = Double.MAX_VALUE, max = Double.MIN_VALUE;
+        for (Map.Entry<Double, Double> entry : xy.entrySet()) {
+            if (entry.getKey() >= max) { max = entry.getKey(); }
+            if (entry.getKey() <= min) { min = entry.getKey(); }
+        }
         //
         for (double i = max; i < (max + xplux); i += (max + xplux) / steps) {
-            points.add(new Point(i, lagranz(xy, i), Color.orange));
+            points.add(new Point(i, lagranz(xy, i)));
         }
         //
         for (double i = min; i > (min - xplux); i += (min - xplux) / steps) {
-            points.add(new Point(i, lagranz(xy, i), Color.orange));
+            points.add(new Point(i, lagranz(xy, i)));
         }
         return points;
     }
