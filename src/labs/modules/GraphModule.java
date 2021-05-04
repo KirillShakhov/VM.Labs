@@ -42,7 +42,8 @@ public class GraphModule extends JPanel {
     public void frameOp() {
         JFrame JF = new JFrame("Paint");
         JPanel boxesPanel = new JPanel();
-        JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28 + 28);
+        JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28 + 38 + 10*(f.size()+points.size()));
+        System.out.println(10*(f.size()+points.size()));
 //        JF.setLayout(null);
 //        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JF.setVisible(true);
@@ -56,12 +57,28 @@ public class GraphModule extends JPanel {
         for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
             box.add(entry.getKey());
         }
-//        box.add(graph_flag);
-//        graph_flag.setSelected(true);
-//        graph_flag.addItemListener(e -> updateUI());
-//        box.add(points_flag);
-//        points_flag.setSelected(true);
-//        points_flag.addItemListener(e -> updateUI());
+        JButton b_selall = new JButton("Выбрать все");
+        b_selall.addActionListener(e -> {
+            for(Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()){
+                entry.getKey().setSelected(true);
+            }
+            for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
+                entry.getKey().setSelected(true);
+            }
+            updateUI();
+        });
+        JButton b_clean = new JButton("Очистить");
+        b_clean.addActionListener(e -> {
+            for(Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()){
+                entry.getKey().setSelected(false);
+            }
+            for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
+                entry.getKey().setSelected(false);
+            }
+            updateUI();
+        });
+        box.add(b_selall);
+        box.add(b_clean);
         JF.add(box);
 
         this.setBackground(Color.WHITE);
@@ -134,7 +151,6 @@ public class GraphModule extends JPanel {
             repaint();
         });
     }
-
     @Override
     public void paintComponent(Graphics g) {
 
