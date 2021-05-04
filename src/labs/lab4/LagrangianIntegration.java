@@ -140,7 +140,7 @@ public class LagrangianIntegration {
             point_func.put("Точка результата Интерполяции", point);
             // Аппроксимирование
             ArrayList<Point> approximation = Approximation(xy);
-            point_func.put("Точки Аппроксимирования", approximation);
+            point_func.put("Точки Интерполяции", approximation);
             // Экстрополяция
             ArrayList<Point> extrapolation = Extrapolation(xy);
             point_func.put("Точки Экстрополяции", extrapolation);
