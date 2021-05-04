@@ -34,6 +34,13 @@ public class RectangleIntegral {
     }
     //функция для вычисления интеграла методом левых прямоугольников
     static double left_rectangle_integral(IFunc f, double a, double b, int n) {
+        boolean isNegative = false;
+        if(a>b){
+            double t = a;
+            a = b;
+            b = t;
+            isNegative = true;
+        }
         double step;
         double sum = 0;
         step = (b - a) / n;  //шаг
@@ -41,9 +48,22 @@ public class RectangleIntegral {
             sum += f.solve(i);//суммируем значения функции в узловых точках
         }
         //приближенное значение интеграла равно сумме площадей прямоугольников
-        return sum*step;//множим на величину шага и возвращаем в вызывающую функцию
+        double result = sum*step;//множим на величину шага и возвращаем в вызывающую функцию
+        if(isNegative){
+            return -1*result;
+        }
+        else {
+            return result;
+        }
     }
     static double right_rectangle_integral(IFunc f, double a, double b, int n) {
+        boolean isNegative = false;
+        if(a>b){
+            double t = a;
+            a = b;
+            b = t;
+            isNegative = true;
+        }
         double step;
         double sum = 0;
         step = (b - a) / n;  //шаг
@@ -52,16 +72,34 @@ public class RectangleIntegral {
             sum += f.solve(a + i*step);
         }
         //приближенное значение интеграла равно сумме площадей прямоугольников
-        return sum*step;//множим на величину шага и возвращаем в вызывающую функцию
-    }
+        double result = sum*step;//множим на величину шага и возвращаем в вызывающую функцию
+        if(isNegative){
+            return -1*result;
+        }
+        else {
+            return result;
+        }    }
     static double mid_rectangle_integral(IFunc f, double a, double b, int n) {
+        boolean isNegative = false;
+        if(a>b){
+            double t = a;
+            a = b;
+            b = t;
+            isNegative = true;
+        }
         double sum = 0;
         double step = (b - a) / n;  //шаг
         for(int i = 0; i < n; i++) {
             sum += f.solve(a + step * (i + 0.5));//0.5 это тип 1/2
         }
         //приближенное значение интеграла равно сумме площадей прямоугольников
-        return sum*step;//множим на величину шага и возвращаем в вызывающую функцию
+        double result = sum*step;//множим на величину шага и возвращаем в вызывающую функцию
+        if(isNegative){
+            return -1*result;
+        }
+        else {
+            return result;
+        }
     }
 
     static ArrayList<Separation> findSeparations(IFunc func, double a, double b){

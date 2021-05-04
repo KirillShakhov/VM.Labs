@@ -4,7 +4,7 @@ import labs.models.Point;
 import labs.modules.GraphModule;
 import java.util.*;
 
-public class LagrangianIntegration {
+public class LagrangianIntegrationMath {
     static Scanner scanner = new Scanner(System.in);
 
     public static void solve(IFunc func1) {

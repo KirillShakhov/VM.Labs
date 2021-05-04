@@ -2,14 +2,14 @@ package labs.lab4.commands;
 
 import labs.models.ICommand;
 import labs.models.IFunc;
-import labs.lab4.LagrangianIntegration;
+import labs.lab4.LagrangianIntegrationMath;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class InterpolationLagrange implements ICommand {
+public class LagrangeInterpolation implements ICommand {
     Scanner scanner = new Scanner(System.in);
     @Override
     public String getMessage() {
@@ -39,7 +39,7 @@ public class InterpolationLagrange implements ICommand {
         String str = scanner.nextLine();
         try {
             IFunc func1 = funcs.get(keys.get(Integer.parseInt(str) - 1));
-            LagrangianIntegration.solve(func1);
+            LagrangianIntegrationMath.solve(func1);
         } catch (Exception e) {
             System.out.println("Нет такого уравнения");
         }
