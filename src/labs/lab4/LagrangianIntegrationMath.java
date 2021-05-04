@@ -16,7 +16,6 @@ public class LagrangianIntegrationMath {
         while (true) {
             try {
                 System.out.println("Выберите готовые данные, или введиет свои:");
-                // TODO добавить данных
                 System.out.println("1. Сгенерировать данные");
                 System.out.println("2. Ввести свои данные");
                 System.out.println("3. Ввести свои данные из файла");
@@ -119,10 +118,9 @@ public class LagrangianIntegrationMath {
                     } else if (s.equals("4")) {
                         System.out.println("Данные для sin(x):");
                         xy = new HashMap<>();
-                        xy.put(1.0, 1.0);
-                        xy.put(2.0, 2.0);
-                        xy.put(2.0000001, 5.0);
-                        xy.put(4.0, 4.0);
+                        xy.put(1.14, 0.9);
+                        xy.put(4.0, -0.756802);
+                        xy.put(5.221, -0.873422);
                         for (Map.Entry<Double, Double> entry : xy.entrySet()) {
                             System.out.println("(" + entry.getKey() + "," + entry.getValue() + ")");
                         }
