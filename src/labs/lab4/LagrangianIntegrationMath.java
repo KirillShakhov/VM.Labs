@@ -163,7 +163,7 @@ public class LagrangianIntegrationMath {
             point.add(new Point(t, result));
             point_func.put("Точка Интерполяции", point);
             // Аппроксимирование
-            ArrayList<Point> interpolation = Approximation(xy);
+            ArrayList<Point> interpolation = Interpolation(xy);
             point_func.put("Точки Интерполяции", interpolation);
             // Экстрополяция
             ArrayList<Point> extrapolation = Extrapolation(xy);
@@ -174,7 +174,7 @@ public class LagrangianIntegrationMath {
 
     }
 
-    private static ArrayList<Point> Approximation(Map<Double, Double> xy) {
+    private static ArrayList<Point> Interpolation(Map<Double, Double> xy) {
         ArrayList<Point> points = new ArrayList<>();
         // Сортировка
         ArrayList<Map.Entry<Double, Double>> list = new ArrayList<>(xy.entrySet());
