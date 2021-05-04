@@ -1,7 +1,5 @@
 package labs.lab5.commands;
 
-import labs.lab3.commands.NumericalIntegrationRectangle;
-import labs.lab3.commands.NumericalIntegrationTrapezoid;
 import labs.models.ICommand;
 import labs.modules.MenuModule;
 import labs.сommands.Main;
