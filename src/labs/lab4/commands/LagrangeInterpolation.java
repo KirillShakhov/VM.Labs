@@ -1,5 +1,6 @@
 package labs.lab4.commands;
 
+import labs.lab4.IndividualFunc;
 import labs.models.ICommand;
 import labs.models.IFunc;
 import labs.lab4.LagrangianIntegrationMath;
@@ -36,12 +37,15 @@ public class LagrangeInterpolation implements ICommand {
             System.out.println((i++) + ". " + entry.getKey());
             keys.add(entry.getKey());
         }
+        System.out.println((funcs.size()+1)+". Ввести своё уравнение");
         String str = scanner.nextLine();
         try {
             IFunc func1 = funcs.get(keys.get(Integer.parseInt(str) - 1));
             LagrangianIntegrationMath.solve(func1);
         } catch (Exception e) {
-            System.out.println("Нет такого уравнения");
+            IndividualFunc f = new IndividualFunc();
+            f.execute();
+            LagrangianIntegrationMath.solve(f);
         }
     }
 }
