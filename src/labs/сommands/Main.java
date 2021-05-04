@@ -2,11 +2,10 @@ package labs.сommands;
 import labs.lab1.commands.SystemsOfLinearAlgebraicEquations;
 import labs.lab2.commands.NonlinearEquationsMenu;
 import labs.lab2.commands.SystemNonlinearEquations;
-import labs.lab4.LinearApproximation;
 import labs.models.ICommand;
 import labs.modules.MenuModule;
 import labs.lab3.commands.Integration;
-import labs.lab4.commands.InterpolationLagrange;
+import labs.lab4.commands.LagrangeInterpolation;
 import java.util.ArrayList;
 
 public class Main implements ICommand {
@@ -26,7 +25,7 @@ public class Main implements ICommand {
         //Lab3
         commands.add(new Integration());
         //Lab4
-        commands.add(new InterpolationLagrange());
+        commands.add(new LagrangeInterpolation());
         //
         //commands.add(new LinearApproximation());
         //

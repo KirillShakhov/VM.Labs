@@ -16,8 +16,8 @@ public class GraphModule extends JPanel {
     double step_x = 1;
     double step_y = 1;
     //Settings
-    int WIDTH = 800;
-    int HEIGHT = 800;
+    int WIDTH = 640;
+    int HEIGHT = 640;
     int lastX = 0;
     int lastY = 0;
     //step_x = Math.PI;
@@ -42,8 +42,7 @@ public class GraphModule extends JPanel {
     public void frameOp() {
         JFrame JF = new JFrame("Paint");
         JPanel boxesPanel = new JPanel();
-        JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28 + 38 + 10*(f.size()+points.size()));
-        System.out.println(10*(f.size()+points.size()));
+        JF.setBounds(100, 100, WIDTH + 16, HEIGHT + 28 + 38 + 10 + 10*(f.size()+points.size()));
 //        JF.setLayout(null);
 //        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JF.setVisible(true);
