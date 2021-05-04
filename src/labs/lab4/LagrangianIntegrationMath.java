@@ -2,6 +2,10 @@ package labs.lab4;
 import labs.models.IFunc;
 import labs.models.Point;
 import labs.modules.GraphModule;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.*;
 
 public class LagrangianIntegrationMath {
@@ -14,8 +18,9 @@ public class LagrangianIntegrationMath {
                 System.out.println("Выберите готовые данные, или введиет свои:");
                 // TODO добавить данных
                 System.out.println("1. Сгенерировать данные");
-                System.out.println("2. Готовые данные для sin(x)");
-                System.out.println("3. Ввести свои данные");
+                System.out.println("2. Ввести свои данные");
+                System.out.println("3. Ввести свои данные из файла");
+                System.out.println("4. Готовые данные для sin(x)");
                 if (scanner.hasNext()) {
                     String s = scanner.nextLine();
                     if (s.equals("0")) {
@@ -68,17 +73,7 @@ public class LagrangianIntegrationMath {
                                 System.out.println("Введены неправильные данные");
                             }
                         }
-                    } else if (s.equals("2")) {
-                        System.out.println("Данные для sin(x):");
-                        xy = new HashMap<>();
-                        xy.put(1.0, 1.0);
-                        xy.put(2.0, 2.0);
-                        xy.put(2.0000001, 5.0);
-                        xy.put(4.0, 4.0);
-                        for (Map.Entry<Double, Double> entry : xy.entrySet()) {
-                            System.out.println("(" + entry.getKey() + "," + entry.getValue() + ")");
-                        }
-                    } else {
+                    } else if(s.equals("2")) {
                         String buffer = "";
                         xy = new HashMap<>();
                         System.out.println("Вводите данные через запятую, используйте \"0\" после ввода данных:");
@@ -102,6 +97,38 @@ public class LagrangianIntegrationMath {
                                 System.out.println("Некоретные данные, введите строку повторно или используйте \"0\", чтобы закончить вводить данные.");
                             }
                         }
+                    } else if(s.equals("3")){
+                        try {
+                            xy = new HashMap<>();
+                            System.out.println("Введите имя файла:");
+                            String path = scanner.nextLine();
+                            BufferedReader file = new BufferedReader(new FileReader(new File(path)));
+                            while (true) {
+                                String buffer = file.readLine().trim();
+                                if (!buffer.equals("0")) {
+                                    String[] t = buffer.split(",");
+                                    xy.put(Double.valueOf(t[0]), Double.valueOf(t[1]));
+                                } else {
+                                    break;
+                                }
+                            }
+                        }catch (Exception e){
+                            System.out.println("Произошла ошибка при чтании файла");
+                            e.printStackTrace();
+                        }
+                    } else if (s.equals("4")) {
+                        System.out.println("Данные для sin(x):");
+                        xy = new HashMap<>();
+                        xy.put(1.0, 1.0);
+                        xy.put(2.0, 2.0);
+                        xy.put(2.0000001, 5.0);
+                        xy.put(4.0, 4.0);
+                        for (Map.Entry<Double, Double> entry : xy.entrySet()) {
+                            System.out.println("(" + entry.getKey() + "," + entry.getValue() + ")");
+                        }
+                    } else{
+                        System.out.println("Такого варианта нет");
+                        throw new Exception("Такого варианта нет");
                     }
                 } else {
                     System.out.println("Завершение работы");
