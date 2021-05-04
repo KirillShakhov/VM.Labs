@@ -1,7 +1,7 @@
 package labs.lab4;
 
 import labs.models.ICommand;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 import labs.models.Point;
 import labs.modules.GraphModule;
 
@@ -42,11 +42,11 @@ public class LinearApproximation implements ICommand {
                 System.out.println("Некоретные данные, введите строку повторно или используйте \"0\", чтобы закончить вводить данные.");
             }
         }
-        Map<String, ArrayList<IFunc>> map_func = new HashMap<>();
+        Map<String, ArrayList<IFuncX>> map_func = new HashMap<>();
         Map<String, ArrayList<Point>> point_func = new HashMap<>();
         // Добавление функции на график
-        ArrayList<IFunc> funcs = new ArrayList<>();
-        IFunc result = approximation(xy);
+        ArrayList<IFuncX> funcs = new ArrayList<>();
+        IFuncX result = approximation(xy);
         funcs.add(result);
         map_func.put("График функции, полученной аппроксимацией", funcs);
         // Добавление точек исходных данных на график
@@ -58,7 +58,7 @@ public class LinearApproximation implements ICommand {
         // Рисуем график
         new GraphModule(map_func, point_func);
     }
-    private static IFunc approximation(Map<Double, Double> xy) {
+    private static IFuncX approximation(Map<Double, Double> xy) {
         ArrayList<Double> x = new ArrayList<>(), y = new ArrayList<>();
         for (Map.Entry<Double, Double> entry : xy.entrySet()) {
             x.add(entry.getKey());
@@ -67,7 +67,7 @@ public class LinearApproximation implements ICommand {
         return approximation(x, y);
     }
 
-    public static IFunc approximation(ArrayList<Double> x, ArrayList<Double> y){
+    public static IFuncX approximation(ArrayList<Double> x, ArrayList<Double> y){
         double SX=0, SY=0, SX2=0, SXY=0;
         if(x.size() != y.size()){
             return null;

@@ -1,5 +1,5 @@
 package labs.lab4;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 import labs.models.Point;
 import labs.modules.GraphModule;
 import java.util.*;
@@ -7,7 +7,7 @@ import java.util.*;
 public class LagrangianIntegration {
     static Scanner scanner = new Scanner(System.in);
 
-    public static void solve(IFunc func1) {
+    public static void solve(IFuncX func1) {
         Map<Double, Double> xy = new HashMap<>();
         while (true) {
             try {
@@ -115,10 +115,10 @@ public class LagrangianIntegration {
         if (xy.isEmpty()) {
             System.out.println("Что-то пошло не так. Массивы X и Y отсутствуют.");
         } else {
-            Map<String, ArrayList<IFunc>> map_func = new HashMap<>();
+            Map<String, ArrayList<IFuncX>> map_func = new HashMap<>();
             Map<String, ArrayList<Point>> point_func = new HashMap<>();
             // Добавление функции на график
-            ArrayList<IFunc> funcs = new ArrayList<>();
+            ArrayList<IFuncX> funcs = new ArrayList<>();
             funcs.add(func1);
             map_func.put("График функции", funcs);
 

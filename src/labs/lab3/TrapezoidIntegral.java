@@ -1,12 +1,12 @@
 package labs.lab3;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 import labs.lab3.models.Separation;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TrapezoidIntegral {
-    public static void execute(IFunc func) {
+    public static void execute(IFuncX func) {
         Scanner scanner = new Scanner(System.in);
         double a, b, steps;
         while(true){
@@ -21,7 +21,7 @@ public class TrapezoidIntegral {
         solve(func, a, b, steps);
     }
 
-    static void solve(IFunc func, double a, double b, double step_count){
+    static void solve(IFuncX func, double a, double b, double step_count){
         ArrayList<Separation> separations = findSeparations(func, a, b);
 
         double sum = 0;
@@ -34,7 +34,7 @@ public class TrapezoidIntegral {
         System.out.println("Общая  площадь: " + String.format("%.8f", round(sum, 8)));
     }
 
-    static ArrayList<Separation> findSeparations(IFunc func, double a, double b){
+    static ArrayList<Separation> findSeparations(IFuncX func, double a, double b){
         ArrayList<Separation> array = new ArrayList<>();
         double eps = 0.00000001;
         int scale = 8; // Количество знаков после запятой.
@@ -72,7 +72,7 @@ public class TrapezoidIntegral {
             return Double.isInfinite(x) ? x : Double.NaN;
         }
     }
-    static Double integral(IFunc func, double a, double b, double step_count) {
+    static Double integral(IFuncX func, double a, double b, double step_count) {
         double sum = 0, step;
         //Проверка шага
         if(step_count<0) { return null; }

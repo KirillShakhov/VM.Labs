@@ -1,7 +1,7 @@
 package labs.lab4.commands;
 
 import labs.models.ICommand;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 import labs.lab4.LagrangianIntegration;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class InterpolationLagrange implements ICommand {
     @Override
     public void execute() {
         System.out.println("Интерполирование многочленом Лагранжа:");
-        Map<String, IFunc> funcs = new HashMap<>();
+        Map<String, IFuncX> funcs = new HashMap<>();
         // 1
         funcs.put("sin(x)", Math::sin);
         // 2
@@ -32,13 +32,13 @@ public class InterpolationLagrange implements ICommand {
         */
         int i = 1;
         ArrayList<String> keys = new ArrayList<>();
-        for (Map.Entry<String, IFunc> entry : funcs.entrySet()) {
+        for (Map.Entry<String, IFuncX> entry : funcs.entrySet()) {
             System.out.println((i++) + ". " + entry.getKey());
             keys.add(entry.getKey());
         }
         String str = scanner.nextLine();
         try {
-            IFunc func1 = funcs.get(keys.get(Integer.parseInt(str) - 1));
+            IFuncX func1 = funcs.get(keys.get(Integer.parseInt(str) - 1));
             LagrangianIntegration.solve(func1);
         } catch (Exception e) {
             System.out.println("Нет такого уравнения");
