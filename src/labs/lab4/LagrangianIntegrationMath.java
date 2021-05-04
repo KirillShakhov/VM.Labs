@@ -156,21 +156,20 @@ public class LagrangianIntegrationMath {
             }
             point_func.put("Точки исходных данных", data_points);
 
-            // TODO Аппроксимирование это другое, надо переделать
             // Интерполяция
             System.out.println("Введите координату x искомой точки:");
             double t = Double.parseDouble(scanner.nextLine());
-            Double result = lagranz(xy, t);
+            double result = lagranz(xy, t);
             System.out.println("Ln(" + t + ")=" + result);
             ArrayList<Point> point = new ArrayList<>();
             point.add(new Point(t, result));
-            point_func.put("Точка результата Интерполяции", point);
+            point_func.put("Точка Интерполяции", point);
             // Аппроксимирование
-            ArrayList<Point> approximation = Approximation(xy);
-            point_func.put("Точки Интерполяции", approximation);
+            ArrayList<Point> interpolation = Approximation(xy);
+            point_func.put("Точки Интерполяции", interpolation);
             // Экстрополяция
             ArrayList<Point> extrapolation = Extrapolation(xy);
-            point_func.put("Точки Экстрополяции", extrapolation);
+            point_func.put("Точки вне исходных данных, посчитанные Лагранжем", extrapolation);
             // Рисуем график
             new GraphModule(map_func, point_func);
         }
