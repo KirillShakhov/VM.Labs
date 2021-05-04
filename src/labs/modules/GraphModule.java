@@ -42,8 +42,7 @@ public class GraphModule extends JPanel {
     public void frameOp() {
         JFrame JF = new JFrame("Paint");
         JPanel boxesPanel = new JPanel();
-        JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28 + 38 + 10*(f.size()+points.size()));
-        System.out.println(10*(f.size()+points.size()));
+        JF.setBounds(100, 100, WIDTH + 16, HEIGHT + 28 + 38 + 10 + 10*(f.size()+points.size()));
 //        JF.setLayout(null);
 //        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JF.setVisible(true);
