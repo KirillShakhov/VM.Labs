@@ -1,11 +1,10 @@
 package labs.lab4;
-
-import labs.lab3.TrapezoidIntegral;
 import labs.models.ICommand;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 import labs.modules.CalcModule;
 import java.util.Scanner;
-public class IndividualFunc implements IFunc, ICommand {
+
+public class IndividualFunc implements IFuncX, ICommand {
     private String xyz;
     @Override
     public Double solve(double x) {

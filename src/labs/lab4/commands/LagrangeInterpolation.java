@@ -1,15 +1,16 @@
 package labs.lab4.commands;
 
+import labs.lab4.IndividualFunc;
 import labs.models.ICommand;
 import labs.models.IFuncX;
-import labs.lab4.LagrangianIntegration;
+import labs.lab4.LagrangianIntegrationMath;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class InterpolationLagrange implements ICommand {
+public class LagrangeInterpolation implements ICommand {
     Scanner scanner = new Scanner(System.in);
     @Override
     public String getMessage() {
@@ -36,12 +37,15 @@ public class InterpolationLagrange implements ICommand {
             System.out.println((i++) + ". " + entry.getKey());
             keys.add(entry.getKey());
         }
+        System.out.println((funcs.size()+1)+". Ввести своё уравнение");
         String str = scanner.nextLine();
         try {
             IFuncX func1 = funcs.get(keys.get(Integer.parseInt(str) - 1));
-            LagrangianIntegration.solve(func1);
+            LagrangianIntegrationMath.solve(func1);
         } catch (Exception e) {
-            System.out.println("Нет такого уравнения");
+            IndividualFunc f = new IndividualFunc();
+            f.execute();
+            LagrangianIntegrationMath.solve(f);
         }
     }
 }
