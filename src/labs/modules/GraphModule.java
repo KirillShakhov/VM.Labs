@@ -10,7 +10,10 @@ import javax.swing.*;
 import labs.models.Point;
 import labs.models.IFuncX;
 
-
+/*
+Author - kushok(https://www.cyberforum.ru/java-gui/thread1194840.html)
+Modified by Kirill Shakhov
+ */
 public class GraphModule extends JPanel {
     double x1 = -5, x2 = 5, y1 = -5, y2 = 5;
     double step_x = 1;
