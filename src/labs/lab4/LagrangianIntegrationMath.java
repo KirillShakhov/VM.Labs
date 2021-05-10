@@ -12,7 +12,7 @@ public class LagrangianIntegrationMath {
     static Scanner scanner = new Scanner(System.in);
 
     public static void solve(IFuncX func1) {
-        Map<Double, Double> xy = new HashMap<>();
+        ArrayList<Point> xy = new ArrayList<>();
         while (true) {
             try {
                 System.out.println("Выберите готовые данные, или введиет свои:");
@@ -23,22 +23,22 @@ public class LagrangianIntegrationMath {
                 if (scanner.hasNext()) {
                     String s = scanner.nextLine();
                     if (s.equals("0")) {
-                        xy = new HashMap<>();
+                        xy = new ArrayList<>();
                         double left, right;
                         left = 0d;
                         right = 4d;
                         Double sep = right - left;
                         Double steps = 4d;
                         for (double i = left; i < right; i += sep / steps) {
-                            xy.put(i, func1.solve(i));
+                            xy.add(new Point(i, func1.solve(i)));
                         }
                         System.out.println("Полученные данные:");
-                        for (Map.Entry<Double, Double> entry : xy.entrySet()) {
-                            System.out.println("(" + entry.getKey() + "," + entry.getValue() + ")");
+                        for (Point point : xy) {
+                            System.out.println("(" + point.getX() + "," + point.getY() + ")");
                         }
                     } else if (s.equals("1")) {
                         while (true) {
-                            xy = new HashMap<>();
+                            xy = new ArrayList<>();
                             double left, right;
                             System.out.println("Введите границы через запятую");
                             System.out.println("Привем для промежутка от -5 до 5:\n-5,5");
@@ -57,11 +57,11 @@ public class LagrangianIntegrationMath {
                                     System.out.println("Введите количество точек:");
                                     Double steps = Double.valueOf(scanner.nextLine());
                                     for (double i = left; i < right; i += sep / steps) {
-                                        xy.put(i, func1.solve(i));
+                                        xy.add(new Point(i, func1.solve(i)));
                                     }
                                     System.out.println("Полученные данные:");
-                                    for (Map.Entry<Double, Double> entry : xy.entrySet()) {
-                                        System.out.println("(" + entry.getKey() + "," + entry.getValue() + ")");
+                                    for (Point point : xy) {
+                                        System.out.println("(" + point.getX() + "," + point.getY() + ")");
                                     }
                                 } else {
                                     System.out.println("Завершершение работы");
@@ -74,7 +74,7 @@ public class LagrangianIntegrationMath {
                         }
                     } else if(s.equals("2")) {
                         String buffer = "";
-                        xy = new HashMap<>();
+                        xy = new ArrayList<>();
                         System.out.println("Вводите данные через запятую, используйте \"0\" после ввода данных:");
                         System.out.println("Пример:\n1,2\n2,3\n4,5\n0");
                         System.out.println("Вводите данные:");
@@ -84,7 +84,7 @@ public class LagrangianIntegrationMath {
                                     buffer = scanner.nextLine();
                                     if (!buffer.equals("0")) {
                                         String[] t = buffer.split(",");
-                                        xy.put(Double.valueOf(t[0]), Double.valueOf(t[1]));
+                                        xy.add(new Point(Double.parseDouble(t[0]), Double.parseDouble(t[1])));
                                     } else {
                                         break;
                                     }
@@ -98,7 +98,7 @@ public class LagrangianIntegrationMath {
                         }
                     } else if(s.equals("3")){
                         try {
-                            xy = new HashMap<>();
+                            xy = new ArrayList<>();
                             System.out.println("Введите имя файла:");
                             String path = scanner.nextLine();
                             BufferedReader file = new BufferedReader(new FileReader(new File(path)));
@@ -106,7 +106,7 @@ public class LagrangianIntegrationMath {
                                 String buffer = file.readLine().trim();
                                 if (!buffer.equals("0")) {
                                     String[] t = buffer.split(",");
-                                    xy.put(Double.valueOf(t[0]), Double.valueOf(t[1]));
+                                    xy.add(new Point(Double.parseDouble(t[0]), Double.parseDouble(t[1])));
                                 } else {
                                     break;
                                 }
@@ -117,12 +117,12 @@ public class LagrangianIntegrationMath {
                         }
                     } else if (s.equals("4")) {
                         System.out.println("Данные для sin(x):");
-                        xy = new HashMap<>();
-                        xy.put(1.14, 0.9);
-                        xy.put(4.0, -0.756802);
-                        xy.put(5.221, -0.873422);
-                        for (Map.Entry<Double, Double> entry : xy.entrySet()) {
-                            System.out.println("(" + entry.getKey() + "," + entry.getValue() + ")");
+                        xy = new ArrayList<>();
+                        xy.add(new Point(1.14, 0.9));
+                        xy.add(new Point(4.0, -0.756802));
+                        xy.add(new Point(5.221, -0.873422));
+                        for (Point point : xy) {
+                            System.out.println("(" + point.getX() + "," + point.getY() + ")");
                         }
                     } else{
                         System.out.println("Такого варианта нет");
@@ -148,11 +148,7 @@ public class LagrangianIntegrationMath {
             map_func.put("График функции", funcs);
 
             // Добавление точек исходных данных на график
-            ArrayList<Point> data_points = new ArrayList<>();
-            for (Map.Entry<Double, Double> entry : xy.entrySet()) {
-                data_points.add(new Point(entry.getKey(), entry.getValue()));
-            }
-            point_func.put("Точки исходных данных", data_points);
+            point_func.put("Точки исходных данных", xy);
 
             // Интерполяция
             System.out.println("Введите координату x искомой точки:");
@@ -174,15 +170,19 @@ public class LagrangianIntegrationMath {
 
     }
 
-    private static ArrayList<Point> Interpolation(Map<Double, Double> xy, int steps) {
+    /*
+    Построение точек между входными данными.
+    xy - входные данные: точки в массиве
+    steps - количество точек, которое надо найти между точками входных данных.
+     */
+    private static ArrayList<Point> Interpolation(ArrayList<Point> xy, int steps) {
         ArrayList<Point> points = new ArrayList<>();
         // Сортировка
-        ArrayList<Map.Entry<Double, Double>> list = new ArrayList<>(xy.entrySet());
-        list.sort(Map.Entry.comparingByKey());
+        xy.sort(Comparator.comparingDouble(Point::getX));
         //
-        for (int i = 1; i < list.size(); i++) {
-            double first = list.get(i-1).getKey();
-            double second = list.get(i).getKey();
+        for (int i = 1; i < xy.size(); i++) {
+            double first = xy.get(i-1).getX();
+            double second = xy.get(i).getX();
             double step = (second-first)/(steps+1);
             for(double j = first+step; j+0.0000001 < second; j+=step){
                 points.add(new Point(j, lagranz(xy, j)));
@@ -190,16 +190,16 @@ public class LagrangianIntegrationMath {
         }
         return points;
     }
-
-    private static ArrayList<Point> Extrapolation(Map<Double, Double> xy) {
+    // Построение точек вне промежутка.
+    private static ArrayList<Point> Extrapolation(ArrayList<Point> xy) {
         ArrayList<Point> points = new ArrayList<>();
         int steps = 100;
         int xplux = 10;
         // Поиск минимума и макисума
         double min = Double.MAX_VALUE, max = Double.MIN_VALUE;
-        for (Map.Entry<Double, Double> entry : xy.entrySet()) {
-            if (entry.getKey() >= max) { max = entry.getKey(); }
-            if (entry.getKey() <= min) { min = entry.getKey(); }
+        for (Point point : xy) {
+            if (point.getX() >= max) { max = point.getX(); }
+            if (point.getX() <= min) { min = point.getX(); }
         }
         //
         for (double i = max; i < (max + xplux); i += (max + xplux) / steps) {
@@ -212,17 +212,25 @@ public class LagrangianIntegrationMath {
         return points;
     }
 
-    private static double lagranz(Map<Double, Double> xy, double t) {
+    // Обертка для Лагранжа, чтобы использовать Array с точками, вместо двух массивов
+    private static double lagranz(ArrayList<Point> xy, double x1) {
+        // разделение на два массива
         ArrayList<Double> x = new ArrayList<>();
         ArrayList<Double> y = new ArrayList<>();
-        for (Map.Entry<Double, Double> entry : xy.entrySet()) {
-            x.add(entry.getKey());
-            y.add(entry.getValue());
+        for (Point point : xy) {
+            x.add(point.getX());
+            y.add(point.getY());
         }
-        return lagranz(x, y, t);
+        return lagranz(x, y, x1);
     }
 
-    public static double lagranz(ArrayList<Double> X, ArrayList<Double> Y, double t) {
+    /*
+    Лагранж - метод лагранжа
+    X - координаты X
+    Y - координаты Y
+    x1 - координата X для поиска Y.
+     */
+    public static double lagranz(ArrayList<Double> X, ArrayList<Double> Y, double x1) {
         double sum, prod;
         int n = X.size();
         sum = 0;
@@ -230,7 +238,7 @@ public class LagrangianIntegrationMath {
             prod = 1;
             for (int i = 0; i < n; i++) {
                 if (i != j) {
-                    prod *= (t - X.get(i)) / (X.get(j) - X.get(i));
+                    prod *= (x1 - X.get(i)) / (X.get(j) - X.get(i));
                 }
             }
             sum += Y.get(j) * prod;
