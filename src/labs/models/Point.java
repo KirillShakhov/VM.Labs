@@ -1,7 +1,5 @@
 package labs.models;
 
-import java.awt.*;
-
 public class Point {
     private double x;
     private double y;

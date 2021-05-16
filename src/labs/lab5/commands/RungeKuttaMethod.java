@@ -17,12 +17,12 @@ public class RungeKuttaMethod implements ICommand {
     }
     @Override
     public void execute() {
-        System.out.println("Интерполирование многочленом Лагранжа:");
+        System.out.println("Рунге-Курта метод:");
         Map<String, IFuncXY> funcs = new HashMap<>();
         // 1
-        funcs.put("??", (x, y) -> 2 * x);
+        funcs.put("2x", (x, y) -> 2 * x);
         // 2
-        funcs.put("??", (x, y) -> 2 * x);
+        funcs.put("2x", (x, y) -> Math.sin(x));
         //
 
         /*

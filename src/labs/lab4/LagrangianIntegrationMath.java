@@ -158,10 +158,10 @@ public class LagrangianIntegrationMath {
             ArrayList<Point> point = new ArrayList<>();
             point.add(new Point(t, result));
             point_func.put("Точка Интерполяции", point);
-            // Аппроксимирование
+            // Интерполяция(Промежуточные точки)
             ArrayList<Point> interpolation = Interpolation(xy, 2);
             point_func.put("Точки Интерполяции", interpolation);
-            // Экстрополяция
+            // Экстраполяция
             ArrayList<Point> extrapolation = Extrapolation(xy);
             point_func.put("Точки вне исходных данных, посчитанные Лагранжем", extrapolation);
             // Рисуем график
@@ -175,7 +175,7 @@ public class LagrangianIntegrationMath {
     xy - входные данные: точки в массиве
     steps - количество точек, которое надо найти между точками входных данных.
      */
-    private static ArrayList<Point> Interpolation(ArrayList<Point> xy, int steps) {
+    public static ArrayList<Point> Interpolation(ArrayList<Point> xy, int steps) {
         ArrayList<Point> points = new ArrayList<>();
         // Сортировка
         xy.sort(Comparator.comparingDouble(Point::getX));
@@ -191,7 +191,7 @@ public class LagrangianIntegrationMath {
         return points;
     }
     // Построение точек вне промежутка.
-    private static ArrayList<Point> Extrapolation(ArrayList<Point> xy) {
+    public static ArrayList<Point> Extrapolation(ArrayList<Point> xy) {
         ArrayList<Point> points = new ArrayList<>();
         int steps = 100;
         int xplux = 10;

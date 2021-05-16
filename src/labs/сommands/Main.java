@@ -2,6 +2,7 @@ package labs.сommands;
 import labs.lab1.commands.SystemsOfLinearAlgebraicEquations;
 import labs.lab2.commands.NonlinearEquationsMenu;
 import labs.lab2.commands.SystemNonlinearEquations;
+import labs.lab5.commands.CauchyProblem;
 import labs.models.ICommand;
 import labs.modules.MenuModule;
 import labs.lab3.commands.Integration;
@@ -26,8 +27,8 @@ public class Main implements ICommand {
         commands.add(new Integration());
         //Lab4
         commands.add(new LagrangeInterpolation());
-        //
-        //commands.add(new LinearApproximation());
+        //Lab5
+        commands.add(new CauchyProblem());
         //
         MenuModule menu = new MenuModule(commands);
         menu.execute();
