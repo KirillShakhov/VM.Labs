@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
-import static labs.lab4.LagrangianIntegrationMath.Extrapolation;
 import static labs.lab4.LagrangianIntegrationMath.Interpolation;
 
 public class RungeKuttaMethodMath {

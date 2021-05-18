@@ -20,11 +20,11 @@ public class RungeKuttaMethod implements ICommand {
         System.out.println("Рунге-Курта метод:");
         Map<String, IFuncXY> funcs = new HashMap<>();
         // 1
-        funcs.put("y' + xy - x^2 = 0", (x, y) -> -(x*y-Math.pow(x, 2)));
+        funcs.put("y' + xy - x^2 = 0", (x, y) -> -(x*y)+Math.pow(x, 2));
         // 2
-        funcs.put("y * y' - x = 0", (x, y) -> x/y);
+        funcs.put("yy' - x = 0", (x, y) -> x/y);
         //
-
+        funcs.put("xy' + y - e^x = 0", (x, y) -> (-y+Math.pow(Math.E, x))/2);
         /*
         Вывод и обработка ввода. Не трогать.
         */
