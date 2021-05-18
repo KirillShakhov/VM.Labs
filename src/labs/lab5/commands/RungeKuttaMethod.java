@@ -22,7 +22,7 @@ public class RungeKuttaMethod implements ICommand {
         // 1
         funcs.put("y' + xy - x^2 = 0", (x, y) -> -(x*y-Math.pow(x, 2)));
         // 2
-        //funcs.put("2x", (x, y) -> Math.sin(x));
+        funcs.put("y * y' - x = 0", (x, y) -> x/y);
         //
 
         /*
