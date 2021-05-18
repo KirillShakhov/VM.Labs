@@ -36,23 +36,10 @@ public class RungeKuttaMethodMath {
                 break;
             }catch (Exception ignored){}
         }
-        /*
-        Получение исходных данных
-         */
-        ArrayList<Point> xy = new ArrayList<>();
-        for(double i = x0; i <= end; i++){
-            xy.add(new Point(i, rungeKuttaSolve(f, x0, y0, i, eps)));
-        }
-        /*
-        Формирование графика
-         */
         Map<String, ArrayList<IFuncX>> map_func = new HashMap<>();
         Map<String, ArrayList<Point>> point_func = new HashMap<>();
-        // Добавление функции на график
-//        ArrayList<IFuncXY> funcs = new ArrayList<>();
-//        funcs.add(f);
-//        map_func.put("График функции", funcs);
-        // Добавление точек исходных данных на график
+        //Получение исходных данных
+        ArrayList<Point> xy = rungeKuttaSolve(f, x0, y0, end, eps);
         point_func.put("Точки исходных данных", xy);
         // Интерполяция
         ArrayList<Point> interpolation = Interpolation(xy, 10);
@@ -66,7 +53,8 @@ public class RungeKuttaMethodMath {
 
     // Находит значение y для заданного x, используя размер шага h
     // и начальное значение y0 в x0.
-    public static double rungeKutta(IFuncXY f, double x0, double y0, double x_end, double h) {
+    public static ArrayList<Point> rungeKutta(IFuncXY f, double x0, double y0, double x_end, double h) {
+        ArrayList<Point> points = new ArrayList<>();
         // Подсчитать количество итераций, используя размер шага или
         // высота шага h
         int n = (int) ((x_end - x0) / h);
@@ -82,19 +70,35 @@ public class RungeKuttaMethodMath {
             k4 = h * f.solve(x0 + h, y + k3);
             // Обновить следующее значение y
             y = y + (1.0 / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4);
+            points.add(new Point(x0, y));
             // Обновляем следующее значение x
             x0 += h;
         }
-        return y;
+        return points;
     }
-    public static double rungeKuttaSolve(IFuncXY f, double x0, double y0, double x_end, double eps){
-        double result, result_eps;
+    public static ArrayList<Point> rungeKuttaSolve(IFuncXY f, double x0, double y0, double x_end, double eps){
+        ArrayList<Point> result;
+        double eps_x = -1000000000;
+        double eps_y = -1000000000;
         double h = 1;
         do {
             result = rungeKutta(f, x0, y0, x_end, h);
-            result_eps = rungeKutta(f, x0, y0, x_end, h/2);
+            ArrayList<Point> result_eps = rungeKutta(f, x0, y0, x_end, h/2);
             h /= 10;
-        }while(result-result_eps > eps);
+            if(result_eps.size() != result.size()) {
+                System.out.println("Произошла ошибка или недочет программы");
+                return null;
+            }
+            // Подсчет погрешности
+            for(int i = 0; i < result.size(); i++){
+                if(Math.abs(result.get(i).getX()-result_eps.get(i).getX()) > eps){
+                    eps_x = Math.abs(result.get(i).getX()-result_eps.get(i).getX());
+                }
+                if(Math.abs(result.get(i).getY()-result_eps.get(i).getY()) > eps){
+                    eps_y = Math.abs(result.get(i).getY()-result_eps.get(i).getY());
+                }
+            }
+        }while(eps_x > eps || eps_y > eps);
         return result;
     }
 }

@@ -7,7 +7,7 @@ import static labs.lab5.RungeKuttaMethodMath.rungeKutta;
 
 
 public class AdamsMethodMath {
-
+/*
     public static double F(double x, double y) // y'
     {
         return 4 * Math.cos(x) + Math.sin(2 * x);
@@ -96,4 +96,6 @@ public class AdamsMethodMath {
             System.out.println("x: ["+p.getX()+"] y: ["+p.getY()+"]");
         }
     }
+
+ */
 }
