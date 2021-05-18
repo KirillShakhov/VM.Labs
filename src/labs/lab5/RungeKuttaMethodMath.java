@@ -36,17 +36,13 @@ public class RungeKuttaMethodMath {
                 break;
             }catch (Exception ignored){}
         }
+        /*
+        Получение исходных данных
+         */
         ArrayList<Point> xy = new ArrayList<>();
-        //System.out.println("The value of y at x is : " + rungeKutta(f, x0, y, x, h));
-
-        double h = 0.2;
-        for(double i = x0; i <= end; i+=eps){
-            xy.add(new Point(i, rungeKutta(f, x0, y0, i, h)));
+        for(double i = x0; i <= end; i++){
+            xy.add(new Point(i, rungeKuttaSolve(f, x0, y0, i, eps)));
         }
-
-
-
-
         /*
         Формирование графика
          */
@@ -70,10 +66,10 @@ public class RungeKuttaMethodMath {
 
     // Находит значение y для заданного x, используя размер шага h
     // и начальное значение y0 в x0.
-    public static double rungeKutta(IFuncXY f, double x0, double y0, double x, double h) {
+    public static double rungeKutta(IFuncXY f, double x0, double y0, double x_end, double h) {
         // Подсчитать количество итераций, используя размер шага или
         // высота шага h
-        int n = (int) ((x - x0) / h);
+        int n = (int) ((x_end - x0) / h);
         double k1, k2, k3, k4;
         // Итерация по количеству итераций
         double y = y0;
@@ -90,5 +86,15 @@ public class RungeKuttaMethodMath {
             x0 += h;
         }
         return y;
+    }
+    public static double rungeKuttaSolve(IFuncXY f, double x0, double y0, double x_end, double eps){
+        double result, result_eps;
+        double h = 1;
+        do {
+            result = rungeKutta(f, x0, y0, x_end, h);
+            result_eps = rungeKutta(f, x0, y0, x_end, h/2);
+            h /= 10;
+        }while(result-result_eps > eps);
+        return result;
     }
 }
