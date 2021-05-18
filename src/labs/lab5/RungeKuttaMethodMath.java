@@ -36,6 +36,9 @@ public class RungeKuttaMethodMath {
         Map<String, ArrayList<Point>> point_func = new HashMap<>();
         //Получение исходных данных
         ArrayList<Point> xy = rungeKuttaSolve(f, x0, y0, end, eps);
+        for(Point p : xy){
+            System.out.println("x: ["+p.getX()+"] y: ["+p.getY()+"]");
+        }
         point_func.put("Точки исходных данных", xy);
         // Интерполяция
         ArrayList<Point> interpolation = Interpolation(xy, 10);
@@ -81,20 +84,18 @@ public class RungeKuttaMethodMath {
             result = rungeKutta(f, x0, y0, x_end, h);
             ArrayList<Point> result_eps = rungeKutta(f, x0, y0, x_end, h/2);
             h /= 10;
-            if(result_eps.size() != result.size()) {
-                System.out.println("Произошла ошибка или недочет программы");
-                return null;
-            }
+
             // Подсчет погрешности
-            for(int i = 0; i < result.size(); i++){
-                if(Math.abs(result.get(i).getX()-result_eps.get(i).getX()) > eps){
-                    eps_x = Math.abs(result.get(i).getX()-result_eps.get(i).getX());
-                }
-                if(Math.abs(result.get(i).getY()-result_eps.get(i).getY()) > eps){
-                    eps_y = Math.abs(result.get(i).getY()-result_eps.get(i).getY());
-                }
-            }
-        }while(eps_x > eps || eps_y > eps);
+//            for(int i = 0; i < result_eps.size(); i++){
+//                if(Math.abs(result.get(i).getX()-result_eps.get(i+1).getX()) > eps){
+//                    eps_x = Math.abs(result.get(i).getX()-result_eps.get(i+1).getX());
+//                }
+//                if(Math.abs(result.get(i).getY()-result_eps.get(i+1).getY()) > eps){
+//                    eps_y = Math.abs(result.get(i).getY()-result_eps.get(i+1).getY());
+//                }
+//            }
+            eps_y = Math.abs(result_eps.get(result_eps.size()-1).getY()-result.get(result.size()-1).getY());
+        }while(eps_y > eps);
         return result;
     }
 }

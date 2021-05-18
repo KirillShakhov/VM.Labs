@@ -35,11 +35,19 @@ public class RungeKuttaMethod implements ICommand {
             keys.add(entry.getKey());
         }
         String str = scanner.nextLine();
+        IFuncXY func1 = null;
         try {
-            IFuncXY func1 = funcs.get(keys.get(Integer.parseInt(str) - 1));
-            RungeKuttaMethodMath.solve(func1);
+            func1 = funcs.get(keys.get(Integer.parseInt(str) - 1));
         } catch (Exception e) {
             System.out.println("Нет такого уравнения");
+        }
+        if(func1 != null) {
+            try {
+                RungeKuttaMethodMath.solve(func1);
+            } catch (Exception e) {
+                System.out.println("Произошла ошибка");
+                e.printStackTrace();
+            }
         }
     }
 }
