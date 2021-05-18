@@ -13,12 +13,8 @@ import static labs.lab4.LagrangianIntegrationMath.Interpolation;
 
 public class RungeKuttaMethodMath {
     public static void solve(IFuncXY f) {
-        //double x0 = 0, y = 1, x = 2, h = 0.2;
         // Пример дифференциального уравнения "dy / dx = (x - y) / 2"
-        // IFuncXY f = (x1, y1) -> (x1 - y1) / 2;
-        //f = (x1, y1) -> (x1 - y1) / 2;
-        //System.out.println("The value of y at x is : " + rungeKutta(f, x0, y, x, h));
-
+        // Пример дифференциального уравнения "y'  = (x - y) / 2"
         //Задается ОбДифУр вида y’ + f(x,y) = 0 ,
         // пользователь задает начальные условия (x0, y0), конец отрезка и точность.
         double x0, y0, end, eps;
