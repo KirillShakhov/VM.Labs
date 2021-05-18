@@ -1,5 +1,5 @@
 package labs.lab2;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 import labs.lab2.models.ISysFunc;
 import labs.models.Point;
 import labs.lab2.models.ResultSetForSys;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class MathModuleLab2 {
-    public static void execute(IFunc func){
+    public static void execute(IFuncX func){
         //Для нелинейных уравнений
         Scanner scanner = new Scanner(System.in);
         double left = -5, right = 5, eps = 0.001;
@@ -63,8 +63,8 @@ public class MathModuleLab2 {
             System.out.println("Уравнение не имеет решений методом хорд.");
         }
         // Добавление функции на график
-        Map<String, ArrayList<IFunc>> map_func = new HashMap<>();
-        ArrayList<IFunc> funcs = new ArrayList<>();
+        Map<String, ArrayList<IFuncX>> map_func = new HashMap<>();
+        ArrayList<IFuncX> funcs = new ArrayList<>();
         funcs.add(func);
         map_func.put("График функции", funcs);
         // Добавление функции на график
@@ -73,7 +73,7 @@ public class MathModuleLab2 {
         new GraphModule(map_func, map_points);
     }
 
-    private static boolean cordChecker(IFunc func, double left, double right) {
+    private static boolean cordChecker(IFuncX func, double left, double right) {
         return true;
     }
 
@@ -105,7 +105,7 @@ public class MathModuleLab2 {
 
 
         // Добавление функции на график
-        Map<String, ArrayList<IFunc>> map_func = new HashMap<>();
+        Map<String, ArrayList<IFuncX>> map_func = new HashMap<>();
         map_func.put("График функции", func.getDraw());
         // Добавление функции на график
         Map<String, ArrayList<Point>> map_points = new HashMap<>();
@@ -113,7 +113,7 @@ public class MathModuleLab2 {
         new GraphModule(map_func, map_points);
     }
 
-    public static boolean doubChecker(IFunc function, double left, double right) {
+    public static boolean doubChecker(IFuncX function, double left, double right) {
         boolean value = false;
         for (double i = left; i < right; i += 0.5) {
             for (double j = left; j < right; j += 0.5) {
@@ -125,7 +125,7 @@ public class MathModuleLab2 {
         return value;
     }
     //Выбирается начальное приближение к отрезку [left, right], такое, что f(left)×f(right)<0
-    public static double doubMetod(IFunc function, double left, double right, double eps) {
+    public static double doubMetod(IFuncX function, double left, double right, double eps) {
         double dx = 0, xi = 0;
         if (function.solve(left) == 0) {
             return left;
@@ -147,7 +147,7 @@ public class MathModuleLab2 {
         return 0;
     }
 
-    public static double chordMethod(IFunc function, double left, double right, double eps) {
+    public static double chordMethod(IFuncX function, double left, double right, double eps) {
         while (Math.abs(right - left) > eps) {
             left = right - (right - left) * function.solve(right) / (function.solve(
                     right) - function.solve(left));

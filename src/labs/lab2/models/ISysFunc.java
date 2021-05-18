@@ -1,10 +1,10 @@
 package labs.lab2.models;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 
 import java.util.ArrayList;
 
 public interface ISysFunc {
-    ArrayList<IFunc> getDraw();
+    ArrayList<IFuncX> getDraw();
     static String toString(ArrayList<String> arrayList) {
         StringBuilder result = new StringBuilder("|");
         for(String it : arrayList){

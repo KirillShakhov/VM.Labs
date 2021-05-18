@@ -112,7 +112,7 @@ public class MathModuleLab1 {
         ArrayList<Double> residuals = new ArrayList<>();
         for(int i = 0; i < matrix.getSize(); i++)
         {
-            float S=0;
+            double S=0;
             for(int j = 0; j < matrix.getSize(); j++)
             {
                 S += matrix.getMatrix()[i][j] * x[j] ;

@@ -1,13 +1,13 @@
 package labs.lab3;
 import labs.lab3.models.Separation;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RectangleIntegral {
     static Scanner scanner = new Scanner(System.in);
-    public static void solve(IFunc f){
+    public static void solve(IFuncX f){
         System.out.println("Введите a:");
         double a = Double.parseDouble(scanner.nextLine());
         System.out.println("Введите b:");
@@ -33,14 +33,7 @@ public class RectangleIntegral {
         System.out.println("Сумма для метода средних прямоугольников: "+round(sum_mid,8));
     }
     //функция для вычисления интеграла методом левых прямоугольников
-    static double left_rectangle_integral(IFunc f, double a, double b, int n) {
-        boolean isNegative = false;
-        if(a>b){
-            double t = a;
-            a = b;
-            b = t;
-            isNegative = true;
-        }
+    static double left_rectangle_integral(IFuncX f, double a, double b, int n) {
         double step;
         double sum = 0;
         step = (b - a) / n;  //шаг
@@ -48,22 +41,9 @@ public class RectangleIntegral {
             sum += f.solve(i);//суммируем значения функции в узловых точках
         }
         //приближенное значение интеграла равно сумме площадей прямоугольников
-        double result = sum*step;//множим на величину шага и возвращаем в вызывающую функцию
-        if(isNegative){
-            return -1*result;
-        }
-        else {
-            return result;
-        }
+        return sum*step;//множим на величину шага и возвращаем в вызывающую функцию
     }
-    static double right_rectangle_integral(IFunc f, double a, double b, int n) {
-        boolean isNegative = false;
-        if(a>b){
-            double t = a;
-            a = b;
-            b = t;
-            isNegative = true;
-        }
+    static double right_rectangle_integral(IFuncX f, double a, double b, int n) {
         double step;
         double sum = 0;
         step = (b - a) / n;  //шаг
@@ -72,37 +52,19 @@ public class RectangleIntegral {
             sum += f.solve(a + i*step);
         }
         //приближенное значение интеграла равно сумме площадей прямоугольников
-        double result = sum*step;//множим на величину шага и возвращаем в вызывающую функцию
-        if(isNegative){
-            return -1*result;
-        }
-        else {
-            return result;
-        }    }
-    static double mid_rectangle_integral(IFunc f, double a, double b, int n) {
-        boolean isNegative = false;
-        if(a>b){
-            double t = a;
-            a = b;
-            b = t;
-            isNegative = true;
-        }
+        return sum*step;//множим на величину шага и возвращаем в вызывающую функцию
+    }
+    static double mid_rectangle_integral(IFuncX f, double a, double b, int n) {
         double sum = 0;
         double step = (b - a) / n;  //шаг
         for(int i = 0; i < n; i++) {
             sum += f.solve(a + step * (i + 0.5));//0.5 это тип 1/2
         }
         //приближенное значение интеграла равно сумме площадей прямоугольников
-        double result = sum*step;//множим на величину шага и возвращаем в вызывающую функцию
-        if(isNegative){
-            return -1*result;
-        }
-        else {
-            return result;
-        }
+        return sum*step;//множим на величину шага и возвращаем в вызывающую функцию
     }
 
-    static ArrayList<Separation> findSeparations(IFunc func, double a, double b){
+    static ArrayList<Separation> findSeparations(IFuncX func, double a, double b){
         ArrayList<Separation> array = new ArrayList<>();
         double eps = 0.00000001;
         int scale = 8; // Количество знаков после запятой.
@@ -142,7 +104,7 @@ public class RectangleIntegral {
     }
 
 
-    public static ResultSet solve(IFunc f, double a, double b, double eps){
+    public static ResultSet solve(IFuncX f, double a, double b, double eps){
         ResultSet resultSet = new ResultSet();
         // left
         int iter = 0;

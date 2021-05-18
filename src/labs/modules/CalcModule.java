@@ -2,6 +2,9 @@ package labs.modules;
 
 import java.util.*;
 
+/*
+Author - kushok(https://www.cyberforum.ru/java-gui/thread1194840.html)
+ */
 public class CalcModule {
 
     ArrayList<String> post;

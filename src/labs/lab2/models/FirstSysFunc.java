@@ -1,12 +1,12 @@
 package labs.lab2.models;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 
 import java.util.ArrayList;
 
 public class FirstSysFunc implements ISysFunc {
     @Override
-    public ArrayList<IFunc> getDraw() {
-        ArrayList<IFunc> ar = new ArrayList<>();
+    public ArrayList<IFuncX> getDraw() {
+        ArrayList<IFuncX> ar = new ArrayList<>();
         ar.add(x -> (1-2*x)/3);
         ar.add(x -> (x>=-Math.pow(3, 0.5) && x<=Math.pow(3, 0.5)) ? -Math.abs(Math.pow(3-Math.pow(x,2), 0.5)) : null);
         ar.add(x -> (x>=-Math.pow(3, 0.5) && x<=Math.pow(3, 0.5)) ? Math.abs(Math.pow(3-Math.pow(x,2), 0.5)) : null);

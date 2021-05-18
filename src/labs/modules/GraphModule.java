@@ -8,9 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
 import labs.models.Point;
-import labs.models.IFunc;
+import labs.models.IFuncX;
 
-
+/*
+Author - kushok(https://www.cyberforum.ru/java-gui/thread1194840.html)
+Modified by Kirill Shakhov
+ */
 public class GraphModule extends JPanel {
     double x1 = -5, x2 = 5, y1 = -5, y2 = 5;
     double step_x = 1;
@@ -21,10 +24,10 @@ public class GraphModule extends JPanel {
     int lastX = 0;
     int lastY = 0;
     //step_x = Math.PI;
-    Map<JCheckBox, ArrayList<IFunc>> f = new HashMap<>();
+    Map<JCheckBox, ArrayList<IFuncX>> f = new HashMap<>();
     Map<JCheckBox, ArrayList<Point>> points = new HashMap<>();
-    public GraphModule(Map<String, ArrayList<IFunc>> map_func, Map<String, ArrayList<Point>> map_points) {
-        for(Map.Entry<String, ArrayList<IFunc>> entry : map_func.entrySet()){
+    public GraphModule(Map<String, ArrayList<IFuncX>> map_func, Map<String, ArrayList<Point>> map_points) {
+        for(Map.Entry<String, ArrayList<IFuncX>> entry : map_func.entrySet()){
             JCheckBox j = new JCheckBox(entry.getKey());
             j.setSelected(true);
             j.addItemListener(e -> updateUI());
@@ -50,7 +53,7 @@ public class GraphModule extends JPanel {
 
         Box box = Box.createVerticalBox();
         box.add(this);
-        for(Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()){
+        for(Map.Entry<JCheckBox, ArrayList<IFuncX>> entry : f.entrySet()){
             box.add(entry.getKey());
         }
         for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
@@ -58,7 +61,7 @@ public class GraphModule extends JPanel {
         }
         JButton b_selall = new JButton("Выбрать все");
         b_selall.addActionListener(e -> {
-            for(Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()){
+            for(Map.Entry<JCheckBox, ArrayList<IFuncX>> entry : f.entrySet()){
                 entry.getKey().setSelected(true);
             }
             for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
@@ -68,7 +71,7 @@ public class GraphModule extends JPanel {
         });
         JButton b_clean = new JButton("Очистить");
         b_clean.addActionListener(e -> {
-            for(Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()){
+            for(Map.Entry<JCheckBox, ArrayList<IFuncX>> entry : f.entrySet()){
                 entry.getKey().setSelected(false);
             }
             for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
@@ -236,10 +239,10 @@ public class GraphModule extends JPanel {
     public void paintF(Graphics g) {
         //Рисуем графики
         int t = 0;
-        for (Map.Entry<JCheckBox, ArrayList<IFunc>> entry : f.entrySet()) {
+        for (Map.Entry<JCheckBox, ArrayList<IFuncX>> entry : f.entrySet()) {
             Color color = getColor(t);
             if(entry.getKey().isSelected()) {
-                for (IFunc f1 : entry.getValue()) {
+                for (IFuncX f1 : entry.getValue()) {
                     int q1;
                     if (f1.solve(x1) != null) {
                         q1 = HEIGHT - (int) Math.floor((HEIGHT / (Math.abs(y2 - y1))) * (f1.solve(x1) - y1));
