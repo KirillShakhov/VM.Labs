@@ -29,9 +29,8 @@ public class SweepMethodMath {
 
         for (int i = alpha.size()-2; i > 0; i--) {
             y_vals.add(alpha.get(i + 1) * yb + beta.get(i + 1));
-            Collections.reverse(y_vals);
         }
-
+        Collections.reverse(y_vals);
 
         ArrayList<Point> points = new ArrayList<>();
         double step = (xb-beg)/y_vals.size();

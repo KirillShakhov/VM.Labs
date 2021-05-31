@@ -58,7 +58,7 @@ public class GraphModule extends JPanel {
 //        JF.setLayout(null);
 //        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JF.setVisible(true);
-        JF.setResizable(false);
+        JF.setResizable(true);
 
         Box box = Box.createVerticalBox();
         box.add(this);
