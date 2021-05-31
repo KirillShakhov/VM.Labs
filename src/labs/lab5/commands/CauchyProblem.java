@@ -1,9 +1,6 @@
 package labs.lab5.commands;
-
 import labs.models.ICommand;
 import labs.modules.MenuModule;
-import labs.сommands.Main;
-
 import java.util.ArrayList;
 
 public class CauchyProblem implements ICommand {
@@ -17,7 +14,6 @@ public class CauchyProblem implements ICommand {
         ArrayList<ICommand> commands = new ArrayList<>();
         commands.add(new RungeKuttaMethod());
         //
-        commands.add(new Main());
         MenuModule menu = new MenuModule(commands);
         menu.execute();
     }

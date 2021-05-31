@@ -1,10 +1,8 @@
 package labs.lab4.commands;
-
 import labs.lab4.IndividualFunc;
+import labs.lab4.LagrangianIntegrationMath;
 import labs.models.ICommand;
 import labs.models.IFuncX;
-import labs.lab4.LagrangianIntegrationMath;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

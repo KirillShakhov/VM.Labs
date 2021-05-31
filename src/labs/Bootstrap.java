@@ -1,9 +1,11 @@
 package labs;
-import labs.сommands.Main;
+import labs.lab5.commands.CauchyProblem;
+import labs.modules.MenuModule;
 
 public class Bootstrap {
     public static void main(String[] args) {
-        Main main = new Main();
-        main.execute();
+        MenuModule menuModule = new MenuModule();
+        menuModule.addCommand(new CauchyProblem());
+        menuModule.execute();
     }
 }

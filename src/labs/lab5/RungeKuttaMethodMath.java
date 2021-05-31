@@ -1,4 +1,5 @@
 package labs.lab5;
+import labs.lab4.LagrangianIntegrationMath;
 import labs.models.IFuncX;
 import labs.models.IFuncXY;
 import labs.models.Point;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import static labs.lab4.LagrangianIntegrationMath.Interpolation;
 
 public class RungeKuttaMethodMath {
     public static void solve(IFuncXY f) {
@@ -39,7 +39,7 @@ public class RungeKuttaMethodMath {
         }
         point_func.put("Исходные данные", xy);
         // Интерполяция
-        ArrayList<Point> interpolation = Interpolation(xy, 100);
+        ArrayList<Point> interpolation = LagrangianIntegrationMath.Interpolation(xy, 100);
         point_func.put("Интерполяция", interpolation);
         // Рисуем график
         new GraphModule(map_func, point_func);

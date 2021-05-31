@@ -1,4 +1,8 @@
 package labs.modules;
+import labs.models.IFuncX;
+import labs.models.Point;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
@@ -6,14 +10,8 @@ import java.awt.font.TextLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.*;
-import labs.models.Point;
-import labs.models.IFuncX;
 
-/*
-Author - kushok(https://www.cyberforum.ru/java-gui/thread1194840.html)
-Modified by Kirill Shakhov
- */
+
 public class GraphModule extends JPanel {
     double x1 = -5, x2 = 5, y1 = -5, y2 = 5;
     double step_x = 1;
@@ -45,7 +43,7 @@ public class GraphModule extends JPanel {
     public void frameOp() {
         JFrame JF = new JFrame("Paint");
         JPanel boxesPanel = new JPanel();
-        JF.setBounds(100, 100, WIDTH + 16, HEIGHT + 28 + 38 + 10 + 10*(f.size()+points.size()));
+        JF.setBounds(100, 100, WIDTH + 6, HEIGHT + 28 + 28);
 //        JF.setLayout(null);
 //        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JF.setVisible(true);
@@ -59,28 +57,12 @@ public class GraphModule extends JPanel {
         for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
             box.add(entry.getKey());
         }
-        JButton b_selall = new JButton("Выбрать все");
-        b_selall.addActionListener(e -> {
-            for(Map.Entry<JCheckBox, ArrayList<IFuncX>> entry : f.entrySet()){
-                entry.getKey().setSelected(true);
-            }
-            for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
-                entry.getKey().setSelected(true);
-            }
-            updateUI();
-        });
-        JButton b_clean = new JButton("Очистить");
-        b_clean.addActionListener(e -> {
-            for(Map.Entry<JCheckBox, ArrayList<IFuncX>> entry : f.entrySet()){
-                entry.getKey().setSelected(false);
-            }
-            for(Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()){
-                entry.getKey().setSelected(false);
-            }
-            updateUI();
-        });
-        box.add(b_selall);
-        box.add(b_clean);
+//        box.add(graph_flag);
+//        graph_flag.setSelected(true);
+//        graph_flag.addItemListener(e -> updateUI());
+//        box.add(points_flag);
+//        points_flag.setSelected(true);
+//        points_flag.addItemListener(e -> updateUI());
         JF.add(box);
 
         this.setBackground(Color.WHITE);
@@ -100,7 +82,7 @@ public class GraphModule extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent evt) {
-                if (evt.getModifiers() == evt.BUTTON1_MASK) {
+                if (evt.getModifiers() == InputEvent.BUTTON1_MASK) {
                     int newX = evt.getX();
                     int newY = evt.getY();
 
@@ -117,7 +99,7 @@ public class GraphModule extends JPanel {
                     lastY = newY;
 
                     repaint();
-                } else if (evt.getModifiers() == evt.BUTTON3_MASK) {
+                } else if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
 
                     int newX = evt.getX();
                     int newY = evt.getY();
@@ -142,17 +124,26 @@ public class GraphModule extends JPanel {
         addMouseListener(MA);
         addMouseMotionListener(MA);
 
-        this.addMouseWheelListener(e -> {
-            int r = e.getWheelRotation();
-            double dx = (x2 - x1) / (10 + Math.abs(r + 1) / 2);
-            double dy = (y2 - y1) / (10 + Math.abs(r + 1) / 2);
-            x1 -= r * dx * lastX / WIDTH;
-            x2 += r * dx * (WIDTH - lastX) / WIDTH;
-            y1 -= r * dy * (HEIGHT - lastY) / HEIGHT;
-            y2 += r * dy * lastY / HEIGHT;
-            repaint();
+        this.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+
+                int r = e.getWheelRotation();
+
+                double dx = (x2 - x1) / (10 + Math.abs(r + 1) / 2);
+                double dy = (y2 - y1) / (10 + Math.abs(r + 1) / 2);
+
+                x1 -= r * dx * lastX / WIDTH;
+                x2 += r * dx * (WIDTH - lastX) / WIDTH;
+                y1 -= r * dy * (HEIGHT - lastY) / HEIGHT;
+                y2 += r * dy * lastY / HEIGHT;
+
+                repaint();
+
+            }
         });
     }
+
     @Override
     public void paintComponent(Graphics g) {
 
@@ -238,9 +229,7 @@ public class GraphModule extends JPanel {
 
     public void paintF(Graphics g) {
         //Рисуем графики
-        int t = 0;
         for (Map.Entry<JCheckBox, ArrayList<IFuncX>> entry : f.entrySet()) {
-            Color color = getColor(t);
             if(entry.getKey().isSelected()) {
                 for (IFuncX f1 : entry.getValue()) {
                     int q1;
@@ -259,10 +248,9 @@ public class GraphModule extends JPanel {
                     }
                 }
             }
-            t++;
         }
         //Рисуем точки
-        t = 0;
+        int t = 0;
         for (Map.Entry<JCheckBox, ArrayList<Point>> entry : points.entrySet()) {
             Color color = getColor(t);
             if(entry.getKey().isSelected()) {
@@ -276,7 +264,6 @@ public class GraphModule extends JPanel {
             t++;
         }
     }
-
     private Color getColor(int i){
         ArrayList<Color> colors = new ArrayList<>();
         colors.add(Color.green);
@@ -295,4 +282,3 @@ public class GraphModule extends JPanel {
         }
     }
 }
-
