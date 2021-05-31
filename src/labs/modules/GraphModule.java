@@ -41,6 +41,15 @@ public class GraphModule extends JPanel {
         }
         frameOp();
     }
+    public GraphModule(Map<String, ArrayList<Point>> map_points) {
+        for(Map.Entry<String, ArrayList<Point>> entry : map_points.entrySet()){
+            JCheckBox j = new JCheckBox(entry.getKey());
+            j.setSelected(true);
+            j.addItemListener(e -> updateUI());
+            points.put(j, entry.getValue());
+        }
+        frameOp();
+    }
 
     public void frameOp() {
         JFrame JF = new JFrame("Paint");

@@ -1,12 +1,14 @@
 package labs.lab6;
 import labs.models.IFuncX;
+import labs.models.Point;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class SweepMethodMath {
 
 
-    public static void solve(IFuncX p, IFuncX g, IFuncX f, double xa, double xb, double ya, double yb, double h) {
+    public static ArrayList<Point> solve(IFuncX p, IFuncX g, IFuncX f, double xa, double xb, double ya, double yb, double h) {
         ArrayList<Double> alpha = new ArrayList<>();
         alpha.add(0.0);
         ArrayList<Double> beta = new ArrayList<>();
@@ -29,7 +31,16 @@ public class SweepMethodMath {
             y_vals.add(alpha.get(i + 1) * yb + beta.get(i + 1));
             Collections.reverse(y_vals);
         }
-        //return ;
-        //get_graph(beg, xb, y_vals);
+
+
+        ArrayList<Point> points = new ArrayList<>();
+        double step = (xb-beg)/y_vals.size();
+        double x = beg;
+        for(Double d : y_vals){
+            System.out.println(d);
+            points.add(new Point(x, d));
+            x += step;
+        }
+        return points;
     }
 }
