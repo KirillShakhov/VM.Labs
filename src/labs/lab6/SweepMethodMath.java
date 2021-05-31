@@ -1,14 +1,11 @@
 package labs.lab6;
 import labs.models.IFuncX;
 import labs.models.Point;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class SweepMethodMath {
-
-
-    public static ArrayList<Point> solve(IFuncX p, IFuncX g, IFuncX f, double xa, double xb, double ya, double yb, double h) {
+    public static ArrayList<Point> solve(IFuncX p, IFuncX q, IFuncX f, double xa, double xb, double ya, double yb, double h) {
         ArrayList<Double> alpha = new ArrayList<>();
         alpha.add(0.0);
         ArrayList<Double> beta = new ArrayList<>();
@@ -18,7 +15,7 @@ public class SweepMethodMath {
 
         for (int i = 0; i < Math.ceil((xb - xa)/h); i++) {
             double A = 1 - h * p.solve(xa)/2;
-            double B = 2 - g.solve(xa) * Math.pow(h, 2);
+            double B = 2 - q.solve(xa) * Math.pow(h, 2);
             double C = 1 + h * p.solve(xa) / 2;
             double D = Math.pow(h, 2) * f.solve(xa);
 

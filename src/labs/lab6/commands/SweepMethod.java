@@ -1,11 +1,9 @@
 package labs.lab6.commands;
-
 import labs.lab6.SweepMethodMath;
 import labs.models.ICommand;
 import labs.models.IFuncX;
 import labs.models.Point;
 import labs.modules.GraphModule;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,18 +19,18 @@ public class SweepMethod implements ICommand {
     public void execute() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<IFuncX> fp = new ArrayList<>();
-        ArrayList<IFuncX> fg = new ArrayList<>();
+        ArrayList<IFuncX> fq = new ArrayList<>();
         ArrayList<IFuncX> ff = new ArrayList<>();
         System.out.println("Выберите уравнение:");
         // 1
         System.out.println("1. y'' +  x^(-2) y' + x^3 y = e^x");
-        fp.add(x -> 1 / Math.pow(x, 2));
-        fg.add(x -> Math.pow(x, 3));
+        fp.add(x -> Math.pow(x, -2));
+        fq.add(x -> Math.pow(x, 3));
         ff.add(x -> Math.pow(Math.E, x));
         // 2
         System.out.println("2. y'' + x^2 y' + 2y  = 2x - 1");
         fp.add(x -> Math.pow(x, 2));
-        fg.add(x -> 1.0);
+        fq.add(x -> 1.0);
         ff.add(x -> 2 * x - 1);
         //
         IFuncX p, g, f;
@@ -40,7 +38,7 @@ public class SweepMethod implements ICommand {
             try {
                 int t = Integer.parseInt(scanner.nextLine())-1;
                 p = fp.get(t);
-                g = fg.get(t);
+                g = fq.get(t);
                 f = ff.get(t);
                 break;
             } catch (Exception e) {
