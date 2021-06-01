@@ -41,6 +41,15 @@ public class GraphModule extends JPanel {
         }
         frameOp();
     }
+    public GraphModule(Map<String, ArrayList<Point>> map_points) {
+        for(Map.Entry<String, ArrayList<Point>> entry : map_points.entrySet()){
+            JCheckBox j = new JCheckBox(entry.getKey());
+            j.setSelected(true);
+            j.addItemListener(e -> updateUI());
+            points.put(j, entry.getValue());
+        }
+        frameOp();
+    }
 
     public void frameOp() {
         JFrame JF = new JFrame("Paint");
@@ -49,7 +58,7 @@ public class GraphModule extends JPanel {
 //        JF.setLayout(null);
 //        JF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JF.setVisible(true);
-        JF.setResizable(false);
+        JF.setResizable(true);
 
         Box box = Box.createVerticalBox();
         box.add(this);
@@ -100,7 +109,7 @@ public class GraphModule extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent evt) {
-                if (evt.getModifiers() == evt.BUTTON1_MASK) {
+                if (evt.getModifiers() == InputEvent.BUTTON1_MASK) {
                     int newX = evt.getX();
                     int newY = evt.getY();
 
@@ -117,7 +126,7 @@ public class GraphModule extends JPanel {
                     lastY = newY;
 
                     repaint();
-                } else if (evt.getModifiers() == evt.BUTTON3_MASK) {
+                } else if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
 
                     int newX = evt.getX();
                     int newY = evt.getY();
