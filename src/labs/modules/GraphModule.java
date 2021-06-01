@@ -109,7 +109,7 @@ public class GraphModule extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent evt) {
-                if (evt.getModifiers() == evt.BUTTON1_MASK) {
+                if (evt.getModifiers() == InputEvent.BUTTON1_MASK) {
                     int newX = evt.getX();
                     int newY = evt.getY();
 
@@ -126,7 +126,7 @@ public class GraphModule extends JPanel {
                     lastY = newY;
 
                     repaint();
-                } else if (evt.getModifiers() == evt.BUTTON3_MASK) {
+                } else if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
 
                     int newX = evt.getX();
                     int newY = evt.getY();

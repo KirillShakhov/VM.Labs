@@ -32,6 +32,10 @@ public class SweepMethod implements ICommand {
         fp.add(x -> Math.pow(x, 2));
         fq.add(x -> 2.0);
         ff.add(x -> 2 * x - 1);
+        System.out.println("3. y'' + 1/x y' + y  = 0");
+        fp.add(x -> 1/x);
+        fq.add(x -> 1.0);
+        ff.add(x -> 0.0);
         //
         IFuncX p, g, f;
         while (true) {
@@ -45,7 +49,7 @@ public class SweepMethod implements ICommand {
                 System.out.println("Нет такого уравнения");
             }
         }
-        System.out.println("Введите концы промежутка через пробел (хa x_b)");
+        System.out.println("Введите концы промежутка через пробел (х_a x_b)");
         String[] x = scanner.nextLine().split(" ");
         double x_a = Double.parseDouble(x[0]);
         double x_b = Double.parseDouble(x[1]);
@@ -56,6 +60,10 @@ public class SweepMethod implements ICommand {
         System.out.println("Введите точность");
         double eps = Double.parseDouble(scanner.nextLine());
         ArrayList<Point> xy = SweepMethodMath.solve(p, g, f, x_a, x_b, y_a, y_b, eps);
+        System.out.println("Результаты:");
+        for(Point p1 : xy){
+            System.out.println("x: "+p1.getX()+" ; y: "+p1.getY());
+        }
         Map<String, ArrayList<Point>> funcs = new HashMap<>();
         funcs.put("Результат", xy);
         new GraphModule(funcs);

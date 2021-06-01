@@ -33,7 +33,6 @@ public class SweepMethodMath {
         double step = (x_b-beg)/y_vals.size();
         double x = beg;
         for(Double d : y_vals){
-            System.out.println(d);
             points.add(new Point(x, d));
             x += step;
         }
