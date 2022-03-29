@@ -94,6 +94,8 @@ public class GraphModule extends JPanel {
 
         this.setBackground(Color.WHITE);
 
+        updateUI();
+
         MouseAdapter MA = new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent evt) {
